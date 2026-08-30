@@ -1,0 +1,24 @@
+{% extends "base_bare.html" %}
+
+{% block title %}ResQ360 — Verification Pending{% endblock %}
+
+{% block content %}
+<div class="page-shell"><div class="page-shell__inner">
+  <div class="r-card card-pad text-center" style="margin-bottom:var(--r-space-5);">
+    <div class="confirm-icon" style="background:var(--r-warning-surface,#FFFBEB);color:var(--r-warning);"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h1 class="r-title-section">Verification Pending</h1>
+    <p class="r-body-secondary mt-2">Your organization cannot participate in emergency response until an admin completes verification. This usually takes 1–3 business days.</p>
+  </div>
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-4);">
+    <div class="review-row"><span class="review-row__label">Submitted on</span><span class="review-row__value">Aug 24, 2026</span></div>
+    <div class="review-row"><span class="review-row__label">Status</span><span class="r-badge r-badge-warning">Pending review</span></div>
+    <div class="review-row"><span class="review-row__label">Organization</span><span class="review-row__value">City Hospital Rapid Response</span></div>
+    <div class="review-row"><span class="review-row__label">Type</span><span class="review-row__value">Hospital / Medical</span></div>
+  </div>
+  <div class="r-disclaimer" role="note" style="margin-bottom:var(--r-space-5);">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 3.9L2.9 17.5a1.6 1.6 0 001.4 2.4h15.4a1.6 1.6 0 001.4-2.4L13.4 3.9a1.6 1.6 0 00-2.8 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+    <span>An admin may request additional information before approving. You'll be notified by email.</span>
+  </div>
+  <a href="{% url 'org_login' %}" class="r-btn r-btn-secondary r-btn-block">Log out</a>
+</div></div>
+{% endblock %}

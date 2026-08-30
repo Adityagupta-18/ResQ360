@@ -1,0 +1,35 @@
+{% extends "base_app.html" %}
+
+{% block title %}ResQ360 Admin — User Management{% endblock %}
+
+{% block sidebar_content %}
+    <div class="app-sidebar__brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#F1F5F9" stroke-width="1.7" stroke-linejoin="round"/></svg>ResQ360 Admin</div>
+    <nav class="app-nav">
+      <a href="{% url 'admin_dashboard' %}" class="app-nav__link">Dashboard</a>
+      <a href="{% url 'admin_verification_list' %}" class="app-nav__link">Organizations</a>
+      <a href="{% url 'admin_incident_oversight' %}" class="app-nav__link">Incidents</a>
+      <a href="{% url 'admin_user_management' %}" class="app-nav__link is-active">Users</a>
+      <a href="{% url 'admin_analytics' %}" class="app-nav__link">Analytics</a>
+    </nav>
+  
+{% endblock %}
+
+{% block topbar_title %}User Management{% endblock %}
+{% block topbar_subtitle %}Citizen &amp; volunteer accounts{% endblock %}
+
+{% block content %}
+      <div class="data-table-wrap responsive-collapse">
+        <table class="data-table">
+          <thead><tr><th>User</th><th>Role</th><th>Account Status</th><th>Created</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Aditya S.</td><td>Volunteer</td><td><span class="r-badge r-badge-success">Active</span></td><td>Jan 12, 2026</td><td><button type="button" class="r-btn r-btn-ghost r-btn-sm">Suspend</button></td></tr>
+            <tr><td>Priya M.</td><td>Citizen</td><td><span class="r-badge r-badge-success">Active</span></td><td>Mar 3, 2026</td><td><button type="button" class="r-btn r-btn-ghost r-btn-sm">Suspend</button></td></tr>
+            <tr><td>Rahul K.</td><td>Volunteer</td><td><span class="r-badge r-badge-inactive">Suspended</span></td><td>Feb 8, 2026</td><td><button type="button" class="r-btn r-btn-secondary r-btn-sm">Restore</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-card-list responsive-collapse">
+        <div class="r-card table-card"><div class="table-card__row"><span>User</span><span>Aditya S.</span></div><div class="table-card__row"><span>Status</span><span class="r-badge r-badge-success">Active</span></div></div>
+      </div>
+    
+{% endblock %}

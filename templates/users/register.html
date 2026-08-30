@@ -1,0 +1,55 @@
+{% extends "base_bare.html" %}
+{% load static %}
+
+{% block title %}ResQ360 — Organization Registration{% endblock %}
+
+{% block content %}
+<div class="auth-shell">
+  <div class="r-card auth-card auth-card--wide">
+    <div class="auth-card__brand"><span class="auth-card__brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/></svg></span>ResQ360</div>
+    <h1>Organization Registration</h1>
+    <p class="r-body-secondary">Step <span id="regStepLabel">1</span> of 3</p>
+    <div class="form-progress" data-tabs>
+      <div class="form-progress__step is-active" data-reg-step="1"></div>
+      <div class="form-progress__step" data-reg-step="2"></div>
+      <div class="form-progress__step" data-reg-step="3"></div>
+    </div>
+
+    <div data-reg-panel="1">
+      <div class="field"><label>Organization name</label><input type="text" class="input" placeholder="City Hospital Rapid Response" value="City Hospital Rapid Response"></div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Organization type</label><select class="select"><option>Hospital / Medical</option><option>Fire &amp; Rescue</option><option>Police / Security</option><option>NGO / Volunteer Group</option></select></div>
+        <div class="field"><label>Official email</label><input type="email" class="input" placeholder="ops@organization.org"></div>
+      </div>
+      <div class="field"><label>Official phone</label><input type="tel" class="input" placeholder="+91 11 4567 8900"></div>
+    </div>
+
+    <div data-reg-panel="2" hidden>
+      <div class="field"><label>Address</label><textarea class="textarea" placeholder="Full street address"></textarea></div>
+      <div class="map-box map-box--sm" style="margin-bottom:var(--r-space-4);"><div class="map-pin" style="top:50%;left:50%;"><div class="map-pin__dot map-pin--org"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></div></div></div>
+      <div class="field"><label>Operating area</label><input type="text" class="input" placeholder="e.g. 12 km radius from Sector 12"></div>
+      <div class="field"><label>Registration / license number</label><input type="text" class="input" placeholder="Official license or registration ID"></div>
+    </div>
+
+    <div data-reg-panel="3" hidden>
+      <div class="field"><label>Authorized representative</label><input type="text" class="input" placeholder="Full name &amp; designation"></div>
+      <div class="field"><label>Services / resources provided</label>
+        <div class="pill-row"><span class="r-badge r-badge-info">Ambulance</span><span class="r-badge r-badge-info">Emergency Ward</span><span class="r-badge r-badge-info">ICU Beds</span></div>
+      </div>
+      <div class="field"><label>Supporting documents</label>
+        <div class="doc-row"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h9l5 5v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="doc-row__name">registration_certificate.pdf</span><span class="r-badge r-badge-success">Uploaded</span></div>
+      </div>
+    </div>
+
+    <div class="flex gap-3 mt-6">
+      <button type="button" class="r-btn r-btn-secondary r-btn-block" id="regBackBtn">Back</button>
+      <button type="button" class="r-btn r-btn-primary r-btn-block" id="regNextBtn" data-final-href="{% url 'org_verification_pending' %}">Continue</button>
+    </div>
+    <p class="auth-foot">Already registered? <a href="{% url 'org_login' %}" style="color:var(--r-indigo);font-weight:var(--r-weight-semibold);">Log in</a></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/org-register.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base_app.html" %}
+
+{% block title %}ResQ360 Admin — Analytics{% endblock %}
+
+{% block sidebar_content %}
+    <div class="app-sidebar__brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#F1F5F9" stroke-width="1.7" stroke-linejoin="round"/></svg>ResQ360 Admin</div>
+    <nav class="app-nav">
+      <a href="{% url 'admin_dashboard' %}" class="app-nav__link">Dashboard</a>
+      <a href="{% url 'admin_verification_list' %}" class="app-nav__link">Organizations</a>
+      <a href="{% url 'admin_incident_oversight' %}" class="app-nav__link">Incidents</a>
+      <a href="{% url 'admin_user_management' %}" class="app-nav__link">Users</a>
+      <a href="{% url 'admin_analytics' %}" class="app-nav__link is-active">Analytics</a>
+    </nav>
+  
+{% endblock %}
+
+{% block topbar_title %}Analytics{% endblock %}
+{% block topbar_subtitle %}Platform-wide performance{% endblock %}
+
+{% block content %}
+      <div class="r-card card-pad" style="margin-bottom:var(--r-space-6);">
+        <p class="r-title-section" style="margin-bottom:var(--r-space-4);">Emergency types (last 30 days)</p>
+        <div class="flex items-center gap-6" style="flex-wrap:wrap;">
+          <div class="donut" style="background:conic-gradient(var(--r-red) 0% 34%, var(--r-indigo) 34% 60%, var(--r-warning) 60% 80%, var(--r-success) 80% 100%);"><div class="donut__center"><strong>1,204</strong><span>emergencies</span></div></div>
+          <div class="legend">
+            <div class="legend__item"><span class="legend__swatch" style="background:var(--r-red);"></span>Medical — 34%</div>
+            <div class="legend__item"><span class="legend__swatch" style="background:var(--r-indigo);"></span>Accident — 26%</div>
+            <div class="legend__item"><span class="legend__swatch" style="background:var(--r-warning);"></span>Fire — 20%</div>
+            <div class="legend__item"><span class="legend__swatch" style="background:var(--r-success);"></span>Other — 20%</div>
+          </div>
+        </div>
+      </div>
+      <div class="r-card card-pad" style="margin-bottom:var(--r-space-6);">
+        <p class="r-title-section" style="margin-bottom:var(--r-space-4);">Resolution rate &amp; response time</p>
+        <div class="chart-bars">
+          <div class="chart-bars__col"><div class="chart-bars__bar" style="height:60%;"></div><span class="chart-bars__label">Wk1</span></div>
+          <div class="chart-bars__col"><div class="chart-bars__bar" style="height:72%;"></div><span class="chart-bars__label">Wk2</span></div>
+          <div class="chart-bars__col"><div class="chart-bars__bar" style="height:66%;"></div><span class="chart-bars__label">Wk3</span></div>
+          <div class="chart-bars__col"><div class="chart-bars__bar" style="height:81%;"></div><span class="chart-bars__label">Wk4</span></div>
+        </div>
+      </div>
+      <div class="section-head"><div><h2>Organization performance</h2></div></div>
+      <div class="data-table-wrap responsive-collapse">
+        <table class="data-table">
+          <thead><tr><th>Organization</th><th>Resolved</th><th>Avg Response</th><th>Active Resources</th></tr></thead>
+          <tbody>
+            <tr><td>City Hospital Rapid Response</td><td>412</td><td>7m</td><td>7</td></tr>
+            <tr><td>Metro Ambulance Network</td><td>298</td><td>9m</td><td>12</td></tr>
+            <tr><td>Sector 12 Volunteers</td><td>145</td><td>11m</td><td>5</td></tr>
+          </tbody>
+        </table>
+      </div>
+    
+{% endblock %}

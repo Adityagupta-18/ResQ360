@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ResQ360 — Report an emergency{% endblock %}
+{% block body_class %}t-citizen{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/citizen-home.css' %}">
+{% endblock %}
+
+{% block header_actions %}
+<a href="{% url 'org_login' %}" class="r-header__link-quiet">Organization &amp; responder login</a>
+{% endblock %}
+
+{% block content %}
+<section class="c-hero r-container">
+  <div class="c-hero__grid">
+    <div>
+      <span class="c-hero__eyebrow"><span class="c-hero__eyebrow-dot" aria-hidden="true"></span><span class="r-eyebrow">Verified responders online now</span></span>
+      <h1 class="c-hero__title r-title-page">Connect with verified emergency responders faster.</h1>
+      <p class="c-hero__subtitle r-body-secondary">Report what's happening and your nearest verified organization is alerted immediately. No account, no forms to fill out under pressure — just what responders need to reach you.</p>
+      <div class="c-report">
+        <div class="c-report__ring" aria-hidden="true"></div>
+        <a href="{% url 'citizen_type' %}" class="c-report__btn">
+          <span class="c-report__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v10" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="18" r="1.4" fill="#FFFFFF"/></svg></span>
+          <span class="c-report__text"><span class="c-report__label">Report Emergency</span><span class="c-report__meta">Takes about a minute</span></span>
+        </a>
+      </div>
+      <p class="c-report__note"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 12.5l4.5 4.5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>No account required — you'll get an Emergency ID to track help in real time.</p>
+      <ul class="c-actions" role="list">
+        <li><a href="{% url 'citizen_track_login' %}" class="r-card c-action-card">
+          <span class="c-action-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="c-action-card__body"><span class="c-action-card__title">Track Emergency</span><span class="c-action-card__desc">Follow status with your Emergency ID</span></span>
+          <svg class="c-action-card__chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></li>
+        <li><a href="{% url 'citizen_nearby_help' %}" class="r-card c-action-card">
+          <span class="c-action-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-6.1-7-11.2A7 7 0 0112 3a7 7 0 017 6.8C19 14.9 12 21 12 21z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="9.8" r="2.3" stroke="currentColor" stroke-width="1.7"/></svg></span>
+          <span class="c-action-card__body"><span class="c-action-card__title">Nearby Help</span><span class="c-action-card__desc">Hospitals, police &amp; fire stations near you</span></span>
+          <svg class="c-action-card__chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></li>
+        <li><a href="{% url 'citizen_account' %}" class="r-card c-action-card">
+          <span class="c-action-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 21v-1.6a3.6 3.6 0 00-3.6-3.6H7.6A3.6 3.6 0 004 19.4V21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="9.8" cy="8.4" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M17 8a3 3 0 010 6M20 21v-1.4a3.4 3.4 0 00-2.2-3.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+          <span class="c-action-card__body"><span class="c-action-card__title">Become a Volunteer</span><span class="c-action-card__desc">Register to help respond in your area</span></span>
+          <svg class="c-action-card__chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></li>
+      </ul>
+      <div class="r-disclaimer" role="note"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 3.9L2.9 17.5a1.6 1.6 0 001.4 2.4h15.4a1.6 1.6 0 001.4-2.4L13.4 3.9a1.6 1.6 0 00-2.8 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span>For life-threatening emergencies, contact official emergency services immediately. ResQ360 coordinates verified responders and does not replace local emergency numbers.</span></div>
+    </div>
+    <aside class="c-hero__panel" aria-label="How ResQ360 works">
+      <div class="c-hero__panel-step"><span class="c-hero__panel-index" aria-hidden="true">1</span><div><p class="c-hero__panel-title">Report what's happening</p><p class="c-hero__panel-desc">Type, location and severity — no login needed.</p></div></div>
+      <div class="c-hero__panel-step"><span class="c-hero__panel-index" aria-hidden="true">2</span><div><p class="c-hero__panel-title">Nearby responders are alerted</p><p class="c-hero__panel-desc">Every suitable verified organization is notified at once.</p></div></div>
+      <div class="c-hero__panel-step"><span class="c-hero__panel-index" aria-hidden="true">3</span><div><p class="c-hero__panel-title">Track help in real time</p><p class="c-hero__panel-desc">Follow status from acceptance to arrival with your Emergency ID.</p></div></div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

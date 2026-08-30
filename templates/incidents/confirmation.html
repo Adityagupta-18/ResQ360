@@ -1,0 +1,28 @@
+{% extends "base_bare.html" %}
+{% load static %}
+
+{% block title %}ResQ360 — Emergency Reported{% endblock %}
+
+{% block content %}
+<div class="confirm-shell">
+  <div class="r-card confirm-card">
+    <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M4 12.5l4.5 4.5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <p class="r-caption" style="margin-bottom:var(--r-space-2);">Your Emergency ID</p>
+    <p class="confirm-id" id="emergencyIdValue">EMG-1042</p>
+    <span class="r-badge r-badge-warning" style="margin-top:var(--r-space-4);display:inline-flex;">FINDING RESPONSE</span>
+    <p class="r-body-secondary" style="margin-top:var(--r-space-4);">Your emergency has been submitted. The system is looking for an appropriate verified organization nearby.</p>
+    <div class="flex flex-col gap-3 mt-6">
+      <a href="{% url 'citizen_tracking' %}" class="r-btn r-btn-primary r-btn-block">Track Emergency</a>
+      <a href="{% url 'citizen_home' %}" class="r-btn r-btn-secondary r-btn-block">Back to Home</a>
+    </div>
+    <div class="r-disclaimer" role="note" style="margin-top:var(--r-space-6);text-align:left;">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 3.9L2.9 17.5a1.6 1.6 0 001.4 2.4h15.4a1.6 1.6 0 001.4-2.4L13.4 3.9a1.6 1.6 0 00-2.8 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span>For life-threatening emergencies, contact official emergency services immediately.</span>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/citizen-report.js' %}"></script>
+{% endblock %}

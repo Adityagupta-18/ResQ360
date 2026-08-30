@@ -1,0 +1,38 @@
+{% extends "base_bare.html" %}
+
+{% block title %}ResQ360 Admin — Verification Detail{% endblock %}
+
+{% block content %}
+<div class="page-shell"><div class="page-shell__inner" style="max-width:680px;">
+  <a href="{% url 'admin_verification_list' %}" class="back-link"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to verification list</a>
+  <div class="flex justify-between items-center" style="margin-bottom:var(--r-space-5);">
+    <h1 class="r-title-section">Sunrise NGO Relief</h1>
+    <span class="r-badge r-badge-warning">Pending</span>
+  </div>
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-4);">
+    <p class="r-title-section" style="margin-bottom:var(--r-space-3);">Organization information</p>
+    <div class="review-row"><span class="review-row__label">Type</span><span class="review-row__value">NGO / Volunteer Group</span></div>
+    <div class="review-row"><span class="review-row__label">Address</span><span class="review-row__value">14 Lotus Lane, Sector 21</span></div>
+    <div class="review-row"><span class="review-row__label">Contact</span><span class="review-row__value">contact@sunrisengo.org</span></div>
+    <div class="review-row"><span class="review-row__label">Registration / license</span><span class="review-row__value">NGO-REG-88213</span></div>
+    <div class="review-row"><span class="review-row__label">Authorized representative</span><span class="review-row__value">Meera Kapoor, Director</span></div>
+    <div class="review-row"><span class="review-row__label">Services</span><span class="review-row__value">Shelter, Food relief, First aid</span></div>
+    <div class="review-row"><span class="review-row__label">Submitted</span><span class="review-row__value">Aug 27, 2026</span></div>
+  </div>
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
+    <p class="r-title-section" style="margin-bottom:var(--r-space-3);">Supporting documents</p>
+    <div class="doc-row" style="margin-bottom:var(--r-space-2);"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h9l5 5v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="doc-row__name">ngo_registration.pdf</span><span class="r-badge r-badge-success">Uploaded</span></div>
+    <div class="doc-row"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h9l5 5v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="doc-row__name">representative_id.pdf</span><span class="r-badge r-badge-success">Uploaded</span></div>
+  </div>
+  <div class="pill-row" style="gap:var(--r-space-3);">
+    <button type="button" class="r-btn r-btn-primary" data-modal-open="approveModal">APPROVE</button>
+    <button type="button" class="r-btn r-btn-danger" data-modal-open="rejectModal">REJECT</button>
+    <button type="button" class="r-btn r-btn-secondary">REQUEST INFORMATION</button>
+    <button type="button" class="r-btn r-btn-ghost" data-modal-open="deleteModal" style="color:var(--r-red);">DELETE / REMOVE</button>
+  </div>
+</div></div>
+
+<div class="modal-overlay" id="approveModal"><div class="modal-box"><h2>Approve Sunrise NGO Relief?</h2><p>This organization will immediately become able to receive and accept emergency assignments.</p><div class="modal-actions"><button type="button" class="r-btn r-btn-secondary" data-modal-close>Cancel</button><a href="{% url 'admin_verification_list' %}" class="r-btn r-btn-primary" data-modal-close>Confirm Approval</a></div></div></div>
+<div class="modal-overlay" id="rejectModal"><div class="modal-box"><h2>Reject this application?</h2><p>The organization will be notified and can re-submit with corrected information.</p><div class="modal-actions"><button type="button" class="r-btn r-btn-secondary" data-modal-close>Cancel</button><a href="{% url 'admin_verification_list' %}" class="r-btn r-btn-danger" data-modal-close>Confirm Rejection</a></div></div></div>
+<div class="modal-overlay" id="deleteModal"><div class="modal-box"><h2>Delete this organization?</h2><p>This permanently removes the organization from ResQ360. This action cannot be undone. There is no suspended state — deletion is final.</p><div class="modal-actions"><button type="button" class="r-btn r-btn-secondary" data-modal-close>Cancel</button><a href="{% url 'admin_verification_list' %}" class="r-btn r-btn-danger" data-modal-close>Delete Permanently</a></div></div></div>
+{% endblock %}

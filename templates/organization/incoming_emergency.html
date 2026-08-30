@@ -1,0 +1,35 @@
+{% extends "base_bare.html" %}
+
+{% block title %}ResQ360 — Incoming Emergency{% endblock %}
+
+{% block content %}
+<div class="page-shell"><div class="page-shell__inner" style="max-width:560px;">
+  <div class="r-card card-pad" style="border-color:var(--r-red-border);background:var(--r-red-surface);margin-bottom:var(--r-space-5);">
+    <div class="flex justify-between items-center"><span class="r-badge r-badge-danger">Critical</span><span class="r-caption">Received 2 min ago</span></div>
+    <h1 class="r-title-section mt-2">Accident — Road blocked, fire risk</h1>
+    <div class="incident-card__meta mt-2">
+      <span><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-6.1-7-11.2A7 7 0 0112 3a7 7 0 017 6.8C19 14.9 12 21 12 21z" stroke="currentColor" stroke-width="1.6"/></svg>1.2 km away</span>
+      <span>3 people affected</span>
+      <span>Ambulance + Fire required</span>
+    </div>
+  </div>
+
+  <div class="map-box map-box--md" style="margin-bottom:var(--r-space-5);">
+    <div class="map-pin" style="top:45%;left:55%;"><div class="map-pin__dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+    <div class="map-pin map-pin--org" style="top:70%;left:25%;"><div class="map-pin__dot"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></div></div>
+    <span class="map-attribution">Approximate location · OpenStreetMap contributors</span>
+  </div>
+
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
+    <p class="r-title-section" style="margin-bottom:var(--r-space-3);">Emergency details</p>
+    <div class="review-row"><span class="review-row__label">Location</span><span class="review-row__value">MG Road, near Sector 12 junction</span></div>
+    <div class="review-row"><span class="review-row__label">Road blocked?</span><span class="review-row__value">Yes</span></div>
+    <div class="review-row"><span class="review-row__label">Fire / smoke?</span><span class="review-row__value">Yes</span></div>
+    <div class="review-row"><span class="review-row__label">Severe bleeding?</span><span class="review-row__value">Unknown</span></div>
+    <div class="review-row"><span class="review-row__label">Required services</span><span class="review-row__value">Ambulance, Fire Unit</span></div>
+  </div>
+
+  <a href="{% url 'org_emergency_detail' %}" class="r-btn r-btn-danger r-btn-lg r-btn-block">ACCEPT</a>
+  <p class="hint text-center mt-2">Other nearby responders were alerted too — first to accept is assigned automatically.</p>
+</div></div>
+{% endblock %}

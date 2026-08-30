@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}ResQ360 — My Account{% endblock %}
+{% block body_class %}t-citizen{% endblock %}
+
+{% block content %}
+<div class="page-shell"><div class="page-shell__inner">
+  <div class="flex items-center gap-3" style="margin-bottom:var(--r-space-6);">
+    <div class="app-sidebar__org-avatar" style="background:var(--r-indigo);">A</div>
+    <div><p style="font-weight:var(--r-weight-bold);">Aditya</p><p class="r-caption">Citizen account · Volunteer</p></div>
+  </div>
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-4);">
+    <p class="r-title-section" style="margin-bottom:var(--r-space-3);">Emergency history</p>
+    <div class="review-row"><span class="review-row__label">EMG-1042 · Medical Emergency</span><span class="r-badge r-badge-success">Resolved</span></div>
+    <div class="review-row"><span class="review-row__label">EMG-0981 · Accident</span><span class="r-badge r-badge-success">Resolved</span></div>
+  </div>
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-4);">
+    <p class="r-title-section" style="margin-bottom:var(--r-space-3);">Saved emergency contacts</p>
+    <div class="review-row"><span class="review-row__label">Rohan (Brother)</span><span class="review-row__value">+91 98xxxxxx21</span></div>
+  </div>
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-4);">
+    <p class="r-title-section" style="margin-bottom:var(--r-space-1);">Volunteer registration</p>
+    <p class="r-caption" style="margin-bottom:var(--r-space-3);">Registered · Medical support, Sector 12 area</p>
+    <span class="r-badge r-badge-success">Active</span>
+  </div>
+  <div class="r-card card-pad">
+    <p class="r-title-section" style="margin-bottom:var(--r-space-1);">Blood donor registration</p>
+    <p class="r-caption" style="margin-bottom:var(--r-space-3);">Blood group O+ · Last donated 4 months ago</p>
+    <span class="r-badge r-badge-inactive">Not registered</span>
+  </div>
+</div></div>
+{% endblock %}

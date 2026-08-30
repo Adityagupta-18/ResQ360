@@ -1,0 +1,17 @@
+{% extends "base_bare.html" %}
+
+{% block title %}ResQ360 — Track Emergency{% endblock %}
+
+{% block content %}
+<div class="auth-shell">
+  <form class="r-card auth-card" id="trackForm" action="{% url 'citizen_tracking' %}" method="get">
+    <div class="auth-card__brand"><span class="auth-card__brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/></svg></span>ResQ360</div>
+    <h1>Track Emergency</h1>
+    <p class="r-body-secondary">No account required. Enter the Emergency ID you received when you reported.</p>
+    <div class="field"><label for="trackId">Emergency ID</label><input type="text" id="trackId" class="input" placeholder="EMG-1042" value="EMG-1042"></div>
+    <div class="field"><label for="trackToken">Secure tracking token <span class="hint">(if provided)</span></label><input type="text" id="trackToken" class="input" placeholder="Optional"></div>
+    <button type="submit" class="r-btn r-btn-primary r-btn-block r-btn-lg">TRACK EMERGENCY</button>
+    <p class="auth-foot"><a href="{% url 'citizen_home' %}" style="color:var(--r-indigo);font-weight:var(--r-weight-semibold);">Back to home</a></p>
+  </form>
+</div>
+{% endblock %}

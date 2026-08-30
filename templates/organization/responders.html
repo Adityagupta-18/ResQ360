@@ -1,0 +1,37 @@
+{% extends "base_app.html" %}
+
+{% block title %}ResQ360 — Responders{% endblock %}
+
+{% block sidebar_content %}
+    <div class="app-sidebar__brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#F1F5F9" stroke-width="1.7" stroke-linejoin="round"/></svg>ResQ360</div>
+    <nav class="app-nav">
+      <a href="{% url 'org_dashboard' %}" class="app-nav__link">Dashboard</a>
+      <a href="{% url 'org_incoming_emergency' %}" class="app-nav__link">Emergencies</a>
+      <a href="{% url 'org_resources' %}" class="app-nav__link">Resources</a>
+      <a href="{% url 'org_responders' %}" class="app-nav__link is-active">Responders</a>
+    </nav>
+    <div class="app-sidebar__footer"><div class="app-sidebar__org"><div class="app-sidebar__org-avatar">CH</div><div><p class="app-sidebar__org-name">City Hospital</p><p class="app-sidebar__org-role">Verified · Medical</p></div></div></div>
+  
+{% endblock %}
+
+{% block topbar_title %}Responders{% endblock %}
+{% block topbar_subtitle %}Team availability &amp; assignment{% endblock %}
+
+{% block content %}
+      <div class="data-table-wrap responsive-collapse">
+        <table class="data-table">
+          <thead><tr><th>Responder</th><th>Role</th><th>Availability</th><th>Current Incident</th></tr></thead>
+          <tbody>
+            <tr><td>Team Alpha</td><td>Paramedic Unit</td><td><span class="r-badge r-badge-danger">On Emergency</span></td><td>EMG-1042</td></tr>
+            <tr><td>Team Bravo</td><td>Paramedic Unit</td><td><span class="r-badge r-badge-success">Available</span></td><td>—</td></tr>
+            <tr><td>Dr. S. Rao</td><td>ER Physician</td><td><span class="r-badge r-badge-success">Available</span></td><td>—</td></tr>
+            <tr><td>Team Charlie</td><td>Paramedic Unit</td><td><span class="r-badge r-badge-inactive">Offline</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-card-list responsive-collapse">
+        <div class="r-card table-card"><div class="table-card__row"><span>Responder</span><span>Team Alpha</span></div><div class="table-card__row"><span>Availability</span><span class="r-badge r-badge-danger">On Emergency</span></div><div class="table-card__row"><span>Incident</span><span>EMG-1042</span></div></div>
+        <div class="r-card table-card"><div class="table-card__row"><span>Responder</span><span>Team Bravo</span></div><div class="table-card__row"><span>Availability</span><span class="r-badge r-badge-success">Available</span></div><div class="table-card__row"><span>Incident</span><span>—</span></div></div>
+      </div>
+    
+{% endblock %}

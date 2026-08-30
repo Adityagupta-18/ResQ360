@@ -1,0 +1,41 @@
+{% extends "base_app.html" %}
+
+{% block title %}ResQ360 Admin — Incident Oversight{% endblock %}
+
+{% block sidebar_content %}
+    <div class="app-sidebar__brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#F1F5F9" stroke-width="1.7" stroke-linejoin="round"/></svg>ResQ360 Admin</div>
+    <nav class="app-nav">
+      <a href="{% url 'admin_dashboard' %}" class="app-nav__link">Dashboard</a>
+      <a href="{% url 'admin_verification_list' %}" class="app-nav__link">Organizations</a>
+      <a href="{% url 'admin_incident_oversight' %}" class="app-nav__link is-active">Incidents</a>
+      <a href="{% url 'admin_user_management' %}" class="app-nav__link">Users</a>
+      <a href="{% url 'admin_analytics' %}" class="app-nav__link">Analytics</a>
+    </nav>
+  
+{% endblock %}
+
+{% block topbar_title %}Incident Oversight{% endblock %}
+{% block topbar_subtitle %}Intervene only when necessary{% endblock %}
+
+{% block content %}
+      <div class="data-table-wrap responsive-collapse">
+        <table class="data-table">
+          <thead><tr><th>Incident ID</th><th>Type</th><th>Severity</th><th>Organization</th><th>Status</th><th>Response Time</th></tr></thead>
+          <tbody>
+            <tr><td>EMG-1042</td><td>Accident</td><td><span class="r-badge r-badge-danger">Critical</span></td><td>City Hospital</td><td>Accepted</td><td>3m</td></tr>
+            <tr><td>EMG-1041</td><td>Medical</td><td><span class="r-badge r-badge-warning">Serious</span></td><td>Metro Ambulance</td><td>En Route</td><td>6m</td></tr>
+            <tr><td>EMG-1039</td><td>Fire</td><td><span class="r-badge r-badge-danger">Critical</span></td><td>— Unassigned —</td><td><span class="r-badge r-badge-warning">No Response</span></td><td>—</td></tr>
+            <tr><td>EMG-1035</td><td>Missing Person</td><td><span class="r-badge r-badge-info">Serious</span></td><td>Sector 12 Volunteers</td><td>In Progress</td><td>4m</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-card-list responsive-collapse">
+        <div class="r-card table-card"><div class="table-card__row"><span>EMG-1039</span><span>Fire</span></div><div class="table-card__row"><span>Status</span><span class="r-badge r-badge-warning">No Response</span></div><div class="table-card__row"><span>Org</span><span>Unassigned</span></div></div>
+      </div>
+      <div class="r-card card-pad mt-6" style="border-color:var(--r-warning-border,#FDE68A);background:var(--r-warning-surface,#FFFBEB);">
+        <p style="font-weight:var(--r-weight-semibold);margin-bottom:var(--r-space-2);">EMG-1039 needs intervention</p>
+        <p class="r-body-secondary" style="font-size:var(--r-text-sm);margin-bottom:var(--r-space-4);">No responder accepted this fire incident. Nearby official resources have been shown to the citizen. Admin can manually escalate.</p>
+        <button type="button" class="r-btn r-btn-secondary r-btn-sm">Manually Reassign</button>
+      </div>
+    
+{% endblock %}

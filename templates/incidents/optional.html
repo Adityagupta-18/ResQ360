@@ -1,0 +1,41 @@
+{% extends "base_bare.html" %}
+{% load static %}
+
+{% block title %}ResQ360 — Additional Information{% endblock %}
+
+{% block content %}
+<div class="wizard-page">
+  <div class="wizard-header">
+    <div class="wizard-header__top">
+      <a href="{% url 'citizen_details' %}" class="wizard-header__back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="wizard-header__title">Anything else? (optional)</span>
+    </div>
+    <div class="form-progress" aria-hidden="true">
+      <div class="form-progress__step is-done"></div><div class="form-progress__step is-done"></div><div class="form-progress__step is-done"></div><div class="form-progress__step is-active"></div><div class="form-progress__step"></div>
+    </div>
+  </div>
+  <div class="wizard-body">
+    <p class="r-body-secondary" style="margin-bottom:var(--r-space-5);">This step is completely optional — you can continue without adding anything.</p>
+    <div class="field">
+      <label for="descriptionField">Description</label>
+      <textarea id="descriptionField" class="textarea" placeholder="Anything responders should know before they arrive…"></textarea>
+    </div>
+    <div class="field">
+      <label>Photo</label>
+      <button type="button" class="r-card card-pad w-full flex flex-col items-center gap-2" style="border-style:dashed;">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26" style="color:var(--r-text-muted);"><path d="M4 17.5V7a2 2 0 012-2h2.2l1.3-1.7h4.9L15.7 5H18a2 2 0 012 2v10.5a2 2 0 01-2 2H6a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12.5" r="3.4" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span class="r-caption">Tap to add a photo (optional)</span>
+      </button>
+      <p class="hint">No video upload — photos only.</p>
+    </div>
+  </div>
+  <div class="wizard-footer">
+    <a href="{% url 'citizen_details' %}" class="r-btn r-btn-secondary">Back</a>
+    <a href="{% url 'citizen_review' %}" class="r-btn r-btn-primary r-btn-lg" id="continueBtnOptional">Continue</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/citizen-report.js' %}"></script>
+{% endblock %}

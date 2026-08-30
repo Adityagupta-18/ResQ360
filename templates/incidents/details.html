@@ -1,0 +1,67 @@
+{% extends "base_bare.html" %}
+{% load static %}
+
+{% block title %}ResQ360 — Emergency Details{% endblock %}
+
+{% block content %}
+<div class="wizard-page">
+  <div class="wizard-header">
+    <div class="wizard-header__top">
+      <a href="{% url 'citizen_location' %}" class="wizard-header__back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="wizard-header__title">A few quick details</span>
+    </div>
+    <div class="form-progress" aria-hidden="true">
+      <div class="form-progress__step is-done"></div><div class="form-progress__step is-done"></div><div class="form-progress__step is-active"></div><div class="form-progress__step"></div><div class="form-progress__step"></div>
+    </div>
+  </div>
+  <div class="wizard-body">
+    <div class="field">
+      <label>How many people are affected?</label>
+      <div class="stepper-counter" data-counter data-counter-min="1" data-counter-max="50">
+        <button type="button" class="stepper-counter__btn" data-counter-dec aria-label="Decrease">−</button>
+        <span class="stepper-counter__value" data-counter-value>1</span>
+        <button type="button" class="stepper-counter__btn" data-counter-inc aria-label="Increase">+</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Severity</label>
+      <div class="severity-grid" data-select-group="severity">
+        <button type="button" class="severity-card" data-severity="critical" data-value="critical">Critical</button>
+        <button type="button" class="severity-card" data-severity="serious" data-value="serious">Serious</button>
+        <button type="button" class="severity-card" data-severity="minor" data-value="minor">Minor</button>
+        <button type="button" class="severity-card" data-severity="unknown" data-value="unknown">Unknown</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Quick questions</label>
+      <div class="r-card card-pad">
+        <div class="toggle-row" data-question="road-blocked">
+          <span class="toggle-row__label">Road blocked?</span>
+          <div class="toggle-pills" data-select-group="q-road" data-select-multi="false"><button type="button" class="toggle-pill" data-value="yes">Yes</button><button type="button" class="toggle-pill" data-value="no">No</button></div>
+        </div>
+        <div class="toggle-row" data-question="fire-smoke">
+          <span class="toggle-row__label">Fire / smoke visible?</span>
+          <div class="toggle-pills" data-select-group="q-fire" data-select-multi="false"><button type="button" class="toggle-pill" data-value="yes">Yes</button><button type="button" class="toggle-pill" data-value="no">No</button></div>
+        </div>
+        <div class="toggle-row" data-question="severe-bleeding">
+          <span class="toggle-row__label">Severe bleeding?</span>
+          <div class="toggle-pills" data-select-group="q-bleeding" data-select-multi="false"><button type="button" class="toggle-pill" data-value="yes">Yes</button><button type="button" class="toggle-pill" data-value="no">No</button></div>
+        </div>
+        <div class="toggle-row" data-question="person-trapped">
+          <span class="toggle-row__label">Person trapped?</span>
+          <div class="toggle-pills" data-select-group="q-trapped" data-select-multi="false"><button type="button" class="toggle-pill" data-value="yes">Yes</button><button type="button" class="toggle-pill" data-value="no">No</button></div>
+        </div>
+      </div>
+      <p class="hint" style="margin-top:var(--r-space-2);">Questions adapt automatically based on the emergency type you selected.</p>
+    </div>
+  </div>
+  <div class="wizard-footer">
+    <a href="{% url 'citizen_location' %}" class="r-btn r-btn-secondary">Back</a>
+    <a href="{% url 'citizen_optional' %}" class="r-btn r-btn-primary r-btn-lg" id="continueBtnDetails">Continue</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/citizen-report.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base_app.html" %}
+
+{% block title %}ResQ360 Admin — Organization Verification{% endblock %}
+
+{% block sidebar_content %}
+    <div class="app-sidebar__brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#F1F5F9" stroke-width="1.7" stroke-linejoin="round"/></svg>ResQ360 Admin</div>
+    <nav class="app-nav">
+      <a href="{% url 'admin_dashboard' %}" class="app-nav__link">Dashboard</a>
+      <a href="{% url 'admin_verification_list' %}" class="app-nav__link is-active">Organizations</a>
+      <a href="{% url 'admin_incident_oversight' %}" class="app-nav__link">Incidents</a>
+      <a href="{% url 'admin_user_management' %}" class="app-nav__link">Users</a>
+      <a href="{% url 'admin_analytics' %}" class="app-nav__link">Analytics</a>
+    </nav>
+  
+{% endblock %}
+
+{% block topbar_title %}Organization Verification{% endblock %}
+{% block topbar_subtitle %}Verification center{% endblock %}
+
+{% block content %}
+      <div class="data-table-wrap responsive-collapse">
+        <table class="data-table">
+          <thead><tr><th>Organization</th><th>Type</th><th>Submitted</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Sunrise NGO Relief</td><td>NGO</td><td>Aug 27, 2026</td><td><span class="r-badge r-badge-warning">Pending</span></td><td><a href="{% url 'admin_verification_detail' %}" class="r-btn r-btn-secondary r-btn-sm">Review</a></td></tr>
+            <tr><td>Metro Fire Auxiliary</td><td>Fire &amp; Rescue</td><td>Aug 28, 2026</td><td><span class="r-badge r-badge-warning">Pending</span></td><td><a href="{% url 'admin_verification_detail' %}" class="r-btn r-btn-secondary r-btn-sm">Review</a></td></tr>
+            <tr><td>City Hospital Rapid Response</td><td>Hospital</td><td>Aug 10, 2026</td><td><span class="r-badge r-badge-success">Verified</span></td><td><a href="{% url 'admin_verification_detail' %}" class="r-btn r-btn-ghost r-btn-sm">View</a></td></tr>
+            <tr><td>Northside Police Volunteers</td><td>Police / Security</td><td>Aug 2, 2026</td><td><span class="r-badge r-badge-danger">Rejected</span></td><td><a href="{% url 'admin_verification_detail' %}" class="r-btn r-btn-ghost r-btn-sm">View</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-card-list responsive-collapse">
+        <div class="r-card table-card"><div class="table-card__row"><span>Organization</span><span>Sunrise NGO Relief</span></div><div class="table-card__row"><span>Status</span><span class="r-badge r-badge-warning">Pending</span></div><a href="{% url 'admin_verification_detail' %}" class="r-btn r-btn-secondary r-btn-sm w-full">Review</a></div>
+        <div class="r-card table-card"><div class="table-card__row"><span>Organization</span><span>Metro Fire Auxiliary</span></div><div class="table-card__row"><span>Status</span><span class="r-badge r-badge-warning">Pending</span></div><a href="{% url 'admin_verification_detail' %}" class="r-btn r-btn-secondary r-btn-sm w-full">Review</a></div>
+      </div>
+    
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ResQ360 — Track Emergency{% endblock %}
+{% block body_class %}t-citizen{% endblock %}
+
+{% block content %}
+<div class="page-shell"><div class="page-shell__inner">
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
+    <div class="flex justify-between items-center">
+      <div>
+        <p class="r-caption">Emergency ID</p>
+        <p style="font-weight:var(--r-weight-bold);font-size:var(--r-text-lg);font-family:var(--r-font-display);" id="trackEmergencyId">EMG-1042</p>
+      </div>
+      <span class="r-badge r-badge-info" id="currentStatusLabel">Reported</span>
+    </div>
+    <div class="mt-4" style="font-size:var(--r-text-sm);color:var(--r-text-secondary);">
+      <p><strong style="color:var(--r-text-primary);" id="trackType">Medical Emergency</strong></p>
+      <p id="trackLocation">Sector 12, MG Road, near City Hospital</p>
+    </div>
+  </div>
+
+  <div id="resolvedBanner" class="r-card card-pad" style="margin-bottom:var(--r-space-5);border-color:var(--r-success-border);background:var(--r-success-surface);" hidden>
+    <p style="font-weight:var(--r-weight-semibold);color:var(--r-success);">Resolved — help has completed on scene.</p>
+  </div>
+
+  <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
+    <p class="r-title-section" style="margin-bottom:var(--r-space-5);">Status</p>
+    <div class="timeline">
+      <div class="timeline-step is-active"><div class="timeline-step__rail"><div class="timeline-step__dot"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l4.5 4.5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="timeline-step__line"></div></div><div class="timeline-step__body"><p class="timeline-step__title">Reported</p><p class="timeline-step__desc">Your emergency was received.</p></div></div>
+      <div class="timeline-step"><div class="timeline-step__rail"><div class="timeline-step__dot"></div><div class="timeline-step__line"></div></div><div class="timeline-step__body"><p class="timeline-step__title">Matching</p><p class="timeline-step__desc">Finding suitable verified responders nearby.</p></div></div>
+      <div class="timeline-step"><div class="timeline-step__rail"><div class="timeline-step__dot"></div><div class="timeline-step__line"></div></div><div class="timeline-step__body"><p class="timeline-step__title">Alerting responders</p><p class="timeline-step__desc">All suitable organizations notified simultaneously.</p></div></div>
+      <div class="timeline-step"><div class="timeline-step__rail"><div class="timeline-step__dot"></div><div class="timeline-step__line"></div></div><div class="timeline-step__body"><p class="timeline-step__title">Accepted</p><p class="timeline-step__desc">A responder has accepted your emergency.</p></div></div>
+      <div class="timeline-step"><div class="timeline-step__rail"><div class="timeline-step__dot"></div><div class="timeline-step__line"></div></div><div class="timeline-step__body"><p class="timeline-step__title">En route</p><p class="timeline-step__desc">Responder is on the way.</p></div></div>
+      <div class="timeline-step"><div class="timeline-step__rail"><div class="timeline-step__dot"></div><div class="timeline-step__line"></div></div><div class="timeline-step__body"><p class="timeline-step__title">Arrived</p><p class="timeline-step__desc">Responder has reached the location.</p></div></div>
+      <div class="timeline-step"><div class="timeline-step__rail"><div class="timeline-step__dot"></div><div class="timeline-step__line"></div></div><div class="timeline-step__body"><p class="timeline-step__title">In progress</p><p class="timeline-step__desc">Response is actively underway.</p></div></div>
+      <div class="timeline-step"><div class="timeline-step__rail"><div class="timeline-step__dot"></div></div><div class="timeline-step__body"><p class="timeline-step__title">Resolved</p><p class="timeline-step__desc">Emergency has been closed out.</p></div></div>
+    </div>
+  </div>
+
+  <div id="assignedOrgBlock" class="r-card card-pad" style="margin-bottom:var(--r-space-5);" hidden>
+    <p class="r-caption" style="margin-bottom:var(--r-space-2);">Assigned organization</p>
+    <div class="flex items-center gap-3">
+      <div class="app-sidebar__org-avatar" style="background:var(--r-indigo);">CH</div>
+      <div><p style="font-weight:var(--r-weight-semibold);font-size:var(--r-text-sm);">City Hospital Rapid Response</p><p class="r-caption">Ambulance unit · ETA ~7 min</p></div>
+    </div>
+  </div>
+
+  <button type="button" id="simulateAdvance" class="r-btn r-btn-primary r-btn-block">Simulate next status update</button>
+  <p class="hint text-center mt-2">Prototype-only control — in production this timeline updates automatically as responders act.</p>
+</div></div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/citizen-report.js' %}"></script>
+{% endblock %}

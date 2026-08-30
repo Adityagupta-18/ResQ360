@@ -1,0 +1,38 @@
+{% extends "base_bare.html" %}
+{% load static %}
+
+{% block title %}ResQ360 — Review & Submit{% endblock %}
+
+{% block content %}
+<div class="wizard-page">
+  <div class="wizard-header">
+    <div class="wizard-header__top">
+      <a href="{% url 'citizen_optional' %}" class="wizard-header__back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <span class="wizard-header__title">Review &amp; submit</span>
+    </div>
+    <div class="form-progress" aria-hidden="true">
+      <div class="form-progress__step is-done"></div><div class="form-progress__step is-done"></div><div class="form-progress__step is-done"></div><div class="form-progress__step is-done"></div><div class="form-progress__step is-active"></div>
+    </div>
+  </div>
+  <div class="wizard-body">
+    <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
+      <div class="review-row"><span class="review-row__label">Emergency type</span><span class="review-row__value" id="reviewType">Medical Emergency</span></div>
+      <div class="review-row"><span class="review-row__label">Location</span><span class="review-row__value" id="reviewLocation">Sector 12, MG Road</span></div>
+      <div class="review-row"><span class="review-row__label">Severity</span><span class="review-row__value" id="reviewSeverity">Serious</span></div>
+      <div class="review-row"><span class="review-row__label">People affected</span><span class="review-row__value" id="reviewPeople">1</span></div>
+      <div class="review-row"><span class="review-row__label">Description</span><span class="review-row__value" id="reviewDescription">No description added</span></div>
+    </div>
+    <div class="r-disclaimer" role="note" style="margin-bottom:var(--r-space-4);">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 3.9L2.9 17.5a1.6 1.6 0 001.4 2.4h15.4a1.6 1.6 0 001.4-2.4L13.4 3.9a1.6 1.6 0 00-2.8 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span>Double-check your location before submitting — this is what responders will see first.</span>
+    </div>
+  </div>
+  <div class="wizard-footer">
+    <a href="{% url 'citizen_confirmation' %}" class="r-btn r-btn-danger r-btn-lg r-btn-block" id="submitBtn">Report Emergency</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/citizen-report.js' %}"></script>
+{% endblock %}

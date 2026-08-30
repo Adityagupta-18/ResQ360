@@ -1,0 +1,68 @@
+{% extends "base_app.html" %}
+
+{% block title %}ResQ360 — Organization Dashboard{% endblock %}
+
+{% block sidebar_content %}
+    <div class="app-sidebar__brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#F1F5F9" stroke-width="1.7" stroke-linejoin="round"/></svg>ResQ360</div>
+    <nav class="app-nav">
+      <a href="{% url 'org_dashboard' %}" class="app-nav__link is-active"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/></svg>Dashboard</a>
+      <a href="{% url 'org_incoming_emergency' %}" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 3.9L2.9 17.5a1.6 1.6 0 001.4 2.4h15.4a1.6 1.6 0 001.4-2.4L13.4 3.9a1.6 1.6 0 00-2.8 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Emergencies</a>
+      <a href="{% url 'org_resources' %}" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.6"/></svg>Resources</a>
+      <a href="{% url 'org_responders' %}" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 20a5.5 5.5 0 0111 0" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="9.5" r="2.3" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 20a4 4 0 017 0" stroke="currentColor" stroke-width="1.6"/></svg>Responders</a>
+      <span class="app-nav__section-label">Account</span>
+      <a href="{% url 'org_verification_pending' %}" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>Organization Profile</a>
+    </nav>
+    <div class="app-sidebar__footer"><div class="app-sidebar__org"><div class="app-sidebar__org-avatar">CH</div><div><p class="app-sidebar__org-name">City Hospital</p><p class="app-sidebar__org-role">Verified · Medical</p></div></div></div>
+  
+{% endblock %}
+
+{% block topbar_title %}Dashboard{% endblock %}
+{% block topbar_subtitle %}City Hospital Rapid Response{% endblock %}
+
+{% block topbar_actions %}
+        <div class="notif-anchor">
+          <button class="notif-btn" data-dropdown-toggle="orgNotifPanel" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9a6 6 0 1112 0c0 3.4 1 5 1.5 5.5H4.5C5 14 6 12.4 6 9z" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 17a2.5 2.5 0 005 0" stroke="currentColor" stroke-width="1.6"/></svg><span class="notif-btn__dot"></span></button>
+          <div class="notif-panel" id="orgNotifPanel">
+            <div class="notif-panel__head"><h2>Notifications</h2><a href="#" class="r-caption" style="color:var(--r-indigo);">Mark all read</a></div>
+            <div class="notif-list">
+              <div class="notif-item is-unread"><div class="notif-item__icon" style="background:var(--r-red-surface);color:var(--r-red);"><svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="notif-item__body"><p class="notif-item__title">New critical emergency nearby</p><p class="notif-item__desc">Accident · 1.2 km · 3 people affected</p><p class="notif-item__time">2 min ago</p></div></div>
+              <div class="notif-item"><div class="notif-item__icon" style="background:var(--r-success-surface);color:var(--r-success);"><svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M4 12.5l4.5 4.5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="notif-item__body"><p class="notif-item__title">EMG-0981 resolved</p><p class="notif-item__desc">Response completed successfully</p><p class="notif-item__time">1 hr ago</p></div></div>
+            </div>
+          </div>
+        </div>
+        <a href="{% url 'org_login' %}" class="r-btn r-btn-secondary r-btn-sm">Log out</a>
+      
+{% endblock %}
+
+{% block content %}
+      <div class="metric-grid metric-grid-5" style="margin-bottom:var(--r-space-6);">
+        <div class="r-card metric-card metric-card--critical"><p class="metric-card__label">Active Emergencies</p><p class="metric-card__value">3</p></div>
+        <div class="r-card metric-card"><p class="metric-card__label">Assigned</p><p class="metric-card__value">2</p></div>
+        <div class="r-card metric-card"><p class="metric-card__label">Available Resources</p><p class="metric-card__value">7</p></div>
+        <div class="r-card metric-card"><p class="metric-card__label">Completed</p><p class="metric-card__value">142</p></div>
+        <div class="r-card metric-card"><p class="metric-card__label">Avg Response Time</p><p class="metric-card__value">8m</p></div>
+      </div>
+
+      <div class="section-head"><div><h2>Active Emergencies</h2><p>Sorted by severity and distance</p></div><a href="{% url 'org_incoming_emergency' %}" class="r-btn r-btn-secondary r-btn-sm">View incoming</a></div>
+      <div class="incident-list">
+        <div class="r-card incident-card is-critical">
+          <div class="incident-card__top"><span class="incident-card__type">Accident — Road blocked, fire risk</span><span class="r-badge r-badge-danger">Critical</span></div>
+          <div class="incident-card__meta">
+            <span><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-6.1-7-11.2A7 7 0 0112 3a7 7 0 017 6.8C19 14.9 12 21 12 21z" stroke="currentColor" stroke-width="1.6"/></svg>1.2 km</span>
+            <span>3 people</span><span>Received 2 min ago</span>
+          </div>
+          <div class="incident-card__actions"><a href="{% url 'org_emergency_detail' %}" class="r-btn r-btn-primary r-btn-sm">Open</a></div>
+        </div>
+        <div class="r-card incident-card">
+          <div class="incident-card__top"><span class="incident-card__type">Medical Emergency — Breathing difficulty</span><span class="r-badge r-badge-warning">Serious</span></div>
+          <div class="incident-card__meta"><span>3.4 km</span><span>1 person</span><span>Received 14 min ago</span></div>
+          <div class="incident-card__actions"><a href="{% url 'org_emergency_detail' %}" class="r-btn r-btn-secondary r-btn-sm">Open</a></div>
+        </div>
+        <div class="r-card incident-card">
+          <div class="incident-card__top"><span class="incident-card__type">Medical Emergency — Stable, monitoring</span><span class="r-badge r-badge-success">Minor</span></div>
+          <div class="incident-card__meta"><span>0.8 km</span><span>1 person</span><span>Received 40 min ago</span></div>
+          <div class="incident-card__actions"><a href="{% url 'org_emergency_detail' %}" class="r-btn r-btn-secondary r-btn-sm">Open</a></div>
+        </div>
+      </div>
+    
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base_app.html" %}
+
+{% block title %}ResQ360 — Resources{% endblock %}
+
+{% block sidebar_content %}
+    <div class="app-sidebar__brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#F1F5F9" stroke-width="1.7" stroke-linejoin="round"/></svg>ResQ360</div>
+    <nav class="app-nav">
+      <a href="{% url 'org_dashboard' %}" class="app-nav__link">Dashboard</a>
+      <a href="{% url 'org_incoming_emergency' %}" class="app-nav__link">Emergencies</a>
+      <a href="{% url 'org_resources' %}" class="app-nav__link is-active">Resources</a>
+      <a href="{% url 'org_responders' %}" class="app-nav__link">Responders</a>
+    </nav>
+    <div class="app-sidebar__footer"><div class="app-sidebar__org"><div class="app-sidebar__org-avatar">CH</div><div><p class="app-sidebar__org-name">City Hospital</p><p class="app-sidebar__org-role">Verified · Medical</p></div></div></div>
+  
+{% endblock %}
+
+{% block topbar_title %}Resources{% endblock %}
+{% block topbar_subtitle %}Ambulances, beds, blood inventory{% endblock %}
+
+{% block topbar_actions %}
+<button class="r-btn r-btn-primary r-btn-sm">+ Add Resource</button>
+{% endblock %}
+
+{% block content %}
+      <div class="data-table-wrap responsive-collapse">
+        <table class="data-table">
+          <thead><tr><th>Name</th><th>Type</th><th>Status</th><th>Current Assignment</th></tr></thead>
+          <tbody>
+            <tr><td>Ambulance — CH-01</td><td>Ambulance</td><td><span class="r-badge r-badge-danger">On Emergency</span></td><td>EMG-1042</td></tr>
+            <tr><td>Ambulance — CH-02</td><td>Ambulance</td><td><span class="r-badge r-badge-success">Available</span></td><td>—</td></tr>
+            <tr><td>ICU Bed Block A</td><td>ICU Beds</td><td><span class="r-badge r-badge-warning">Busy</span></td><td>4 / 6 occupied</td></tr>
+            <tr><td>General Ward Beds</td><td>Beds</td><td><span class="r-badge r-badge-success">Available</span></td><td>18 / 40 occupied</td></tr>
+            <tr><td>Blood Bank — O+</td><td>Blood Inventory</td><td><span class="r-badge r-badge-warning">Low stock</span></td><td>3 units</td></tr>
+            <tr><td>Ambulance — CH-03</td><td>Ambulance</td><td><span class="r-badge r-badge-inactive">Offline</span></td><td>Under maintenance</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-card-list responsive-collapse">
+        <div class="r-card table-card"><div class="table-card__row"><span>Name</span><span>Ambulance — CH-01</span></div><div class="table-card__row"><span>Status</span><span class="r-badge r-badge-danger">On Emergency</span></div><div class="table-card__row"><span>Assignment</span><span>EMG-1042</span></div></div>
+        <div class="r-card table-card"><div class="table-card__row"><span>Name</span><span>ICU Bed Block A</span></div><div class="table-card__row"><span>Status</span><span class="r-badge r-badge-warning">Busy</span></div><div class="table-card__row"><span>Assignment</span><span>4 / 6 occupied</span></div></div>
+        <div class="r-card table-card"><div class="table-card__row"><span>Name</span><span>Blood Bank — O+</span></div><div class="table-card__row"><span>Status</span><span class="r-badge r-badge-warning">Low stock</span></div><div class="table-card__row"><span>Assignment</span><span>3 units</span></div></div>
+      </div>
+    
+{% endblock %}

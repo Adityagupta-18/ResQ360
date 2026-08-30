@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}ResQ360 — Nearby Help{% endblock %}
+{% block body_class %}t-citizen{% endblock %}
+
+{% block content %}
+<div class="page-shell"><div class="page-shell__inner">
+  <a href="{% url 'citizen_home' %}" class="back-link"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</a>
+  <h1 class="r-title-section" style="margin-bottom:var(--r-space-2);">Nearby Help</h1>
+  <p class="r-body-secondary" style="margin-bottom:var(--r-space-5);">Official resources near you. These are informational — ResQ360 does not dispatch government emergency services directly.</p>
+  <div class="map-box map-box--md" style="margin-bottom:var(--r-space-5);">
+    <div class="map-pin" style="top:40%;left:35%;"><div class="map-pin__dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div></div>
+    <div class="map-pin map-pin--muted" style="top:60%;left:65%;"><div class="map-pin__dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div></div>
+    <span class="map-attribution">Map data — OpenStreetMap contributors</span>
+  </div>
+  <div class="incident-list">
+    <div class="r-card incident-card"><div class="incident-card__top"><span class="incident-card__type">City Hospital</span><span class="r-badge r-badge-info">Hospital</span></div><div class="incident-card__meta"><span>1.2 km away</span><span>Open 24 hours</span></div></div>
+    <div class="r-card incident-card"><div class="incident-card__top"><span class="incident-card__type">Sector 14 Police Station</span><span class="r-badge r-badge-info">Police</span></div><div class="incident-card__meta"><span>2.4 km away</span><span>Open 24 hours</span></div></div>
+    <div class="r-card incident-card"><div class="incident-card__top"><span class="incident-card__type">Central Fire Station</span><span class="r-badge r-badge-info">Fire</span></div><div class="incident-card__meta"><span>3.1 km away</span><span>Open 24 hours</span></div></div>
+  </div>
+</div></div>
+{% endblock %}
