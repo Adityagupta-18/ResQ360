@@ -1,0 +1,82 @@
+/* ==========================================================================
+   ResQ360 — shared screen-layout patterns
+   Full-bleed page shells reused across several screens: auth cards
+   (login/register/track), the citizen report wizard chrome, the
+   confirmation screen, and the generic centered page-shell used by
+   Tracking, Nearby Help, Account, and several organization/admin detail
+   screens. Loaded globally via base_document.html.
+   ========================================================================== */
+
+/* ---------- Auth shell (org login / register / citizen track-without-login) ---------- */
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--r-space-6) var(--r-space-4);
+  background: var(--r-bg);
+}
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: var(--r-space-8) var(--r-space-6);
+}
+.auth-card--wide { max-width: 640px; }
+.auth-card__brand {
+  display: flex; align-items: center; gap: var(--r-space-2);
+  font-family: var(--r-font-display); font-weight: var(--r-weight-bold);
+  font-size: var(--r-text-lg); margin-bottom: var(--r-space-6);
+}
+.auth-card__brand-mark {
+  width: 32px; height: 32px; border-radius: var(--r-radius-sm);
+  background: var(--r-navy); display: flex; align-items: center; justify-content: center;
+}
+.auth-card h1 { font-size: var(--r-text-2xl); margin-bottom: var(--r-space-2); }
+.auth-card > p.r-body-secondary { margin-bottom: var(--r-space-6); }
+.auth-foot { text-align: center; font-size: var(--r-text-sm); color: var(--r-text-secondary); margin-top: var(--r-space-5); }
+
+/* ---------- Citizen report wizard chrome (Emergency Type / Location / Details / Optional / Review) ---------- */
+.wizard-page { min-height: 100vh; background: var(--r-bg); }
+.wizard-header {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--r-surface);
+  border-bottom: 1px solid var(--r-border);
+  padding: var(--r-space-4);
+}
+.wizard-header__top { display: flex; align-items: center; gap: var(--r-space-3); margin-bottom: var(--r-space-3); }
+.wizard-header__back {
+  width: 40px; height: 40px; border-radius: var(--r-radius-sm);
+  border: 1px solid var(--r-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--r-text-primary); flex-shrink: 0;
+}
+.wizard-header__title { font-size: var(--r-text-lg); font-family: var(--r-font-display); }
+.wizard-body { padding: var(--r-space-5) var(--r-space-4) var(--r-space-10); max-width: 640px; margin: 0 auto; }
+.wizard-footer {
+  position: sticky; bottom: 0;
+  background: var(--r-surface);
+  border-top: 1px solid var(--r-border);
+  padding: var(--r-space-4);
+  display: flex; gap: var(--r-space-3);
+}
+.wizard-footer .r-btn { flex: 1; }
+
+/* ---------- Review summary rows (Review & Submit, Verification Detail) ---------- */
+.review-row { display: flex; justify-content: space-between; gap: var(--r-space-3); padding: var(--r-space-3) 0; border-bottom: 1px solid var(--r-border); }
+.review-row:last-child { border-bottom: none; }
+.review-row__label { font-size: var(--r-text-sm); color: var(--r-text-secondary); }
+.review-row__value { font-size: var(--r-text-sm); font-weight: var(--r-weight-semibold); text-align: right; }
+
+/* ---------- Emergency Confirmation screen ---------- */
+.confirm-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: var(--r-space-6) var(--r-space-4); background: var(--r-bg); }
+.confirm-card { max-width: 480px; width: 100%; text-align: center; padding: var(--r-space-8) var(--r-space-6); }
+.confirm-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--r-indigo-surface); color: var(--r-indigo); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--r-space-5); }
+.confirm-id { font-family: var(--r-font-display); font-size: var(--r-text-3xl); font-weight: var(--r-weight-extrabold, 800); color: var(--r-navy); letter-spacing: 0.02em; }
+
+/* ---------- Generic centered page shell (Tracking, Nearby Help, Account, Verification Pending/Detail, Incoming/Emergency Detail) ---------- */
+.page-shell { min-height: 100vh; background: var(--r-bg); }
+.page-shell__inner { max-width: 640px; margin: 0 auto; padding: var(--r-space-6) var(--r-space-4); }
+.pill-row { display: flex; flex-wrap: wrap; gap: var(--r-space-2); }
+.doc-row { display: flex; align-items: center; gap: var(--r-space-3); padding: var(--r-space-3); border: 1px solid var(--r-border); border-radius: var(--r-radius-md); }
+.doc-row svg { width: 20px; height: 20px; color: var(--r-text-secondary); flex-shrink: 0; }
+.doc-row__name { font-size: var(--r-text-sm); font-weight: var(--r-weight-medium); flex: 1; }

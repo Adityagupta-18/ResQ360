@@ -1,0 +1,267 @@
+/* ==========================================================================
+   Citizen Home — screen-specific styles
+   Mobile-first. The Report Emergency CTA must dominate the mobile viewport.
+   ========================================================================== */
+
+.r-header__link-quiet {
+  color: var(--r-text-on-dark-muted);
+  font-size: var(--r-text-sm);
+  font-weight: var(--r-weight-medium);
+  padding: var(--r-space-2) var(--r-space-3);
+  border-radius: var(--r-radius-sm);
+  border: 1px solid transparent;
+  transition: border-color var(--r-duration-fast) var(--r-ease), color var(--r-duration-fast) var(--r-ease);
+}
+.r-header__link-quiet:hover {
+  color: var(--r-text-on-dark);
+  border-color: var(--r-navy-border);
+}
+
+.c-hero {
+  padding-block: var(--r-space-8) var(--r-space-6);
+}
+
+.c-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--r-space-2);
+  margin-bottom: var(--r-space-3);
+}
+.c-hero__eyebrow-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--r-success);
+  box-shadow: 0 0 0 3px var(--r-success-surface);
+}
+
+.c-hero__title {
+  max-width: 20ch;
+  margin-bottom: var(--r-space-3);
+}
+
+.c-hero__subtitle {
+  max-width: 46ch;
+  margin-bottom: var(--r-space-6);
+}
+
+/* ---------- Dominant Report Emergency CTA ---------- */
+.c-report {
+  position: relative;
+  margin-bottom: var(--r-space-3);
+}
+
+.c-report__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-radius-lg);
+  pointer-events: none;
+}
+.c-report__ring::before,
+.c-report__ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-radius-lg);
+  border: 1.5px solid var(--r-red);
+  opacity: 0;
+  animation: r-report-pulse 2.6s var(--r-ease) infinite;
+}
+.c-report__ring::after { animation-delay: 1.3s; }
+
+@keyframes r-report-pulse {
+  0%   { transform: scale(1);    opacity: 0.45; }
+  100% { transform: scale(1.06); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-report__ring::before,
+  .c-report__ring::after { animation: none; opacity: 0; }
+}
+
+.c-report__btn {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--r-space-4);
+  padding: var(--r-space-6) var(--r-space-6);
+  background: var(--r-red);
+  color: #FFFFFF;
+  border: 1px solid var(--r-red-active);
+  border-radius: var(--r-radius-lg);
+  box-shadow: var(--r-shadow-md);
+  min-height: 88px;
+  transition: background-color var(--r-duration-fast) var(--r-ease), transform var(--r-duration-fast) var(--r-ease);
+}
+.c-report__btn:hover { background: var(--r-red-hover); }
+.c-report__btn:active { transform: translateY(1px); }
+
+.c-report__icon {
+  flex-shrink: 0;
+  width: 48px; height: 48px;
+  border-radius: var(--r-radius-md);
+  background: rgba(255,255,255,0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.c-report__icon svg { width: 26px; height: 26px; }
+
+.c-report__text { text-align: left; }
+.c-report__label {
+  display: block;
+  font-family: var(--r-font-display);
+  font-size: var(--r-text-xl);
+  font-weight: var(--r-weight-bold);
+  line-height: var(--r-leading-tight);
+}
+.c-report__meta {
+  display: block;
+  font-size: var(--r-text-sm);
+  font-weight: var(--r-weight-medium);
+  color: rgba(255,255,255,0.85);
+  margin-top: 2px;
+}
+
+.c-report__note {
+  display: flex;
+  align-items: center;
+  gap: var(--r-space-2);
+  font-size: var(--r-text-sm);
+  color: var(--r-text-secondary);
+  margin-top: var(--r-space-3);
+}
+.c-report__note svg { flex-shrink: 0; width: 16px; height: 16px; color: var(--r-success); }
+
+/* ---------- Secondary actions ---------- */
+.c-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--r-space-3);
+  margin-block: var(--r-space-8);
+}
+
+.c-action-card {
+  display: flex;
+  align-items: center;
+  gap: var(--r-space-4);
+  padding: var(--r-space-4) var(--r-space-5);
+  min-height: 64px;
+}
+
+.c-action-card__icon {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: var(--r-radius-md);
+  background: var(--r-indigo-surface);
+  color: var(--r-indigo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.c-action-card__icon svg { width: 20px; height: 20px; }
+
+.c-action-card__body { flex: 1; min-width: 0; }
+.c-action-card__title {
+  font-size: var(--r-text-base);
+  font-weight: var(--r-weight-semibold);
+  color: var(--r-text-primary);
+}
+.c-action-card__desc {
+  font-size: var(--r-text-sm);
+  color: var(--r-text-secondary);
+  margin-top: 1px;
+}
+
+.c-action-card__chevron {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  color: var(--r-text-muted);
+  transition: transform var(--r-duration-fast) var(--r-ease);
+}
+.c-action-card:hover { border-color: var(--r-border-strong); box-shadow: var(--r-shadow-md); }
+.c-action-card:hover .c-action-card__chevron { transform: translateX(2px); }
+
+/* ---------- Section divider ---------- */
+.c-section-gap { margin-block: var(--r-space-10); }
+
+/* ---------- Trust / how-it-works panel (tablet+, right column) ---------- */
+.c-hero__panel {
+  display: none;
+}
+.c-hero__panel-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--r-space-3);
+}
+.c-hero__panel-index {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: var(--r-text-on-dark);
+  font-size: var(--r-text-xs);
+  font-weight: var(--r-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.c-hero__panel-title {
+  color: var(--r-text-on-dark);
+  font-weight: var(--r-weight-semibold);
+  font-size: var(--r-text-sm);
+}
+.c-hero__panel-desc {
+  color: var(--r-text-on-dark-muted);
+  font-size: var(--r-text-xs);
+  margin-top: 2px;
+  line-height: var(--r-leading-normal);
+}
+
+/* ---------- Tablet / Desktop ---------- */
+@media (min-width: 768px) {
+  .c-hero { padding-block: var(--r-space-12) var(--r-space-8); }
+
+  .c-hero__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--r-space-12);
+    align-items: start;
+  }
+
+  .c-hero__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--r-space-5);
+    background: var(--r-navy);
+    border-radius: var(--r-radius-lg);
+    padding: var(--r-space-6);
+  }
+
+  .c-hero__title { max-width: 16ch; }
+
+  .c-actions {
+    grid-template-columns: repeat(3, 1fr);
+    margin-block: var(--r-space-10);
+  }
+  .c-action-card {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: var(--r-space-5);
+  }
+  .c-action-card__chevron { display: none; }
+
+  .c-report__btn { padding: var(--r-space-8); min-height: 120px; }
+  .c-report__label { font-size: var(--r-text-2xl); }
+  .c-report__icon { width: 56px; height: 56px; }
+  .c-report__icon svg { width: 30px; height: 30px; }
+}
+
+@media (min-width: 1024px) {
+  .c-hero__panel {
+    height: 100%;
+    min-height: 320px;
+    justify-content: center;
+  }
+}

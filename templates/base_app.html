@@ -1,0 +1,31 @@
+{% extends "base_document.html" %}
+
+{% block body %}
+<div class="app-shell">
+  <aside class="app-sidebar" data-drawer>
+    {% block sidebar_content %}{% endblock %}
+  </aside>
+  <div class="drawer-overlay" data-drawer-overlay></div>
+
+  <div class="app-main">
+    <div class="app-topbar">
+      <div class="flex items-center gap-3">
+        <button class="menu-toggle" data-drawer-open aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="app-topbar__title">
+          <h1>{% block topbar_title %}{% endblock %}</h1>
+          <span>{% block topbar_subtitle %}{% endblock %}</span>
+        </div>
+      </div>
+      <div class="app-topbar__actions">
+        {% block topbar_actions %}{% endblock %}
+      </div>
+    </div>
+
+    <div class="app-content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}
