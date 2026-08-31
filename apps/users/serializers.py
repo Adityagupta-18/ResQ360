@@ -17,3 +17,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
             account_type=validated_data['account_type']
         )
+
+    def validate_account_type(self, value):
+        if value != 'VOL':
+            raise serializers.ValidationError("Only volunteers can register here.")
+        return value
