@@ -41,3 +41,11 @@ class OrganizationProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=Organization
         fields='__all__'
+        read_only_fields = [
+            'id',
+            'organization_type',
+            'verification_status',
+            'verification_document',
+            'created_at',
+            'updated_at',
+        ]

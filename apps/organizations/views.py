@@ -17,10 +17,17 @@ class OrganizationRegistrationView(APIView):
 
 class OrganizationProfileView(APIView):
     permission_classes=[IsAuthenticated,IsOrganization]
+
     def get(self,request):
         organization=request.user.organization
         serializer=OrganizationProfileSerializer(organization)
         return Response(serializer.data)
 
-
-            
+    def patch(self,request):
+        org=request.user.organization
+        serializer=OrganizationProfileSerializer(org,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        Response(serializer.errors, status=400)
+        
