@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
-from apps.organizations.serializers import OrganizationRegistrationSerializer
-from rest_framework.permissions import AllowAny
-
+from apps.organizations.serializers import OrganizationRegistrationSerializer ,OrganizationProfileSerializer
+from rest_framework.permissions import AllowAny , IsAuthenticated
+from apps.users.permissions import IsOrganization
 # Create your views here.
 
 class OrganizationRegistrationView(APIView):
@@ -13,3 +13,14 @@ class OrganizationRegistrationView(APIView):
             organization = serializer.save()
             return Response({"message": "Organization registered successfully."}, status=201)
         return Response(serializer.errors, status=400)
+
+
+class OrganizationProfileView(APIView):
+    permission_classes=[IsAuthenticated,IsOrganization]
+    def get(self,request):
+        organization=request.user.organization
+        serializer=OrganizationProfileSerializer(organization)
+        return Response(serializer.data)
+
+
+            

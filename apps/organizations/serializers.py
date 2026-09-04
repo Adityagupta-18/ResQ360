@@ -34,3 +34,10 @@ class OrganizationRegistrationSerializer(serializers.Serializer):
                 verification_document=validated_data['verification_document']
             )
         return organization
+
+
+
+class OrganizationProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Organization
+        fields='__all__'
