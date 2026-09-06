@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView, Response
 from apps.organizations.serializers import OrganizationRegistrationSerializer ,OrganizationProfileSerializer
 from rest_framework.permissions import AllowAny , IsAuthenticated
-from apps.users.permissions import IsOrganization
+from apps.users.permissions import IsOrganization , IsVerifiedOrganization
 # Create your views here.
 
 class OrganizationRegistrationView(APIView):
