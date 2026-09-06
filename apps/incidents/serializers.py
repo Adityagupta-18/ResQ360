@@ -18,3 +18,8 @@ class IncidentSerializer(serializers.ModelSerializer):
         incident.generate_emergency_id()
         incident.save()
         return incident
+
+class IncidentTrackingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Incident
+        fields=['emergency_id','incident_type','severity','people_affected','location_address','created_at','status']

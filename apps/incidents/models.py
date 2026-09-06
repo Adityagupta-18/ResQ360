@@ -19,14 +19,15 @@ class Incident(models.Model):
         SERIOUS = "SERIOUS", "Serious"
         MINOR = "MINOR", "Minor"
         UNKNOWN = "UNKNOWN", "Unknown"
-
+            
     class Status(models.TextChoices):
         REPORTED = "REPORTED", "Reported"
-        DISPATCHING = "DISPATCHING", "Dispatching"
+        MATCHING = "MATCHING", "Matching"
+        ALERTING = "ALERTING", "Alerting Responders"
         ACCEPTED = "ACCEPTED", "Accepted"
+        ENROUTE = "ENROUTE", "Enroute"
         IN_PROGRESS = "IN_PROGRESS", "In Progress"
         RESOLVED = "RESOLVED", "Resolved"
-        CANCELLED = "CANCELLED", "Cancelled"
 
     # Internal database identity
     id = models.UUIDField(
