@@ -1,5 +1,5 @@
 import uuid
-
+from apps.organizations.models import Organization
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -95,5 +95,41 @@ class Incident(models.Model):
                 self.emergency_id = emergency_id
                 return emergency_id
 
+
+    def get_required_organization_types(self):
+        mapping={
+            "ACCIDENT":['MED','POLICE_SECURITY','NGO'],
+            "MEDICAL":['MED','NGO'],
+            "FIRE":['FIRE_RESCUE','POLICE_SECURITY','NGO'],
+            "CRIME_SECURITY":['POLICE_SECURITY'],
+            "MISSING_PERSON":['POLICE_SECURITY'],
+            "BLOOD_BANK":['MED','NGO']
+        }
+        return mapping[self.incident_type]
+
+
     def __str__(self):
         return self.emergency_id or str(self.id)
+
+
+
+class IncidentOrganization(models.Model):
+    STATUS_CHOICE=[
+        ('NOTIFIED','Notified'),
+        ('ACCEPTED','Accepted')
+    ]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    incident=models.ForeignKey(Incident,on_delete=models.CASCADE,related_name='incident_organizations')
+    organization=models.ForeignKey(Organization,on_delete=models.CASCADE,related_name='incident_organizations')
+    status=models.CharField(max_length=10,choices=STATUS_CHOICE,default='NOTIFIED')
+    notified_at = models.DateTimeField(null=True, blank=True)
+    accepted_at = models.DateTimeField(null=True, blank=True)
+
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["incident", "organization"],
+                name="unique_incident_organization"
+            )
+        ]
