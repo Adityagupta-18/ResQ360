@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Incident
+from .services import dispatch_incident
 
 class IncidentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +18,7 @@ class IncidentSerializer(serializers.ModelSerializer):
         incident = Incident.objects.create(**validated_data)
         incident.generate_emergency_id()
         incident.save()
+        dispatch_incident(incident)
         return incident
 
 class IncidentTrackingSerializer(serializers.ModelSerializer):

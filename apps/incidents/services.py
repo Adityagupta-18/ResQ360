@@ -7,6 +7,8 @@ def dispatch_incident(incident):
     queryset=Organization.objects.filter(organization_type__in=required_types,verification_status='VERIF')
 
     for organization in queryset:
+        if IncidentOrganization.objects.filter(incident=incident,organization=organization).exists():
+            continue
         IncidentOrganization.objects.create(
             incident=incident,
             organization=organization,
