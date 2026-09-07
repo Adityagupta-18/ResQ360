@@ -46,9 +46,18 @@ class IncidentOrganizationAcceptView(APIView):
     def post(self,request,incident_organization_id):
         assignment=get_object_or_404(IncidentOrganization,id=incident_organization_id,organization=request.user.organization)
 
+        already_accepted = IncidentOrganization.objects.filter(incident=assignment.incident,status="ACCEPTED").exists()
+        if already_accepted:
+            return Response(
+                {"error": "Emergency already accepted by another organization."},
+                status=status.HTTP_409_CONFLICT)
+        
         assignment.status = "ACCEPTED"
         assignment.accepted_at = timezone.now()
         assignment.save()
+        
+        assignment.incident.status = "ACCEPTED"
+        assignment.incident.save()
 
         serializer = IncidentOrganizationSerializer(assignment)
         return Response(serializer.data,status=status.HTTP_200_OK)
