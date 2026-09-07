@@ -1,5 +1,6 @@
 import uuid
 from apps.organizations.models import Organization
+from apps.users.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -108,6 +109,18 @@ class Incident(models.Model):
         return mapping[self.incident_type]
 
 
+    def should_notify_volunteers(self):
+        mapping={
+            "ACCIDENT":True,
+            "MEDICAL":True,
+            "FIRE":True,
+            "CRIME_SECURITY":True,
+            "MISSING_PERSON":False,
+            "BLOOD_BANK":True
+        }
+        return mapping[self.incident_type]
+
+
     def __str__(self):
         return self.emergency_id or str(self.id)
 
@@ -133,3 +146,19 @@ class IncidentOrganization(models.Model):
                 name="unique_incident_organization"
             )
         ]
+
+
+class IncidentVolunteer(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    incident=models.ForeignKey(Incident,on_delete=models.CASCADE,related_name='incident_volunteers')
+    volunteer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='incident_volunteers')
+    notified_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["incident", "volunteer"],
+                name="unique_incident_volunteer",
+            )
+        ]
+
