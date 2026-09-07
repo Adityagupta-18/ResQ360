@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .models import Incident , IncidentOrganization
 from apps.users.permissions import IsVerifiedOrganization
+from django.utils import timezone
+from rest_framework.permissions import IsAuthenticated
 
 class IncidentCreateView(APIView):
     permission_classes=[AllowAny,]
@@ -28,6 +30,7 @@ class IncidentTrackingView(APIView):
         serializer=IncidentTrackingSerializer(incident)
         return Response(serializer.data,status=status.HTTP_200_OK)  
 
+
 class IncidentOrganizationListView(generics.ListAPIView):
     permission_classes=[IsVerifiedOrganization]
     serializer_class=IncidentOrganizationSerializer
@@ -36,3 +39,16 @@ class IncidentOrganizationListView(generics.ListAPIView):
         return IncidentOrganization.objects.filter(
             organization=self.request.user.organization
         )
+
+class IncidentOrganizationAcceptView(APIView):
+    permission_classes=[IsVerifiedOrganization]
+
+    def post(self,request,incident_organization_id):
+        assignment=get_object_or_404(IncidentOrganization,id=incident_organization_id,organization=request.user.organization)
+
+        assignment.status = "ACCEPTED"
+        assignment.accepted_at = timezone.now()
+        assignment.save()
+
+        serializer = IncidentOrganizationSerializer(assignment)
+        return Response(serializer.data,status=status.HTTP_200_OK)
