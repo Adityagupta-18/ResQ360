@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
-from .serializers import IncidentSerializer , IncidentTrackingSerializer
-from rest_framework import status
+from rest_framework.views import APIView     
+from .serializers import IncidentSerializer , IncidentTrackingSerializer , IncidentOrganizationSerializer
+from rest_framework import status , generics
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .models import Incident
+from .models import Incident , IncidentOrganization
+from apps.users.permissions import IsVerifiedOrganization
 
 class IncidentCreateView(APIView):
     permission_classes=[AllowAny,]
@@ -18,6 +19,7 @@ class IncidentCreateView(APIView):
             return Response(serializer.data , status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+
 class IncidentTrackingView(APIView):
     permission_classes=[AllowAny,]
 
@@ -25,3 +27,12 @@ class IncidentTrackingView(APIView):
         incident=get_object_or_404(Incident,emergency_id=emergency_id)
         serializer=IncidentTrackingSerializer(incident)
         return Response(serializer.data,status=status.HTTP_200_OK)  
+
+class IncidentOrganizationListView(generics.ListAPIView):
+    permission_classes=[IsVerifiedOrganization]
+    serializer_class=IncidentOrganizationSerializer
+
+    def get_queryset(self):
+        return IncidentOrganization.objects.filter(
+            organization=self.request.user.organization
+        )
