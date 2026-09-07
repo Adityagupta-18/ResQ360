@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import IncidentCreateView , IncidentTrackingView , IncidentOrganizationAcceptView ,IncidentOrganizationEnrouteView ,IncidentOrganizationInProgressView
+from .views import IncidentCreateView , IncidentTrackingView , IncidentOrganizationAcceptView ,IncidentOrganizationEnrouteView ,IncidentOrganizationInProgressView , IncidentOrganizationResolvedView
 
 urlpatterns = [
     path('',IncidentCreateView.as_view(), name='incident-create'),
@@ -8,5 +8,7 @@ urlpatterns = [
     path("organization-assignments/<uuid:incident_organization_id>/enroute/",IncidentOrganizationEnrouteView.as_view(),
     name="organization-incident-enroute"),
     path("organization-assignments/<uuid:incident_organization_id>/in-progress/",IncidentOrganizationInProgressView.as_view(),
+    name="organization-incident-in-progress"),
+    path("organization-assignments/<uuid:incident_organization_id>/resolved/",IncidentOrganizationResolvedView.as_view(),
     name="organization-incident-in-progress"),
 ]
