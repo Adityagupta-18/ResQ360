@@ -79,3 +79,21 @@ class IncidentOrganizationEnrouteView(APIView):
         return Response(
             {"error": "Organization must accept the emergency first."},
             status=status.HTTP_400_BAD_REQUEST)
+
+
+class IncidentOrganizationInProgressView(APIView):
+    permission_classes=[IsVerifiedOrganization]
+
+    def post(self,request,incident_organization_id):
+        assignment=get_object_or_404(IncidentOrganization,id=incident_organization_id,organization=request.user.organization)
+
+        if assignment.incident.status == "ENROUTE":
+            assignment.incident.status = "IN_PROGRESS"
+            assignment.incident.save()
+
+            serializer=IncidentOrganizationSerializer(assignment)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+
+        return Response(
+            {"error": "Emergency must be ENROUTE before marking it IN_PROGRESS."},
+            status=status.HTTP_400_BAD_REQUEST)
