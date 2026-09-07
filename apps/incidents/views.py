@@ -55,9 +55,27 @@ class IncidentOrganizationAcceptView(APIView):
         assignment.status = "ACCEPTED"
         assignment.accepted_at = timezone.now()
         assignment.save()
-        
+
         assignment.incident.status = "ACCEPTED"
         assignment.incident.save()
 
         serializer = IncidentOrganizationSerializer(assignment)
         return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+class IncidentOrganizationEnrouteView(APIView):
+    permission_classes=[IsVerifiedOrganization]
+
+    def post(self,request,incident_organization_id):
+        assignment=get_object_or_404(IncidentOrganization,id=incident_organization_id,organization=request.user.organization)
+
+        if assignment.status == "ACCEPTED":
+            assignment.incident.status = "ENROUTE"
+            assignment.incident.save()
+
+            serializer=IncidentOrganizationSerializer(assignment)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+
+        return Response(
+            {"error": "Organization must accept the emergency first."},
+            status=status.HTTP_400_BAD_REQUEST)
