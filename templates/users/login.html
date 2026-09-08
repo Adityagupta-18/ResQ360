@@ -1,22 +1,22 @@
 {% extends "base_bare.html" %}
 
-{% block title %}ResQ360 — Organization Login{% endblock %}
+{% block title %}ResQ360 — Login{% endblock %}
 
 {% block content %}
 <div class="auth-shell">
-  <form class="r-card auth-card" onsubmit="event.preventDefault(); nav('org-dashboard');">
+  <form id="loginForm" class="r-card auth-card" onsubmit="event.preventDefault(); nav('org-dashboard');">
     <div class="auth-card__brand"><span class="auth-card__brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/></svg></span>ResQ360</div>
-    <h1>Organization Login</h1>
+    <h1>Login</h1>
     <p class="r-body-secondary">Sign in to manage emergencies, resources and responders.</p>
-    <div class="field"><label for="orgEmail">Email</label><input type="email" id="orgEmail" class="input" placeholder="ops@cityhospital.org" value="ops@cityhospital.org"></div>
-    <div class="field"><label for="orgPassword">Password</label><input type="password" id="orgPassword" class="input" placeholder="••••••••" value="demo-password"></div>
+    <div class="field"><label for="LoginEmail">Email</label><input type="email" id="LoginEmail" class="input" placeholder="ops@cityhospital.org" value="ops@cityhospital.org"></div>
+    <div class="field"><label for="LoginPassword">Password</label><input type="password" id="LoginPassword" class="input" placeholder="password" value="demo-password"></div>
     <div class="flex justify-between items-center" style="margin-bottom:var(--r-space-5);">
       <span></span>
       <a href="#" style="font-size:var(--r-text-sm);color:var(--r-indigo);font-weight:var(--r-weight-medium);">Forgot password?</a>
     </div>
     <button type="submit" class="r-btn r-btn-primary r-btn-block r-btn-lg">Login</button>
-    <p class="auth-foot">New organization? <a href="{% url 'org_register' %}" style="color:var(--r-indigo);font-weight:var(--r-weight-semibold);">Register here</a></p>
-    <p class="auth-foot"><a href="{% url 'citizen_home' %}" style="color:var(--r-text-secondary);">← Back to citizen site</a></p>
+    <p class="auth-foot">New organization? <a href="{% url 'organization-registration' %}" style="color:var(--r-indigo);font-weight:var(--r-weight-semibold);">Register here</a></p>
+    <p class="auth-foot"><a href="/" style="color:var(--r-text-secondary);">← Back to citizen site</a></p>
   </form>
 </div>
 {% endblock %}

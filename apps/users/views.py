@@ -16,3 +16,7 @@ class CustomUserView(APIView):
     def get(self, request):
         user=request.user
         return Response({"message": "Hello, this is a custom user view!","full_name": user.full_name, "email": user.email , "account_type": user.account_type})
+
+
+def login_page(request):
+    return render(request, "users/login.html")

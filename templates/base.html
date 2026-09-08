@@ -4,7 +4,7 @@
   {% block header %}
   <header class="r-header">
     <div class="r-container r-header__inner">
-      <a href="{% url 'citizen_home' %}" class="r-brand" aria-label="ResQ360 home">
+      <a href="/" class="r-brand" aria-label="ResQ360 home">
         <span class="r-brand__mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/>
@@ -27,7 +27,7 @@
     <div class="r-container r-footer__inner">
       <span class="r-caption">&copy; {% now "Y" %} ResQ360. Coordination platform for verified emergency responders.</span>
       <nav class="r-footer__links" aria-label="Footer">
-        <a href="{% url 'org_login' %}" class="r-caption r-footer__link">Organization &amp; responder login</a>
+        <a href="{% url 'login-page' %}" class="r-caption r-footer__link">Organization &amp; responder login</a>
       </nav>
     </div>
   </footer>

@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from apps.users.views import login_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('api/v1/organizations/', include('apps.organizations.urls')),
     path('api/v1/incidents/', include('apps.incidents.urls')),
     path("api/v1/notifications/",include("apps.notifications.urls")),
+    path("login/", login_page, name="login-page"),
     ]
