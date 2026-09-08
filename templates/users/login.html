@@ -1,4 +1,5 @@
 {% extends "base_bare.html" %}
+{% load static %}
 
 {% block title %}ResQ360 — Login{% endblock %}
 
@@ -19,4 +20,8 @@
     <p class="auth-foot"><a href="/" style="color:var(--r-text-secondary);">← Back to citizen site</a></p>
   </form>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/login.js' %}"></script>
 {% endblock %}
