@@ -9,6 +9,7 @@ from .models import Incident , IncidentOrganization
 from apps.users.permissions import IsVerifiedOrganization
 from django.utils import timezone
 from rest_framework.permissions import IsAuthenticated
+from django.db import transaction
 
 class IncidentCreateView(APIView):
     permission_classes=[AllowAny,]
@@ -44,9 +45,16 @@ class IncidentOrganizationAcceptView(APIView):
     permission_classes=[IsVerifiedOrganization]
 
     def post(self,request,incident_organization_id):
-        assignment=get_object_or_404(IncidentOrganization,id=incident_organization_id,organization=request.user.organization)
+        with transaction.atomic():
+            assignment = get_object_or_404(
+                IncidentOrganization.objects.select_for_update(),
+                id=incident_organization_id,
+                organization=request.user.organization
+            )
 
-        already_accepted = IncidentOrganization.objects.filter(incident=assignment.incident,status="ACCEPTED").exists()
+        already_accepted = IncidentOrganization.objects.filter(incident=assignment.incident,status="ACCEPTED"
+            ).exclude(id=assignment.id).exists()
+        
         if already_accepted:
             return Response(
                 {"error": "Emergency already accepted by another organization."},
