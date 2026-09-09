@@ -6,13 +6,21 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-const organization = await apiRequest("/organizations/me/");
-document.getElementById("organizationName").textContent =
-    organization.name;
-    
-
 
 document.addEventListener("DOMContentLoaded", async function () {
+
+    const organization = await apiRequest("/organizations/me/");
+    document.getElementById("organizationName").textContent =
+    organization.name;
+    // SIDEBAR
+    document.getElementById("orgName").textContent = organization.name;
+
+    const organizationTypes = {MED: "Medical",FIRE_RESCUE: "Fire & Rescue",POLICE_SECURITY: "Police & Security",NGO: "NGO"};
+    document.getElementById("orgRole").textContent =
+        `Verified · ${organizationTypes[organization.organization_type]}`
+
+    const initials = organization.name.split(" ").map(word => word[0]).join("").slice(0, 2).toUpperCase();  
+    document.getElementById("orgAvatar").textContent = initials;
 
     const incidentList = document.getElementById("incidentList");
     const data = await apiRequest("/organizations/incidents/");

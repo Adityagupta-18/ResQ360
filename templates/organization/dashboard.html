@@ -13,8 +13,16 @@
       <span class="app-nav__section-label">Account</span>
       <a href="/" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>Organization Profile</a>
     </nav>
-    <div class="app-sidebar__footer"><div class="app-sidebar__org"><div class="app-sidebar__org-avatar">CH</div><div><p class="app-sidebar__org-name">City Hospital</p><p class="app-sidebar__org-role">Verified · Medical</p></div></div></div>
-  
+
+    <div class="app-sidebar__footer">
+    <div class="app-sidebar__org">
+        <div class="app-sidebar__org-avatar" id="orgAvatar">CH</div>
+        <div>
+            <p class="app-sidebar__org-name" id="orgName"></p>
+            <p class="app-sidebar__org-role" id="orgRole"></p>
+        </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block topbar_title %}Dashboard{% endblock %}
@@ -40,7 +48,7 @@
 
 {% block content %}
 
-      <div class="section-head"><div><h2>Active Emergencies</h2><p>Sorted by severity and distance</p></div><a href="/" class="r-btn r-btn-secondary r-btn-sm">View incoming</a></div>
+      <div class="section-head"><div><h2>Active Emergencies</h2><p>Sorted by severity and distance</p></div><a class="r-btn r-btn-secondary r-btn-sm">Incoming</a></div>
       <div class="incident-list" id="incidentList">
 
         <div class="r-card incident-card is-critical">  

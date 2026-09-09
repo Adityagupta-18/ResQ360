@@ -43,6 +43,6 @@ class IncidentOrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IncidentOrganization
-        fields = ["emergency_id","incident_type","severity","people_affected","location_address",
+        fields = ["id","emergency_id","incident_type","severity","people_affected","location_address",
             "latitude","longitude","status","created_at","response_status",
             ]

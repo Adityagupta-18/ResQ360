@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="page-shell"><div class="page-shell__inner" style="max-width:640px;">
-  <a href="/" class="back-link"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to dashboard</a>
+  <a href="{% url "organization-dashboard" %}" class="back-link"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to dashboard</a>
   <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
     <div class="flex justify-between items-center">
       <h1 class="r-title-section" id="incidentTitle"></h1>
