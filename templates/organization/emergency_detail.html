@@ -1,13 +1,16 @@
 {% extends "base_bare.html" %}
-
+{% load static %}
 {% block title %}ResQ360 — Emergency Detail{% endblock %}
 
 {% block content %}
 <div class="page-shell"><div class="page-shell__inner" style="max-width:640px;">
-  <a href="{% url 'org_dashboard' %}" class="back-link"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to dashboard</a>
+  <a href="/" class="back-link"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to dashboard</a>
   <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
-    <div class="flex justify-between items-center"><h1 class="r-title-section">Accident — EMG-1042</h1><span class="r-badge r-badge-danger">Critical</span></div>
-    <p class="r-caption mt-2">MG Road, near Sector 12 junction</p>
+    <div class="flex justify-between items-center">
+      <h1 class="r-title-section" id="incidentTitle"></h1>
+      <span class="r-badge r-badge-danger" id="incidentSeverity"></span>
+    </div>
+    <p class="r-caption mt-2" id="incidentLocation"></p>
   </div>
 
   <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);overflow-x:auto;">
@@ -37,4 +40,9 @@
     <button type="button" class="r-btn r-btn-primary r-btn-block r-btn-lg">Mark as En Route</button>
   </div>
 </div></div>
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="{% static 'js/emergency-detail.js' %}"></script>
 {% endblock %}

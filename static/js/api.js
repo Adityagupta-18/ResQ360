@@ -1,23 +1,38 @@
 const API_BASE_URL = "http://127.0.0.1:8000/api/v1";
 
 async function apiRequest(endpoint, options = {}) {
-
     const url = API_BASE_URL + endpoint;
     const token = localStorage.getItem("resq360_access_token");
+
     const headers = {
-    "Content-Type": "application/json"
+        "Content-Type": "application/json"
     };
     if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
+        headers["Authorization"] = `Bearer ${token}`;
     }
-
-    const response = await fetch(url, {
+    let response = await fetch(url, {
         ...options,
         headers: {
             ...headers,
             ...options.headers
         }
     });
+
+    // Access token expired
+    if (response.status === 401 && token) {
+        const refreshData = await refreshAccessToken();
+
+        if (refreshData.access) {
+            headers["Authorization"] = `Bearer ${refreshData.access}`;
+            response = await fetch(url, {
+                ...options,
+                headers: {
+                    ...headers,
+                    ...options.headers
+                }
+            });
+        }
+    }
     return await response.json();
 }
 

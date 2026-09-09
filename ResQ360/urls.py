@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from apps.users.views import login_page
-from apps.organizations.views import organization_dashboard
+from apps.organizations.views import organization_dashboard ,emergency_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +27,5 @@ urlpatterns = [
     path("api/v1/notifications/",include("apps.notifications.urls")),
     path("login/", login_page, name="login-page"),
     path("organization/dashboard/", organization_dashboard, name="organization-dashboard"),
+    path("organization/emergency/<str:emergency_id>/", emergency_detail, name="emergency-detail"),
     ]

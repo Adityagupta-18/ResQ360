@@ -35,3 +35,9 @@ class OrganizationProfileView(APIView):
 
 def organization_dashboard(request):
     return render(request, "organization/dashboard.html")
+
+
+def emergency_detail(request, emergency_id):
+    return render(request, "organization/emergency_detail.html", {
+        "emergency_id": emergency_id
+    })

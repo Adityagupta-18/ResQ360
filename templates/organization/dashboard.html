@@ -18,7 +18,10 @@
 {% endblock %}
 
 {% block topbar_title %}Dashboard{% endblock %}
-{% block topbar_subtitle %}City Hospital Rapid Response{% endblock %}
+
+{% block topbar_subtitle %}
+<span id="organizationName"></span>
+{% endblock %}
 
 {% block topbar_actions %}
         <div class="notif-anchor">
@@ -36,34 +39,11 @@
 {% endblock %}
 
 {% block content %}
-      <div class="metric-grid metric-grid-5" style="margin-bottom:var(--r-space-6);">
-        <div class="r-card metric-card metric-card--critical"><p class="metric-card__label">Active Emergencies</p><p class="metric-card__value">3</p></div>
-        <div class="r-card metric-card"><p class="metric-card__label">Assigned</p><p class="metric-card__value">2</p></div>
-        <div class="r-card metric-card"><p class="metric-card__label">Available Resources</p><p class="metric-card__value">7</p></div>
-        <div class="r-card metric-card"><p class="metric-card__label">Completed</p><p class="metric-card__value">142</p></div>
-        <div class="r-card metric-card"><p class="metric-card__label">Avg Response Time</p><p class="metric-card__value">8m</p></div>
-      </div>
 
       <div class="section-head"><div><h2>Active Emergencies</h2><p>Sorted by severity and distance</p></div><a href="/" class="r-btn r-btn-secondary r-btn-sm">View incoming</a></div>
       <div class="incident-list" id="incidentList">
-        <div class="r-card incident-card is-critical">
-          <div class="incident-card__top"><span class="incident-card__type">Accident — Road blocked, fire risk</span><span class="r-badge r-badge-danger">Critical</span></div>
-          <div class="incident-card__meta">
-            <span><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-6.1-7-11.2A7 7 0 0112 3a7 7 0 017 6.8C19 14.9 12 21 12 21z" stroke="currentColor" stroke-width="1.6"/></svg>1.2 km</span>
-            <span>3 people</span><span>Received 2 min ago</span>
-          </div>
-          <div class="incident-card__actions"><a href="/" class="r-btn r-btn-primary r-btn-sm">Open</a></div>
-        </div>
-        <div class="r-card incident-card">
-          <div class="incident-card__top"><span class="incident-card__type">Medical Emergency — Breathing difficulty</span><span class="r-badge r-badge-warning">Serious</span></div>
-          <div class="incident-card__meta"><span>3.4 km</span><span>1 person</span><span>Received 14 min ago</span></div>
-          <div class="incident-card__actions"><a href="/" class="r-btn r-btn-secondary r-btn-sm">Open</a></div>
-        </div>
-        <div class="r-card incident-card">
-          <div class="incident-card__top"><span class="incident-card__type">Medical Emergency — Stable, monitoring</span><span class="r-badge r-badge-success">Minor</span></div>
-          <div class="incident-card__meta"><span>0.8 km</span><span>1 person</span><span>Received 40 min ago</span></div>
-          <div class="incident-card__actions"><a href="/" class="r-btn r-btn-secondary r-btn-sm">Open</a></div>
-        </div>
+
+        <div class="r-card incident-card is-critical">  
       </div>
     
 {% endblock %}
