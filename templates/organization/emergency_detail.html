@@ -19,7 +19,7 @@
       <div class="workflow-connector is-done"></div>
       <div class="workflow-node is-active"><div class="workflow-node__dot">2</div><span class="workflow-node__label">Accepted</span></div>
       <div class="workflow-connector"></div>
-      <div class="workflow-node"><div class="workflow-node__dot">3</div><span class="workflow-node__label">En Route</span></div>
+      <div class="workflow-node"><div class="workflow-node__dot">3</div><span class="workflow-node__label">En a</span></div>
       <div class="workflow-connector"></div>
       <div class="workflow-node"><div class="workflow-node__dot">4</div><span class="workflow-node__label">Arrived</span></div>
       <div class="workflow-connector"></div>
@@ -35,9 +35,11 @@
   </div>
 
   <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
-    <p class="r-title-section" style="margin-bottom:var(--r-space-3);">Only the action valid for the current state is shown</p>
-    <p class="r-body-secondary" style="margin-bottom:var(--r-space-4);font-size:var(--r-text-sm);">Status: <strong style="color:var(--r-text-primary);">Accepted</strong> — mark as en route once your team departs.</p>
-    <button type="button" class="r-btn r-btn-primary r-btn-block r-btn-lg">Mark as En Route</button>
+    <p id="actionTitle" class="r-title-section" style="margin-bottom:var(--r-space-3);">
+    Only the action valid for the current state is shown
+</p>
+    <p class="r-body-secondary" style="margin-bottom:var(--r-space-4);font-size:var(--r-text-sm);">Status: <strong id="incidentStatus" style="color:var(--r-text-primary);"></strong> — mark as en route once your team departs.</p>
+    <button type="button" id="enrouteBtn" class="r-btn r-btn-primary r-btn-block r-btn-lg">Mark as En Route</button>
   </div>
 </div></div>
 {% endblock %}
