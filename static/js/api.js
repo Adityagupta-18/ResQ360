@@ -20,3 +20,28 @@ async function apiRequest(endpoint, options = {}) {
     });
     return await response.json();
 }
+
+
+
+
+async function refreshAccessToken() {
+    const refreshToken = localStorage.getItem("resq360_refresh_token");
+
+    const response = await fetch(API_BASE_URL + "/auth/token/refresh/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            refresh: refreshToken
+        })
+    });
+
+    const data = await response.json();
+
+    if (data.access) {
+        localStorage.setItem("resq360_access_token", data.access);
+    }
+
+    return data;
+}

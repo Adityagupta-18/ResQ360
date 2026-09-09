@@ -30,4 +30,8 @@ class OrganizationProfileView(APIView):
             serializer.save()
             return Response(serializer.data)
         Response(serializer.errors, status=400)
-        
+
+
+
+def organization_dashboard(request):
+    return render(request, "organization/dashboard.html")
