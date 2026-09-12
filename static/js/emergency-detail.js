@@ -16,17 +16,88 @@ document.addEventListener("DOMContentLoaded", async function () {
         referrerPolicy: "strict-origin-when-cross-origin"
     }).addTo(map);
 
-    L.marker([latitude, longitude])
-        .addTo(map)
+    const emergencyIcon = L.divIcon({
+        className: "emergency-marker",
+        html: `<div style="
+            width: 18px;
+            height: 18px;
+            background: #dc2626;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        "></div>`,
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
+    });
+
+    const organizationIcon = L.divIcon({
+        className: "organization-marker",
+        html: `<div style="
+            width: 18px;
+            height: 18px;
+            background: #2563eb;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        "></div>`,
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
+    });
+
+    const emergencyMarker = L.marker(
+        [latitude, longitude],
+        { icon: emergencyIcon }
+    ).addTo(map);
+
+    emergencyMarker
         .bindPopup("Emergency location")
         .openPopup();
 
     navigator.geolocation.getCurrentPosition(
-    function (position) {
+    async function (position) {
         const orgLatitude = position.coords.latitude;
         const orgLongitude = position.coords.longitude;
 
         console.log("Organization location:", orgLatitude, orgLongitude);
+        console.log("Emergency location:", latitude, longitude);
+
+    const routeUrl =
+    `https://router.project-osrm.org/route/v1/driving/` +
+    `${orgLongitude},${orgLatitude};${longitude},${latitude}` +
+    `?overview=full&geometries=geojson`;
+
+    const routeResponse = await fetch(routeUrl);
+    const routeData = await routeResponse.json();
+    console.log("Route data:", routeData);
+    const routeCoordinates = routeData.routes[0].geometry.coordinates;
+
+    // Locaiton Direction From Live to Incident
+    const leafletCoordinates = routeCoordinates.map(
+        coordinate => [coordinate[1], coordinate[0]]
+    );
+
+    const routeLine = L.polyline(leafletCoordinates, {
+        color: "#2576e8",
+        weight: 5,
+        opacity: 0.9
+    }).addTo(map);
+
+    const mapBounds = L.latLngBounds([
+    [latitude, longitude],
+    [orgLatitude, orgLongitude]
+    ]);
+
+    map.fitBounds(mapBounds, {
+        padding: [15, 15]
+    });
+
+    const organizationMarker = L.marker(
+        [orgLatitude, orgLongitude],
+        { icon: organizationIcon }
+    ).addTo(map);
+
+    organizationMarker.bindPopup("Your location");
+
         },
         function (error) {
             console.log("Could not get organization location:", error);
@@ -34,6 +105,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
 
 
+// UPDATING THE STATUS RAIL
     function updateWorkflow(status) {
     const steps = [
         document.getElementById("stepReported"),
