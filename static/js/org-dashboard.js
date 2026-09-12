@@ -74,10 +74,24 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
 
 
 async function loadNotifications() {
+
     const notifications = await apiRequest("/notifications/");
     const notificationList = document.getElementById("notificationList");
 
     notificationList.innerHTML = "";
+
+    const unreadCount = notifications.filter(
+        notification => !notification.is_read).length;
+    console.log("Unread count:", unreadCount);
+    console.log(
+        "Dot element:",
+        document.getElementById("notificationDot")
+    );
+
+    document.getElementById("notificationDot").style.display =
+        unreadCount > 0 ? "block" : "none";
+
+
     notifications.forEach(notification => {
         const item = document.createElement("div");
         item.className = `notif-item${notification.is_read ? "" : " is-unread"}`;
@@ -116,6 +130,11 @@ async function loadNotifications() {
 
                 notification.is_read = true;
                 item.classList.remove("is-unread");
+                const remainingUnread = notifications.filter(
+                    notification => !notification.is_read).length;
+
+                document.getElementById("notificationDot").style.display =
+                    remainingUnread > 0 ? "block" : "none";
             }
 
             window.location.href =
