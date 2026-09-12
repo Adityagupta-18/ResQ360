@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const map = L.map("incidentMap").setView([latitude, longitude],15);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "&copy; OpenStreetMap contributors"
+        attribution: "&copy; OpenStreetMap contributors",
+        referrerPolicy: "strict-origin-when-cross-origin"
     }).addTo(map);
 
     L.marker([latitude, longitude])
