@@ -15,21 +15,17 @@
 
   <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);overflow-x:auto;">
     <div class="workflow-rail">
-      <div class="workflow-node is-done"><div class="workflow-node__dot">✓</div><span class="workflow-node__label">Assigned</span></div>
-      <div class="workflow-connector is-done"></div>
-      <div class="workflow-node is-active"><div class="workflow-node__dot">2</div><span class="workflow-node__label">Accepted</span></div>
-      <div class="workflow-connector"></div>
-      <div class="workflow-node"><div class="workflow-node__dot">3</div><span class="workflow-node__label">En a</span></div>
-      <div class="workflow-connector"></div>
-      <div class="workflow-node"><div class="workflow-node__dot">4</div><span class="workflow-node__label">Arrived</span></div>
-      <div class="workflow-connector"></div>
-      <div class="workflow-node"><div class="workflow-node__dot">5</div><span class="workflow-node__label">In Progress</span></div>
-      <div class="workflow-connector"></div>
-      <div class="workflow-node"><div class="workflow-node__dot">6</div><span class="workflow-node__label">Resolved</span></div>
+      <div class="workflow-node is-done" id="stepReported"><div class="workflow-node__dot">✓</div><span class="workflow-node__label">Reported</span></div>
+      <div class="workflow-connector is-done" id="connector1"></div>
+      <div class="workflow-node is-active" id="stepAccepted"><div class="workflow-node__dot">2</div><span class="workflow-node__label">Accepted</span></div>
+      <div class="workflow-connector" id="connector2"></div>
+      <div class="workflow-node" id="stepEnroute"><div class="workflow-node__dot">3</div><span class="workflow-node__label">En Route</span></div>
+      <div class="workflow-connector" id="connector3"></div>
+      <div class="workflow-node" id="stepProgress"><div class="workflow-node__dot">4</div><span class="workflow-node__label">In Progress</span></div>
     </div>
   </div>
 
-  <div class="map-box map-box--md" style="margin-bottom:var(--r-space-5);">
+  <div id="incidentMap" class="map-box map-box--md" style="margin-bottom:var(--r-space-5);">
     <div class="map-pin" style="top:45%;left:55%;"><div class="map-pin__dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
     <span class="map-attribution">OpenStreetMap contributors</span>
   </div>
@@ -38,13 +34,21 @@
     <p id="actionTitle" class="r-title-section" style="margin-bottom:var(--r-space-3);">
     Only the action valid for the current state is shown
 </p>
-    <p class="r-body-secondary" style="margin-bottom:var(--r-space-4);font-size:var(--r-text-sm);">Status: <strong id="incidentStatus" style="color:var(--r-text-primary);"></strong> — mark as en route once your team departs.</p>
-    <button type="button" id="enrouteBtn" class="r-btn r-btn-primary r-btn-block r-btn-lg">Mark as En Route</button>
+    <p class="r-body-secondary"
+      style="margin-bottom:var(--r-space-4);font-size:var(--r-text-sm);">
+        Status: <strong id="incidentStatus" style="color:var(--r-text-primary);"></strong>
+        <span id="statusMessage"></span>
+    </p>
+    <button type="button" id="actionBtn" class="r-btn r-btn-primary r-btn-block r-btn-lg">
+        Accept Emergency
+    </button>
   </div>
 </div></div>
 {% endblock %}
 
 
 {% block extra_js %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="{% static 'js/emergency-detail.js' %}"></script>
 {% endblock %}
