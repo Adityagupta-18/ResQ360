@@ -42,13 +42,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                         ${incident.incident_type} - ${incident.emergency_id}
                     </span>
 
-                    <span class="r-badge r-badge-danger">
-                        ${incident.severity}
-                    </span>
+                    ${incident.severity
+                    ? `<span class="r-badge r-badge-danger">${incident.severity}</span>`: "UNKNOWN"
+                    }
                 </div>
                 <div class="incident-card__meta">
-                    <span>${incident.people_affected} people</span>
-                    <span>${incident.location_address}</span>
+                    <span><b>${incident.people_affected}</b> PEOPLE</span>|
+                    <span>${incident.location_address}</span>|
                     <span>${incident.status}</span>
                 </div>
                 <div class="incident-card__actions">
@@ -58,4 +58,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             incidentList.appendChild(card);
         });
     }
+});
+
+
+document.getElementById("logoutBtn").addEventListener("click", function () {
+    localStorage.removeItem("resq360_access_token");
+    localStorage.removeItem("resq360_refresh_token");
+
+    window.location.href = "/login/";
 });
