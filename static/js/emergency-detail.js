@@ -210,26 +210,30 @@ document.addEventListener("DOMContentLoaded", async function () {
             statusMessage.textContent =
                 " — mark as en route once your team departs.";
             actionBtn.textContent = "Mark as En Route";
+        }else {
+            statusMessage.textContent = ` — ${response.error}`;
         }
 
     } else if (data.status === "ACCEPTED") {
-        response = await apiRequest(
-            `/incidents/organization-assignments/${incident.id}/enroute/`,
-            {
-                method: "POST"
-            }
-        );
-        console.log("Enroute response:", response);
+            response = await apiRequest(
+                `/incidents/organization-assignments/${incident.id}/enroute/`,
+                {
+                    method: "POST"
+                }
+            );
+            console.log("Enroute response:", response);
 
-        if (!response.error) {
-            data.status = "ENROUTE";
-            updateWorkflow(data.status);
-            document.getElementById("incidentStatus").textContent = "ENROUTE";
-            statusMessage.textContent =
-                " — your team is on the way.";
-            actionBtn.textContent = "Mark as In Progress";
-            }
-        }
+            if (!response.error) {
+                data.status = "ENROUTE";
+                updateWorkflow(data.status);
+                document.getElementById("incidentStatus").textContent = "ENROUTE";
+                statusMessage.textContent =
+                    " —The team is on the way.";
+                actionBtn.textContent = "Mark as In Progress";
+                }else {
+            statusMessage.textContent = ` — Another organization has already accepted this emergency.`;
+                    }
+            } 
         else if (data.status === "ENROUTE") {
         response = await apiRequest(
             `/incidents/organization-assignments/${incident.id}/in-progress/`,
@@ -246,7 +250,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             statusMessage.textContent =
                 " — response is currently in progress.";
             actionBtn.textContent = "Resolve Emergency";
-        }
+        }else {
+            statusMessage.textContent = ` — Another organization has already accepted this emergency.`;
+                }
+
         } else if (data.status === "IN_PROGRESS") {
         response = await apiRequest(
             `/incidents/organization-assignments/${incident.id}/resolved/`,
@@ -264,7 +271,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 " — this emergency has been resolved.";
 
             actionBtn.style.display = "none";
-    }
+    }else {
+            statusMessage.textContent = ` — Another organization has already accepted this emergency.`;
+        }
 }
     });
 });

@@ -95,7 +95,7 @@ class IncidentOrganizationInProgressView(APIView):
     def post(self,request,incident_organization_id):
         assignment=get_object_or_404(IncidentOrganization,id=incident_organization_id,organization=request.user.organization)
 
-        if assignment.incident.status == "ENROUTE":
+        if assignment.status == "ACCEPTED" and assignment.incident.status == "ENROUTE":
             assignment.incident.status = "IN_PROGRESS"
             assignment.incident.save()
 
@@ -113,7 +113,7 @@ class IncidentOrganizationResolvedView(APIView):
     def post(self,request,incident_organization_id):
         assignment=get_object_or_404(IncidentOrganization,id=incident_organization_id,organization=request.user.organization)
 
-        if assignment.incident.status == "IN_PROGRESS":
+        if assignment.status == "ACCEPTED" and assignment.incident.status == "IN_PROGRESS":
             assignment.incident.status = "RESOLVED"
             assignment.incident.save()
 

@@ -23,8 +23,6 @@ class Incident(models.Model):
             
     class Status(models.TextChoices):
         REPORTED = "REPORTED", "Reported"
-        MATCHING = "MATCHING", "Matching"
-        ALERTING = "ALERTING", "Alerting Responders"
         ACCEPTED = "ACCEPTED", "Accepted"
         ENROUTE = "ENROUTE", "Enroute"
         IN_PROGRESS = "IN_PROGRESS", "In Progress"
@@ -122,7 +120,7 @@ class Incident(models.Model):
 
 
     def __str__(self):
-        return self.emergency_id or str(self.id)
+        return f"{self.emergency_id} - {self.incident_type} - {self.location_address}"
 
 
 
