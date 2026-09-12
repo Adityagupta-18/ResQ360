@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                     ${incident.severity
                     ? `<span class="r-badge r-badge-danger">${incident.severity}</span>`
-                    : ""
+                    : `<span class="r-badge r-badge-danger">NOT SPECIFIED</span>`
                     }
                 </div>
                 <div class="incident-card__meta">
@@ -105,5 +105,21 @@ async function loadNotifications() {
         `;
 
         notificationList.appendChild(item);
+        item.addEventListener("click", async function () {
+            if (!notification.is_read) {
+                await apiRequest(
+                    `/notifications/${notification.id}/read/`,
+                    {
+                        method: "POST"
+                    }
+                );
+
+                notification.is_read = true;
+                item.classList.remove("is-unread");
+            }
+
+            window.location.href =
+                `/organization/emergency/${notification.emergency_id}/`;
+        });
     });
 }
