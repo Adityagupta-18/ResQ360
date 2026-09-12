@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 document.addEventListener("DOMContentLoaded", async function () {
-
     const organization = await apiRequest("/organizations/me/");
     document.getElementById("organizationName").textContent =
     organization.name;
+
     // SIDEBAR
     document.getElementById("orgName").textContent = organization.name;
 
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const initials = organization.name.split(" ").map(word => word[0]).join("").slice(0, 2).toUpperCase();  
     document.getElementById("orgAvatar").textContent = initials;
 
+    loadNotifications();
     const incidentList = document.getElementById("incidentList");
     const data = await apiRequest("/organizations/incidents/");
     console.log("Organization incidents:", data);
@@ -43,7 +44,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                     </span>
 
                     ${incident.severity
-                    ? `<span class="r-badge r-badge-danger">${incident.severity}</span>`: "UNKNOWN"
+                    ? `<span class="r-badge r-badge-danger">${incident.severity}</span>`
+                    : ""
                     }
                 </div>
                 <div class="incident-card__meta">
@@ -67,3 +69,41 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
 
     window.location.href = "/login/";
 });
+
+
+
+
+async function loadNotifications() {
+    const notifications = await apiRequest("/notifications/");
+    const notificationList = document.getElementById("notificationList");
+
+    notificationList.innerHTML = "";
+    notifications.forEach(notification => {
+        const item = document.createElement("div");
+        item.className = `notif-item${notification.is_read ? "" : " is-unread"}`;
+
+        item.innerHTML = `
+            <div class="notif-item__icon"
+                style="background:var(--r-red-surface);color:var(--r-red);">
+                <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+                    <path d="M12 9v4.5M12 16.2h.01"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div class="notif-item__body">
+                <p class="notif-item__title">${notification.message}</p>
+                <p class="notif-item__desc">
+                    Emergency ID: ${notification.emergency_id}
+                </p>
+                <p class="notif-item__time">
+                    ${new Date(notification.created_at).toLocaleString()}
+                </p>
+            </div>
+        `;
+
+        notificationList.appendChild(item);
+    });
+}
