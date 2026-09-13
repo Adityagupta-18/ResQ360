@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
-
 document.addEventListener("DOMContentLoaded", async function () {
     const organization = await apiRequest("/organizations/me/");
     document.getElementById("organizationName").textContent =

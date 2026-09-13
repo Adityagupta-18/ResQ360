@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-
+    await loadNotifications();
     const incidentList = document.getElementById("incidentList");
 
     // Load notifications
