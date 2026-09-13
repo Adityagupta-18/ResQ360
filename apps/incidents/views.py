@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from rest_framework.views import APIView     
-from .serializers import IncidentSerializer , IncidentTrackingSerializer , IncidentOrganizationSerializer
+from .serializers import IncidentSerializer , IncidentTrackingSerializer , IncidentOrganizationSerializer , IncidentVolunteerSerializer
+from apps.users.permissions import IsVolunteer
 from rest_framework import status , generics
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .models import Incident , IncidentOrganization
+from .models import Incident , IncidentOrganization , IncidentVolunteer
 from apps.users.permissions import IsVerifiedOrganization
 from django.utils import timezone
 from rest_framework.permissions import IsAuthenticated
@@ -23,6 +24,7 @@ class IncidentCreateView(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
+
 class IncidentTrackingView(APIView):
     permission_classes=[AllowAny,]
 
@@ -30,6 +32,18 @@ class IncidentTrackingView(APIView):
         incident=get_object_or_404(Incident,emergency_id=emergency_id)
         serializer=IncidentTrackingSerializer(incident)
         return Response(serializer.data,status=status.HTTP_200_OK)  
+
+
+class VolunteerIncidentListView(APIView):
+    permission_classes = [IsAuthenticated, IsVolunteer]
+
+    def get(self, request):
+        assignments = IncidentVolunteer.objects.filter(
+            volunteer=request.user
+        ).select_related("incident")
+
+        serializer = IncidentVolunteerSerializer(assignments, many=True)
+        return Response(serializer.data)
 
 
 class IncidentOrganizationListView(generics.ListAPIView):
@@ -40,6 +54,7 @@ class IncidentOrganizationListView(generics.ListAPIView):
         return IncidentOrganization.objects.filter(
             organization=self.request.user.organization
         )
+
 
 class IncidentOrganizationAcceptView(APIView):
     permission_classes=[IsVerifiedOrganization]

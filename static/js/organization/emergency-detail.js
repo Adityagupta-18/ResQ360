@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             connector.classList.add("is-done");
         }
     });
-}
+    }
     updateWorkflow(data.status);
 
     console.log("Emergency details:", data);
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     } else if (data.status === "RESOLVED") {
         statusMessage.textContent =
-            " — this emergency has been resolved.";
+            " — this emergency has been resolved. Thank You";
         actionBtn.style.display = "none";
     }
 
@@ -233,8 +233,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 }else {
             statusMessage.textContent = ` — Another organization has already accepted this emergency.`;
                     }
-            } 
-        else if (data.status === "ENROUTE") {
+    } else if (data.status === "ENROUTE") {
         response = await apiRequest(
             `/incidents/organization-assignments/${incident.id}/in-progress/`,
             {
@@ -254,7 +253,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             statusMessage.textContent = ` — Another organization has already accepted this emergency.`;
                 }
 
-        } else if (data.status === "IN_PROGRESS") {
+    } else if (data.status === "IN_PROGRESS") {
         response = await apiRequest(
             `/incidents/organization-assignments/${incident.id}/resolved/`,
             {
@@ -271,9 +270,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 " — this emergency has been resolved.";
 
             actionBtn.style.display = "none";
-    }else {
+        }else {
             statusMessage.textContent = ` — Another organization has already accepted this emergency.`;
-        }
+            }
 }
-    });
+    }); 
 });
