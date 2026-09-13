@@ -6,6 +6,8 @@ from apps.users.permissions import IsOrganization ,IsVolunteer
 from .serializers import UserRegistrationSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 class UserRegistrationView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
@@ -20,3 +22,7 @@ class CustomUserView(APIView):
 
 def login_page(request):
     return render(request, "users/login.html")
+
+
+def volunteer_dashboard(request):
+    return render(request, "volunteer/dashboard.html")

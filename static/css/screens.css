@@ -11,6 +11,7 @@
 .auth-shell {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: var(--r-space-6) var(--r-space-4);
@@ -34,6 +35,37 @@
 .auth-card h1 { font-size: var(--r-text-2xl); margin-bottom: var(--r-space-2); }
 .auth-card > p.r-body-secondary { margin-bottom: var(--r-space-6); }
 .auth-foot { text-align: center; font-size: var(--r-text-sm); color: var(--r-text-secondary); margin-top: var(--r-space-5); }
+
+#loginError::before {
+    content: "⚠";
+    margin-right: 8px;
+    font-size: 14px;
+}
+#loginError.d-none {
+    display: none !important;
+}
+
+#loginError {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto 16px auto;
+    padding: 12px 16px;
+
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-left: 4px solid #dc2626;
+    border-radius: 8px;
+
+    color: #b91c1c;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+
+    box-sizing: border-box;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.08);
+}
+
 
 /* ---------- Citizen report wizard chrome (Emergency Type / Location / Details / Optional / Review) ---------- */
 .wizard-page { min-height: 100vh; background: var(--r-bg); }

@@ -1,7 +1,12 @@
 const loginForm = document.getElementById("loginForm");
+const loginError = document.getElementById("loginError");
 
 loginForm.addEventListener("submit", async function(event) {
     event.preventDefault();
+
+    // Hide previous error
+    loginError.classList.add("d-none");
+    loginError.textContent = "";
 
     const email = document.getElementById("LoginEmail").value;
     const password = document.getElementById("LoginPassword").value;
@@ -15,9 +20,19 @@ loginForm.addEventListener("submit", async function(event) {
     });
 
     console.log("Login response:", data);
+
+    // Invalid credentials
+    if (!data.access || !data.refresh) {
+        loginError.textContent = data.detail || "Invalid email or password.";
+        loginError.classList.remove("d-none");
+        return;
+    }
+
+    // Successful login
     saveTokens(data.access, data.refresh);
 
     const user = await apiRequest("/auth/me/");
+
     if (user.account_type === "ORG") {
         window.location.href = "/organization/dashboard/";
     } else if (user.account_type === "VOL") {
