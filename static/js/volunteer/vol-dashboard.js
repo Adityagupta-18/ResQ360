@@ -1,4 +1,22 @@
 document.addEventListener("DOMContentLoaded", async function () {
+
+const volunteer = await apiRequest("/auth/volunteer/me/");
+
+console.log("Volunteer profile:", volunteer);
+
+if (volunteer && volunteer.full_name) {
+
+    document.getElementById("volunteerName").textContent =
+        volunteer.full_name;
+
+    // SIDEBAR
+    document.getElementById("volName").textContent =volunteer.full_name;
+    document.getElementById("volRole").textContent ="Verified · Volunteer";
+
+    const initials = volunteer.full_name.split(" ").map(word => word[0]).join("").slice(0, 2).toUpperCase();
+    document.getElementById("volAvatar").textContent =initials;
+}
+
     await loadNotifications();
     const incidentList = document.getElementById("incidentList");
 

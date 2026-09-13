@@ -22,3 +22,14 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         if value != 'VOL':
             raise serializers.ValidationError("Only volunteers can register here.")
         return value
+
+
+class VolunteerProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id","full_name","email","account_type",]
+        read_only_fields = [
+            "id",
+            "email",
+            "account_type",
+        ]
