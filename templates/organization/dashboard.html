@@ -7,16 +7,11 @@
     <div class="app-sidebar__brand"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#F1F5F9" stroke-width="1.7" stroke-linejoin="round"/></svg>ResQ360</div>
     <nav class="app-nav">
       <a href="/" class="app-nav__link is-active"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.6"/></svg>Dashboard</a>
-      <a href="/" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 3.9L2.9 17.5a1.6 1.6 0 001.4 2.4h15.4a1.6 1.6 0 001.4-2.4L13.4 3.9a1.6 1.6 0 00-2.8 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Emergencies</a>
-      <a href="/" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.6"/></svg>Resources</a>
-      <a href="/" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 20a5.5 5.5 0 0111 0" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="9.5" r="2.3" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 20a4 4 0 017 0" stroke="currentColor" stroke-width="1.6"/></svg>Responders</a>
-      <span class="app-nav__section-label">Account</span>
-      <a href="/" class="app-nav__link"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>Organization Profile</a>
     </nav>
 
     <div class="app-sidebar__footer">
     <div class="app-sidebar__org">
-        <div class="app-sidebar__org-avatar" id="orgAvatar">CH</div>
+        <div class="app-sidebar__org-avatar" id="orgAvatar"></div>
         <div>
             <p class="app-sidebar__org-name" id="orgName"></p>
             <p class="app-sidebar__org-role" id="orgRole"></p>
@@ -58,5 +53,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/org-dashboard.js' %}"></script>
+<script src="{% static 'js/organization-js/org-dashboard.js' %}"></script>
 {% endblock %}
