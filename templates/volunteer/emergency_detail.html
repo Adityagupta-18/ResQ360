@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="page-shell"><div class="page-shell__inner" style="max-width:640px;">
-  <a href="{% url "organization-dashboard" %}" class="back-link"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to dashboard</a>
+  <a href="{% url "volunteer-dashboard" %}" class="back-link"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to dashboard</a>
   <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
     <div class="flex justify-between items-center">
       <h1 class="r-title-section" id="incidentTitle"></h1>
@@ -31,17 +31,13 @@
   </div>
 
   <div class="r-card card-pad" style="margin-bottom:var(--r-space-5);">
-    <p id="actionTitle" class="r-title-section" style="margin-bottom:var(--r-space-3);">
-    Only the action valid for the current state is shown
-</p>
+
     <p class="r-body-secondary"
       style="margin-bottom:var(--r-space-4);font-size:var(--r-text-sm);">
         Status: <strong id="incidentStatus" style="color:var(--r-text-primary);"></strong>
         <span id="statusMessage"></span>
     </p>
-    <button type="button" id="actionBtn" class="r-btn r-btn-primary r-btn-block r-btn-lg">
-        Accept Emergency
-    </button>
+    
   </div>
 </div></div>
 {% endblock %}

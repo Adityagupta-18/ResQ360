@@ -26,3 +26,7 @@ def login_page(request):
 
 def volunteer_dashboard(request):
     return render(request, "volunteer/dashboard.html")
+
+
+def volunteer_emergency_detail(request, emergency_id):
+    return render(request, "volunteer/emergency_detail.html")
