@@ -90,8 +90,12 @@
   border-top: 1px solid var(--r-border);
   padding: var(--r-space-4);
   display: flex; gap: var(--r-space-3);
+  justify-content: center;
 }
-.wizard-footer .r-btn { flex: 1; }
+.wizard-footer .r-btn { 
+  flex: unset;
+  width: 300px; 
+}
 
 /* ---------- Review summary rows (Review & Submit, Verification Detail) ---------- */
 .review-row { display: flex; justify-content: space-between; gap: var(--r-space-3); padding: var(--r-space-3) 0; border-bottom: 1px solid var(--r-border); }
