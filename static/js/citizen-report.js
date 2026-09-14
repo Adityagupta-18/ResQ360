@@ -9,9 +9,81 @@
   function loadReport() { try { return JSON.parse(localStorage.getItem(REPORT_KEY)) || {}; } catch (e) { return {}; } }
   function saveReport(d) { try { localStorage.setItem(REPORT_KEY, JSON.stringify(d)); } catch (e) { /* storage unavailable — continue silently */ } }
 
-  var TYPE_LABELS = { accident: "Accident", medical: "Medical Emergency", fire: "Fire", crime: "Crime / Security", missing: "Missing Person", other: "Other" };
-  var SEVERITY_LABELS = { critical: "Critical", serious: "Serious", minor: "Minor", unknown: "Unknown" };
-  var TIMELINE_LABELS = ["Reported", "Matching", "Alerting responders", "Accepted", "En route", "Arrived", "In progress", "Resolved"];
+  async function updateLocationAddress(latitude, longitude) {
+    var addressEl = document.getElementById("locationAddress");
+    var textEl = document.getElementById("selectedLocationText");
+
+    if (!textEl) return;
+
+    textEl.textContent = "Finding address...";
+
+    try {
+        var response = await fetch(
+            "https://nominatim.openstreetmap.org/reverse" +
+            "?format=jsonv2" +
+            "&lat=" + encodeURIComponent(latitude) +
+            "&lon=" + encodeURIComponent(longitude)
+        );
+
+        if (!response.ok) {
+            throw new Error("Reverse geocoding failed");
+        }
+
+        var data = await response.json();
+
+        textEl.textContent =
+            data.display_name || "Location selected";
+
+        var d = loadReport();
+        d.location = data.display_name || "";
+        saveReport(d);
+
+        if (addressEl) {
+            addressEl.hidden = false;
+        }
+
+    } catch (error) {
+        textEl.textContent = "Location selected";
+
+        var d = loadReport();
+        d.location = "";
+        saveReport(d);
+
+        if (addressEl) {
+            addressEl.hidden = false;
+        }
+    }
+}
+
+
+  var TYPE_LABELS = { accident: "Accident", 
+    medical: "Medical Emergency",
+     fire: "Fire", 
+     crime: "Crime / Security", 
+     missing: "Missing Person", 
+     other: "Other" };
+
+  var INCIDENT_TYPE_MAP = {
+    accident: "ACCIDENT",
+    medical: "MEDICAL",
+    fire: "FIRE",
+    crime: "CRIME_SECURITY",
+    missing: "MISSING_PERSON",
+    blood_bank: "BLOOD_BANK"
+};
+
+var SEVERITY_MAP = {
+    critical: "CRITICAL",
+    serious: "SERIOUS",
+    minor: "MINOR",
+    unknown: "UNKNOWN"
+};
+  var SEVERITY_LABELS = { critical: "Critical", 
+    serious: "Serious", 
+    minor: "Minor", 
+    unknown: "Unknown" };
+
+  var TIMELINE_LABELS = ["Reported", "Accepted", "En route","In progress", "Resolved"];
 
 
 
@@ -91,6 +163,7 @@
             d.latitude = position.coords.latitude;
             d.longitude = position.coords.longitude;
             saveReport(d);
+            updateLocationAddress(d.latitude, d.longitude);
 
           if (mapEl && citizenMap) {
             citizenMap.setView([d.latitude, d.longitude], 16);
@@ -107,6 +180,7 @@
             updatedReport.latitude = position.lat;
             updatedReport.longitude = position.lng;
             saveReport(updatedReport);
+            updateLocationAddress(updatedReport.latitude,updatedReport.longitude);
           });
           }
 
@@ -169,19 +243,25 @@
 
     /* ---- Screen: Emergency Details ---- */
     var detailsContinueBtn = document.getElementById("continueBtnDetails");
+
     if (detailsContinueBtn) {
       detailsContinueBtn.addEventListener("click", function () {
+
         var d = loadReport();
         var sevGroup = qs('[data-select-group="severity"]');
         var peopleEl = qs('[data-counter-value]');
+
         d.severity = sevGroup ? sevGroup.getAttribute("data-value") : "";
+        
         d.severityLabel = SEVERITY_LABELS[d.severity] || "";
         d.people = peopleEl ? peopleEl.textContent : "1";
         var quickAnswers = {};
+
         qsa("[data-question]").forEach(function (row) {
           var selected = qs(".toggle-pill.is-selected", row);
-          quickAnswers[row.getAttribute("data-question")] = selected ? selected.getAttribute("data-value") : null;
-        });
+
+            quickAnswers[row.getAttribute("data-question")] = selected ? selected.getAttribute("data-value") : null;
+          });
         d.quickAnswers = quickAnswers;
         saveReport(d);
       });
@@ -207,30 +287,62 @@
       setText("reviewLocation", d.location);
       setText("reviewSeverity", d.severityLabel);
       setText("reviewPeople", d.people);
-      setText("reviewDescription", d.description || "No description added");
     }
 
+    
+
 var submitBtn = document.getElementById("submitBtn");
+
 if (submitBtn) {
-  submitBtn.addEventListener("click", function () {
-      var d2 = loadReport();
+    submitBtn.addEventListener("click", async function () {
 
-      var payload = {
-          incident_type: d2.type,
-          latitude: d2.latitude,
-          longitude: d2.longitude,
-          location_address: d2.location,
-          people_affected: Number(d2.people),
-          severity: d2.severity,
-          road_blocked: d2.quickAnswers.road_blocked,
-          fire_smoke: d2.quickAnswers.fire_smoke,
-          severe_bleeding: d2.quickAnswers.severe_bleeding,
-          person_trapped: d2.quickAnswers.person_trapped
-      };
+        var d = loadReport();
 
-      console.log("Incident payload:", payload);
-  });
+        var payload = {
+            incident_type: INCIDENT_TYPE_MAP[d.type],
+            latitude: Number(Number(d.latitude).toFixed(6)),
+            longitude: Number(Number(d.longitude).toFixed(6)),
+            location_address: d.location || "",
+            people_affected: Number(d.people),
+            severity: SEVERITY_MAP[d.severity],
+
+            road_blocked: d.quickAnswers &&
+                d.quickAnswers["road-blocked"] === "yes",
+
+            fire_smoke: d.quickAnswers &&
+                d.quickAnswers["fire-smoke"] === "yes",
+
+            severe_bleeding: d.quickAnswers &&
+                d.quickAnswers["severe-bleeding"] === "yes",
+
+            person_trapped: d.quickAnswers &&
+                d.quickAnswers["person-trapped"] === "yes"
+        };
+
+
+        var response = await fetch("/api/v1/incidents/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        var result = await response.json();
+
+        if (!response.ok) {
+            console.error("Incident creation failed:", result);
+            return;
+        }
+
+        d.emergencyId = result.emergency_id;
+        saveReport(d);
+
+        window.location.href = "/incident-confirmation";
+    });
 }
+
+
 
     /* ---- Screen: Emergency Confirmation ---- */
     var idEl = document.getElementById("emergencyIdValue");
