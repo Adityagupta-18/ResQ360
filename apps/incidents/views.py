@@ -138,3 +138,34 @@ class IncidentOrganizationResolvedView(APIView):
         return Response(
             {"error": "Emergency must be IN_PROGRESS before marking it as RESOLVED."},
             status=status.HTTP_400_BAD_REQUEST)
+
+
+from django.shortcuts import render
+
+
+def citizen_home(request):
+    return render(request, "incidents/home.html")
+
+def track_incident(request):
+    return render(request,'incidents/track_login.html')
+
+def track_emergency(request):
+    return render(request,'incidents/tracking.html')
+
+def nearby_help(request):
+    return render(request,'incidents/nearby_help.html')
+
+def incident_type(request):
+    return render(request,'incidents/incident_type.html')
+
+def citizen_location(request):
+    return render(request,'incidents/location.html')
+
+def incident_details(request):
+    return render(request,'incidents/details.html')
+
+def incident_review(request):
+    return render(request,'incidents/review.html')
+
+def incident_confirmation(request):
+    return render(request,'incidents/confirmation.html')

@@ -1,13 +1,3 @@
-/* ==========================================================================
-   ResQ360 — Citizen emergency-report flow
-   Carries demo answers between the report screens via localStorage so the
-   Review, Confirmation and Tracking screens can reflect what was actually
-   selected. This is prototype-only state: a real build replaces every
-   localStorage call here with the equivalent DRF request/response.
-   Include this file only on: type, location, details, optional, review,
-   confirmation and tracking screens. Every block below is guarded by an
-   element-existence check, so it is always safe to include.
-   ========================================================================== */
 (function () {
   "use strict";
   var REPORT_KEY = "resq360_demo_report";
@@ -141,16 +131,22 @@
       setText("reviewPeople", d.people);
       setText("reviewDescription", d.description || "No description added");
     }
-    var submitBtn = document.getElementById("submitBtn");
-    if (submitBtn) {
-      submitBtn.addEventListener("click", function () {
-        var d2 = loadReport();
-        var n = 1000 + Math.floor(Math.random() * 9000);
-        d2.emergencyId = "EMG-" + n;
-        saveReport(d2);
-        try { localStorage.setItem(TRACK_KEY, JSON.stringify({ stepIndex: 0 })); } catch (e) { /* noop */ }
-      });
-    }
+
+var submitBtn = document.getElementById("submitBtn");
+if (submitBtn) {
+  submitBtn.addEventListener("click", async function () {
+      var d2 = loadReport();
+
+      var payload = {
+          incident_type: d2.type,
+          severity: d2.severity,
+          people_affected: Number(d2.people),
+          location_address: d2.location
+      };
+
+      console.log("Sending incident:", payload);
+  });
+}
 
     /* ---- Screen: Emergency Confirmation ---- */
     var idEl = document.getElementById("emergencyIdValue");

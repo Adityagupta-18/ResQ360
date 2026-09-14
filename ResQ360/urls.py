@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path,include
 from apps.users.views import login_page , volunteer_dashboard , volunteer_emergency_detail
 from apps.organizations.views import organization_dashboard ,emergency_detail
+from apps.incidents.views import citizen_home , track_incident , track_emergency , nearby_help , incident_type ,incident_details,incident_review , citizen_location ,incident_confirmation
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +31,13 @@ urlpatterns = [
     path("organization/emergency/<str:emergency_id>/", emergency_detail, name="emergency-detail"),
     path("volunteer/dashboard/", volunteer_dashboard, name="volunteer-dashboard"),
     path("volunteer/emergency/<str:emergency_id>/",volunteer_emergency_detail,name="volunteer-emergency-detail"),
+    path("", citizen_home, name="citizen-home"),
+    path("nearby-help", nearby_help, name="nearby-help"),
+    path("track-incident", track_incident, name="track-incident"),
+    path("track-emergency", track_emergency, name="track-emergency"),
+    path("incident-type", incident_type, name="incident-type"),
+    path("citizen-location", citizen_location, name="citizen-location"),
+    path("incident-details", incident_details, name="incident-details"),
+    path("incident-review", incident_review, name="incident-review"),
+    path("incident-confirmation", incident_confirmation, name="incident-confirmation"),
     ]

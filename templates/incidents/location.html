@@ -7,7 +7,7 @@
 <div class="wizard-page">
   <div class="wizard-header">
     <div class="wizard-header__top">
-      <a href="{% url 'citizen_type' %}" class="wizard-header__back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="/" class="wizard-header__back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <span class="wizard-header__title">Where is it happening?</span>
     </div>
     <div class="form-progress" aria-hidden="true">
@@ -43,8 +43,8 @@
     </div>
   </div>
   <div class="wizard-footer">
-    <a href="{% url 'citizen_type' %}" class="r-btn r-btn-secondary">Back</a>
-    <a href="{% url 'citizen_details' %}" class="r-btn r-btn-primary r-btn-lg" id="continueBtnLocation" disabled>Continue</a>
+    <a href="{% url "incident-type" %}" class="r-btn r-btn-secondary">Back</a>
+    <a href="{% url "incident-details" %}" class="r-btn r-btn-primary r-btn-lg" id="continueBtnLocation" disabled>Continue</a>
   </div>
 </div>
 {% endblock %}
