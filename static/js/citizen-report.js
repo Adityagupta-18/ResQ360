@@ -1,7 +1,6 @@
 (function () {
   "use strict";
   var REPORT_KEY = "resq360_demo_report";
-  var TRACK_KEY = "resq360_demo_tracking";
 
   function qsa(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
   function qs(sel, root) { return (root || document).querySelector(sel); }
@@ -386,6 +385,12 @@ function updateTrackingTimeline(status) {
     if (resolvedBanner) {
         resolvedBanner.hidden = status !== "RESOLVED";
     }
+    
+    var timeline = document.querySelector(".timeline");
+
+    if (timeline) {
+        timeline.classList.toggle("is-resolved", status === "RESOLVED");
+    }
 }      
 
 
@@ -394,7 +399,7 @@ var trackIdEl = document.getElementById("trackEmergencyId");
 
 if (trackIdEl) {
     var dt = loadReport();
-    var emergencyId = dt.emergencyId;
+    var emergencyId =new URLSearchParams(window.location.search).get("emergency_id") || dt.emergencyId;
 
     if (!emergencyId) {
         trackIdEl.textContent = "Emergency ID unavailable";

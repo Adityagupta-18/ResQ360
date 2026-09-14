@@ -500,6 +500,15 @@
 .workflow-connector { flex: 1; height: 2px; background: var(--r-border); min-width: 24px; margin-top: -20px; }
 .workflow-connector.is-done { background: var(--r-success); }
 
+.timeline.is-resolved .timeline-step__dot {
+    background: var(--r-success);
+    border-color: var(--r-success);
+}
+
+.timeline.is-resolved .timeline-step__line {
+    background: var(--r-success);
+}
+
 /* ---------- Map placeholder ---------- */
 .map-box {
   position: relative;
