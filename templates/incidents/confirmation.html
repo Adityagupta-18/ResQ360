@@ -8,11 +8,11 @@
   <div class="r-card confirm-card">
     <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M4 12.5l4.5 4.5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <p class="r-caption" style="margin-bottom:var(--r-space-2);">Your Emergency ID</p>
-    <p class="confirm-id" id="emergencyIdValue">EMG-1042</p>
-    <span class="r-badge r-badge-warning" style="margin-top:var(--r-space-4);display:inline-flex;">FINDING RESPONSE</span>
+    <p class="confirm-id" id="emergencyIdValue">Emergency ID</p>
+    <span class="r-badge r-badge-warning" style="margin-top:var(--r-space-4);display:inline-flex;">Save this ID to track your emergency. - FINDING RESPONSE</span>
     <p class="r-body-secondary" style="margin-top:var(--r-space-4);">Your emergency has been submitted. The system is looking for an appropriate verified organization nearby.</p>
     <div class="flex flex-col gap-3 mt-6">
-      <a href="{% url 'track-incident' %}" class="r-btn r-btn-primary r-btn-block">Track Emergency</a>
+      <a href="{% url 'track-emergency' %}" class="r-btn r-btn-primary r-btn-block">Track Emergency</a>
       <a href="/" class="r-btn r-btn-secondary r-btn-block">Back to Home</a>
     </div>
     <div class="r-disclaimer" role="note" style="margin-top:var(--r-space-6);text-align:left;">

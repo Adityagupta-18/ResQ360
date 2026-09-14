@@ -348,56 +348,102 @@ if (submitBtn) {
     var idEl = document.getElementById("emergencyIdValue");
     if (idEl) {
       var dc = loadReport();
-      idEl.textContent = dc.emergencyId || "EMG-1042";
+      idEl.textContent = dc.emergencyId || "Emergency ID unavailable";
     }
 
-    /* ---- Screen: Emergency Tracking ---- */
-    var trackIdEl = document.getElementById("trackEmergencyId");
-    if (trackIdEl) {
-      var dt = loadReport();
-      trackIdEl.textContent = dt.emergencyId || "EMG-1042";
-      var trackTypeEl = document.getElementById("trackType");
-      if (trackTypeEl) trackTypeEl.textContent = dt.typeLabel || "Medical Emergency";
-      var trackLocEl = document.getElementById("trackLocation");
-      if (trackLocEl) trackLocEl.textContent = dt.location || "Sector 12, MG Road, near City Hospital";
 
-      var tracking = {};
-      try { tracking = JSON.parse(localStorage.getItem(TRACK_KEY)) || {}; } catch (e) { tracking = {}; }
-      var stepIndex = typeof tracking.stepIndex === "number" ? tracking.stepIndex : 0;
+function updateTrackingTimeline(status) {
 
-      function render() {
-        var nodes = qsa(".timeline-step");
-        nodes.forEach(function (node, i) {
-          node.classList.remove("is-done", "is-active");
-          if (i < stepIndex) node.classList.add("is-done");
-          else if (i === stepIndex) node.classList.add("is-active");
-        });
-        var statusLabelEl = document.getElementById("currentStatusLabel");
-        if (statusLabelEl) statusLabelEl.textContent = TIMELINE_LABELS[stepIndex] || "Reported";
-        var orgBlock = document.getElementById("assignedOrgBlock");
-        if (orgBlock) orgBlock.hidden = stepIndex < 3;
-        var doneBanner = document.getElementById("resolvedBanner");
-        if (doneBanner) doneBanner.hidden = stepIndex < 7;
-        var advanceBtn = document.getElementById("simulateAdvance");
-        if (advanceBtn) advanceBtn.toggleAttribute("disabled", stepIndex >= TIMELINE_LABELS.length - 1);
-      }
-      render();
+    var statusSteps = [
+        "REPORTED",
+        "ACCEPTED",
+        "ENROUTE",
+        "IN_PROGRESS",
+        "RESOLVED"
+    ];
 
-      var advanceBtn2 = document.getElementById("simulateAdvance");
-      if (advanceBtn2) {
-        advanceBtn2.addEventListener("click", function () {
-          var tt = {};
-          try { tt = JSON.parse(localStorage.getItem(TRACK_KEY)) || {}; } catch (e) { tt = {}; }
-          var idx = typeof tt.stepIndex === "number" ? tt.stepIndex : 0;
-          if (idx < TIMELINE_LABELS.length - 1) {
-            idx++;
-            tt.stepIndex = idx;
-            try { localStorage.setItem(TRACK_KEY, JSON.stringify(tt)); } catch (e) { /* noop */ }
-            stepIndex = idx;
-            render();
-          }
-        });
-      }
+    var currentIndex = statusSteps.indexOf(status);
+
+    if (currentIndex === -1) {
+        currentIndex = 0;
     }
+
+    var nodes = qsa(".timeline-step");
+
+    nodes.forEach(function (node, index) {
+
+        node.classList.remove("is-done", "is-active");
+
+        if (index < currentIndex) {
+            node.classList.add("is-done");
+        } else if (index === currentIndex) {
+            node.classList.add("is-active");
+        }
+    });
+
+    var resolvedBanner = document.getElementById("resolvedBanner");
+
+    if (resolvedBanner) {
+        resolvedBanner.hidden = status !== "RESOLVED";
+    }
+}      
+
+
+/* ---- Screen: Emergency Tracking ---- */
+var trackIdEl = document.getElementById("trackEmergencyId");
+
+if (trackIdEl) {
+    var dt = loadReport();
+    var emergencyId = dt.emergencyId;
+
+    if (!emergencyId) {
+        trackIdEl.textContent = "Emergency ID unavailable";
+    } else {
+
+        trackIdEl.textContent = emergencyId;
+
+        fetch("/api/v1/incidents/track/" + encodeURIComponent(emergencyId) + "/")
+            .then(function (response) {
+                return response.json().then(function (data) {
+                    return {
+                        ok: response.ok,
+                        data: data
+                    };
+                });
+            })
+            .then(function (result) {
+
+                if (!result.ok) {
+                    console.error("Tracking API failed:", result.data);
+                    return;
+                }
+
+                var data = result.data;
+
+                var trackTypeEl = document.getElementById("trackType");
+                if (trackTypeEl) {
+                    trackTypeEl.textContent = data.incident_type;
+                }
+
+                var trackLocEl = document.getElementById("trackLocation");
+                if (trackLocEl) {
+                    trackLocEl.textContent =
+                        data.location_address || "Location unavailable";
+                }
+
+                var statusLabelEl =
+                    document.getElementById("currentStatusLabel");
+
+                if (statusLabelEl) {
+                    statusLabelEl.textContent = data.status;
+                }
+
+                updateTrackingTimeline(data.status);
+            })
+            .catch(function (error) {
+                console.error("Tracking request failed:", error);
+            });
+    }
+}
   });
 })();
