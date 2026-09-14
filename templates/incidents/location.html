@@ -32,16 +32,15 @@
     </div>
     <div id="locationDenied" class="r-disclaimer" role="alert" style="margin-bottom:var(--r-space-4);" hidden>
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 9v4.5M12 16.2h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.6 3.9L2.9 17.5a1.6 1.6 0 001.4 2.4h15.4a1.6 1.6 0 001.4-2.4L13.4 3.9a1.6 1.6 0 00-2.8 0z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-      <span>Location access was denied. Use "Adjust Location" to drop a pin manually so responders can still find you.</span>
+      <span>Use "Adjust Location" to drop a pin manually so responders can still find you.</span>
     </div>
     <div class="flex flex-col gap-3">
       <button type="button" id="useCurrentLocation" class="r-btn r-btn-primary r-btn-block">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         Use My Current Location
       </button>
-      <div class="flex gap-3">
+      <div>
         <button type="button" id="useManualLocation" class="r-btn r-btn-secondary r-btn-block">Adjust Location</button>
-        <button type="button" id="simulateDenied" class="r-btn r-btn-ghost r-btn-block">Simulate permission denied</button>
       </div>
     </div>
   </div>

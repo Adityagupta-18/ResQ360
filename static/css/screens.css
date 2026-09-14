@@ -70,7 +70,8 @@
 /* ---------- Citizen report wizard chrome (Emergency Type / Location / Details / Optional / Review) ---------- */
 .wizard-page { min-height: 100vh; background: var(--r-bg); }
 .wizard-header {
-  position: sticky; top: 0; z-index: 20;
+  position: sticky; top: 0; 
+  z-index: 9999;
   background: var(--r-surface);
   border-bottom: 1px solid var(--r-border);
   padding: var(--r-space-4);
@@ -95,6 +96,10 @@
 .wizard-footer .r-btn { 
   flex: unset;
   width: 300px; 
+}
+
+[hidden] {
+    display: none !important;
 }
 
 /* ---------- Review summary rows (Review & Submit, Verification Detail) ---------- */

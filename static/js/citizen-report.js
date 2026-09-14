@@ -26,7 +26,8 @@
     citizenMap = L.map("citizenMap").setView([28.6139, 77.2090], 13);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors"
+      attribution: "&copy; OpenStreetMap contributors",
+      referrerPolicy: "strict-origin-when-cross-origin"
     }).addTo(citizenMap);
   }
 
@@ -53,12 +54,19 @@
         d.typeLabel = TYPE_LABELS[value] || value;
         saveReport(d);
       });
+      if (mapEl && citizenMap) {
+      citizenMap.setView([d.latitude, d.longitude], 16);
+
+      citizenMarker = L.marker(
+        [d.latitude, d.longitude],
+        { draggable: true }
+      ).addTo(citizenMap);
+    }
     }
 
     /* ---- Screen: Emergency Location ---- */
         var useCurrentBtn = document.getElementById("useCurrentLocation");
         var manualBtn = document.getElementById("useManualLocation");
-        var denyBtn = document.getElementById("simulateDenied");
         if (useCurrentBtn || manualBtn) {
           var statusEl = document.getElementById("locationStatus");
           var deniedEl = document.getElementById("locationDenied");
@@ -102,7 +110,7 @@
           });
           }
 
-            if (continueBtn) continueBtn.removeAttribute("disabled");
+          if (continueBtn) continueBtn.removeAttribute("disabled");
           },
           function () {
             if (statusEl) statusEl.hidden = true;
@@ -114,23 +122,47 @@
     }
 
     if (manualBtn) {
-  manualBtn.addEventListener("click", function () {
-    if (deniedEl) deniedEl.hidden = true;
+        manualBtn.addEventListener("click", function () {
 
-    if (citizenMap && citizenMarker) {
-      citizenMarker.dragging.enable();
-      citizenMap.setView(citizenMarker.getLatLng(), 16);
+            if (!citizenMap) return;
+
+            if (deniedEl) deniedEl.hidden = true;
+
+            var d = loadReport();
+
+            // If a marker already exists, use it.
+            if (citizenMarker) {
+                citizenMarker.dragging.enable();
+                citizenMap.setView(citizenMarker.getLatLng(), 16);
+                return;
+            }
+
+            // No GPS marker exists, so create one at the map center.
+            var center = citizenMap.getCenter();
+
+            d.latitude = center.lat;
+            d.longitude = center.lng;
+            saveReport(d);
+
+            citizenMarker = L.marker(
+                [center.lat, center.lng],
+                { draggable: true }
+            ).addTo(citizenMap);
+
+            citizenMarker.on("dragend", function (event) {
+                var position = event.target.getLatLng();
+
+                var updatedReport = loadReport();
+                updatedReport.latitude = position.lat;
+                updatedReport.longitude = position.lng;
+                saveReport(updatedReport);
+            });
+
+            if (continueBtn) {
+                continueBtn.removeAttribute("disabled");
+            }
+        });
     }
-  });
-}
-
-if (denyBtn) {
-  denyBtn.addEventListener("click", function () {
-    if (deniedEl) deniedEl.hidden = false;
-    if (addressEl) addressEl.hidden = true;
-  });
-}
-
       }
 
 
