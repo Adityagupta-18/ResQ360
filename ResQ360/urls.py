@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from apps.users.views import login_page , volunteer_dashboard , volunteer_emergency_detail
+from apps.users.views import login_page ,register_page , volunteer_dashboard , volunteer_emergency_detail , pending_verification
 from apps.organizations.views import organization_dashboard ,emergency_detail
 from apps.incidents.views import citizen_home , track_incident , track_emergency , nearby_help , incident_type ,incident_details,incident_review , citizen_location ,incident_confirmation
 
@@ -26,7 +26,9 @@ urlpatterns = [
     path('api/v1/organizations/', include('apps.organizations.urls')),
     path('api/v1/incidents/', include('apps.incidents.urls')),
     path("api/v1/notifications/",include("apps.notifications.urls")),
+    path("register/", register_page, name="register-page"),
     path("login/", login_page, name="login-page"),
+    path("pending-verification/",pending_verification, name="pending-verification"),
     path("organization/dashboard/", organization_dashboard, name="organization-dashboard"),
     path("organization/emergency/<str:emergency_id>/", emergency_detail, name="emergency-detail"),
     path("volunteer/dashboard/", volunteer_dashboard, name="volunteer-dashboard"),

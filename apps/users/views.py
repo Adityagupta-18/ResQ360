@@ -43,6 +43,11 @@ class VolunteerProfileView(APIView):
 def login_page(request):
     return render(request, "users/login.html")
 
+def register_page(request):
+    return render(request, "users/register.html")
+
+def pending_verification(request):
+    return render(request, "users/verification_pending.html")
 
 def volunteer_dashboard(request):
     return render(request, "volunteer/dashboard.html")
