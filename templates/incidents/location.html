@@ -18,7 +18,7 @@
   </div>
   </div>
   <div class="wizard-body">
-    <div class="map-box map-box--lg" style="margin-bottom:var(--r-space-4);">
+    <div id="citizenMap" class="map-box map-box--lg" style="height:400px; margin-bottom:var(--r-space-4);">
       <div class="map-pin" style="top:55%;left:48%;"><div class="map-pin__dot"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></div></div>
       <span class="map-attribution">Map data — OpenStreetMap contributors</span>
     </div>
@@ -53,5 +53,8 @@
 {% endblock %}
 
 {% block extra_js %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="{% static 'js/citizen-report.js' %}"></script>
 {% endblock %}

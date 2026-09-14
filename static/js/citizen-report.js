@@ -13,7 +13,22 @@
   var SEVERITY_LABELS = { critical: "Critical", serious: "Serious", minor: "Minor", unknown: "Unknown" };
   var TIMELINE_LABELS = ["Reported", "Matching", "Alerting responders", "Accepted", "En route", "Arrived", "In progress", "Resolved"];
 
+
+
   document.addEventListener("DOMContentLoaded", function () {
+
+    var mapEl = document.getElementById("citizenMap");
+    var mapEl = document.getElementById("citizenMap");
+    var citizenMap = null;
+    var citizenMarker = null;
+
+  if (mapEl && window.L) {
+    citizenMap = L.map("citizenMap").setView([28.6139, 77.2090], 13);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(citizenMap);
+  }
 
     /* ---- Screen: What happened? (emergency type) ---- */
     var typeContinueBtn = document.getElementById("continueBtnType");
@@ -41,53 +56,84 @@
     }
 
     /* ---- Screen: Emergency Location ---- */
-    var useCurrentBtn = document.getElementById("useCurrentLocation");
-    var manualBtn = document.getElementById("useManualLocation");
-    var denyBtn = document.getElementById("simulateDenied");
-    if (useCurrentBtn || manualBtn) {
-      var statusEl = document.getElementById("locationStatus");
-      var deniedEl = document.getElementById("locationDenied");
-      var addressEl = document.getElementById("locationAddress");
-      var continueBtn = document.getElementById("continueBtnLocation");
-      var DEMO_ADDRESS = "Sector 12, MG Road, near City Hospital";
+        var useCurrentBtn = document.getElementById("useCurrentLocation");
+        var manualBtn = document.getElementById("useManualLocation");
+        var denyBtn = document.getElementById("simulateDenied");
+        if (useCurrentBtn || manualBtn) {
+          var statusEl = document.getElementById("locationStatus");
+          var deniedEl = document.getElementById("locationDenied");
+          var addressEl = document.getElementById("locationAddress");
+          var continueBtn = document.getElementById("continueBtnLocation");
+    
 
-      if (useCurrentBtn) {
-        useCurrentBtn.addEventListener("click", function () {
-          if (statusEl) statusEl.hidden = false;
-          if (deniedEl) deniedEl.hidden = true;
-          if (addressEl) addressEl.hidden = true;
-          useCurrentBtn.setAttribute("disabled", "true");
-          // Demo only: simulate a resolved location instead of calling the
-          // real Geolocation API, so the prototype behaves identically for
-          // every reviewer regardless of browser permissions.
-          setTimeout(function () {
+    if (useCurrentBtn) {
+      useCurrentBtn.addEventListener("click", function () {
+        if (statusEl) statusEl.hidden = false;
+        if (deniedEl) deniedEl.hidden = true;
+        if (addressEl) addressEl.hidden = true;
+        useCurrentBtn.setAttribute("disabled", "true");
+
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
             if (statusEl) statusEl.hidden = true;
             if (addressEl) addressEl.hidden = false;
             useCurrentBtn.removeAttribute("disabled");
+
             var d = loadReport();
-            d.location = DEMO_ADDRESS;
+            d.latitude = position.coords.latitude;
+            d.longitude = position.coords.longitude;
             saveReport(d);
+
+          if (mapEl && citizenMap) {
+            citizenMap.setView([d.latitude, d.longitude], 16);
+
+            citizenMarker = L.marker(
+              [d.latitude, d.longitude],
+              { draggable: true }
+            ).addTo(citizenMap);
+
+            citizenMarker.on("dragend", function (event) {
+            var position = event.target.getLatLng();
+
+            var updatedReport = loadReport();
+            updatedReport.latitude = position.lat;
+            updatedReport.longitude = position.lng;
+            saveReport(updatedReport);
+          });
+          }
+
             if (continueBtn) continueBtn.removeAttribute("disabled");
-          }, 800);
-        });
-      }
-      if (manualBtn) {
-        manualBtn.addEventListener("click", function () {
-          if (deniedEl) deniedEl.hidden = true;
-          if (addressEl) addressEl.hidden = false;
-          var d = loadReport();
-          d.location = DEMO_ADDRESS;
-          saveReport(d);
-          if (continueBtn) continueBtn.removeAttribute("disabled");
-        });
-      }
-      if (denyBtn) {
-        denyBtn.addEventListener("click", function () {
-          if (deniedEl) deniedEl.hidden = false;
-          if (addressEl) addressEl.hidden = true;
-        });
-      }
+          },
+          function () {
+            if (statusEl) statusEl.hidden = true;
+            if (deniedEl) deniedEl.hidden = false;
+            useCurrentBtn.removeAttribute("disabled");
+          }
+        );
+      });
     }
+
+    if (manualBtn) {
+  manualBtn.addEventListener("click", function () {
+    if (deniedEl) deniedEl.hidden = true;
+
+    if (citizenMap && citizenMarker) {
+      citizenMarker.dragging.enable();
+      citizenMap.setView(citizenMarker.getLatLng(), 16);
+    }
+  });
+}
+
+if (denyBtn) {
+  denyBtn.addEventListener("click", function () {
+    if (deniedEl) deniedEl.hidden = false;
+    if (addressEl) addressEl.hidden = true;
+  });
+}
+
+      }
+
+
 
     /* ---- Screen: Emergency Details ---- */
     var detailsContinueBtn = document.getElementById("continueBtnDetails");
@@ -134,17 +180,23 @@
 
 var submitBtn = document.getElementById("submitBtn");
 if (submitBtn) {
-  submitBtn.addEventListener("click", async function () {
+  submitBtn.addEventListener("click", function () {
       var d2 = loadReport();
 
       var payload = {
           incident_type: d2.type,
-          severity: d2.severity,
+          latitude: d2.latitude,
+          longitude: d2.longitude,
+          location_address: d2.location,
           people_affected: Number(d2.people),
-          location_address: d2.location
+          severity: d2.severity,
+          road_blocked: d2.quickAnswers.road_blocked,
+          fire_smoke: d2.quickAnswers.fire_smoke,
+          severe_bleeding: d2.quickAnswers.severe_bleeding,
+          person_trapped: d2.quickAnswers.person_trapped
       };
 
-      console.log("Sending incident:", payload);
+      console.log("Incident payload:", payload);
   });
 }
 
