@@ -60,8 +60,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         const volLatitude = position.coords.latitude;
         const volLongitude = position.coords.longitude;
 
-        console.log("volunteer location:", volLatitude, volLongitude);
-        console.log("Emergency location:", latitude, longitude);
 
     const routeUrl =
     `https://router.project-osrm.org/route/v1/driving/` +
@@ -70,7 +68,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const routeResponse = await fetch(routeUrl);
     const routeData = await routeResponse.json();
-    console.log("Route data:", routeData);
     const routeCoordinates = routeData.routes[0].geometry.coordinates;
 
     // Locaiton Direction From Live to Incident
@@ -151,9 +148,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
     }
     updateWorkflow(data.status);
-
-    console.log("Emergency details:", data);
-    console.log("Assignment:", incident);
 
     document.getElementById("incidentTitle").textContent =
         `${data.incident_type} — ${data.emergency_id}`;

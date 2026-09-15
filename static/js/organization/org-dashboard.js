@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const data = await apiRequest("/organizations/incidents/");
 
-    console.log("Organization incidents:", data);
 });
 
 
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     loadNotifications();
     const incidentList = document.getElementById("incidentList");
     const data = await apiRequest("/organizations/incidents/");
-    console.log("Organization incidents:", data);
 
     if (Array.isArray(data)) {
         incidentList.innerHTML = "";
@@ -81,11 +79,6 @@ async function loadNotifications() {
 
     const unreadCount = notifications.filter(
         notification => !notification.is_read).length;
-    console.log("Unread count:", unreadCount);
-    console.log(
-        "Dot element:",
-        document.getElementById("notificationDot")
-    );
 
     document.getElementById("notificationDot").style.display =
         unreadCount > 0 ? "block" : "none";

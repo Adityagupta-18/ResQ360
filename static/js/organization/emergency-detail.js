@@ -58,9 +58,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         const orgLatitude = position.coords.latitude;
         const orgLongitude = position.coords.longitude;
 
-        console.log("Organization location:", orgLatitude, orgLongitude);
-        console.log("Emergency location:", latitude, longitude);
-
     const routeUrl =
     `https://router.project-osrm.org/route/v1/driving/` +
     `${orgLongitude},${orgLatitude};${longitude},${latitude}` +
@@ -68,7 +65,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const routeResponse = await fetch(routeUrl);
     const routeData = await routeResponse.json();
-    console.log("Route data:", routeData);
     const routeCoordinates = routeData.routes[0].geometry.coordinates;
 
     // Locaiton Direction From Live to Incident
@@ -150,9 +146,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     updateWorkflow(data.status);
 
-    console.log("Emergency details:", data);
-    console.log("Assignment:", incident);
-
     document.getElementById("incidentTitle").textContent =
         `${data.incident_type} — ${data.emergency_id}`;
 
@@ -201,7 +194,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 method: "POST"
             }
         );
-        console.log("Accept response:", response);
 
         if (!response.error) {
             data.status = "ACCEPTED";
@@ -221,7 +213,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     method: "POST"
                 }
             );
-            console.log("Enroute response:", response);
 
             if (!response.error) {
                 data.status = "ENROUTE";
@@ -240,7 +231,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 method: "POST"
             }
         );
-        console.log("In Progress response:", response);
 
         if (!response.error) {
             data.status = "IN_PROGRESS";
@@ -260,7 +250,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 method: "POST"
             }
         );
-        console.log("Resolve response:", response);
 
         if (!response.error) {
             data.status = "RESOLVED";

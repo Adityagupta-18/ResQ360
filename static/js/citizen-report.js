@@ -417,7 +417,6 @@ if (trackForm) {
         }
 
         errorEl.hidden = true;
-        console.log("Entered ID:", emergencyId);
         if (!emergencyId) {
             showError("Please enter an Emergency ID.");
             return;

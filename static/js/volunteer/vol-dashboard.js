@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 const volunteer = await apiRequest("/auth/volunteer/me/");
 
-console.log("Volunteer profile:", volunteer);
-
 if (volunteer && volunteer.full_name) {
 
     document.getElementById("volunteerName").textContent =
@@ -23,8 +21,6 @@ if (volunteer && volunteer.full_name) {
     // Load notifications
     const notifications = await apiRequest("/notifications/");
 
-    console.log("Volunteer notifications:", notifications);
-
     if (!Array.isArray(notifications)) {
         return;
     }
@@ -40,7 +36,6 @@ if (volunteer && volunteer.full_name) {
                 `/incidents/track/${notification.emergency_id}/`
             );
 
-            console.log("Incident:", incident);
 
             // Don't show resolved emergencies
             if (incident.status === "RESOLVED") {
@@ -114,11 +109,6 @@ async function loadNotifications() {
 
     const unreadCount = notifications.filter(
         notification => !notification.is_read).length;
-    console.log("Unread count:", unreadCount);
-    console.log(
-        "Dot element:",
-        document.getElementById("notificationDot")
-    );
 
     document.getElementById("notificationDot").style.display =
         unreadCount > 0 ? "block" : "none";
