@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -33,3 +34,24 @@ class VolunteerProfileSerializer(serializers.ModelSerializer):
             "email",
             "account_type",
         ]
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        if self.user.account_type == 'ORG':
+            organization = self.user.organization
+
+            if organization.verification_status == 'PEND':
+                raise serializers.ValidationError(
+                    "Organization verification is pending."
+                )
+
+            if organization.verification_status == 'REJ':
+                raise serializers.ValidationError(
+                    "Organization registration has been rejected."
+                )
+
+        return data

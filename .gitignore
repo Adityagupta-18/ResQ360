@@ -26,6 +26,10 @@ db.sqlite3-journal
 /staticfiles/
 /media/
 
+# User-uploaded files
+media/
+verification_documents/
+
 # =========================
 # Environment Variables
 # =========================
