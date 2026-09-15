@@ -394,6 +394,73 @@ function updateTrackingTimeline(status) {
 }      
 
 
+
+/* ---- Screen: Track Incident Form ---- */
+var trackForm = document.getElementById("trackForm");
+
+if (trackForm) {
+    trackForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+
+        var trackInput = document.getElementById("trackId");
+        var errorEl = document.getElementById("trackError");
+        var errorTextEl = document.getElementById("trackErrorText");
+
+        var emergencyId = trackInput
+            ? trackInput.value.trim()
+            : "";
+
+        function showError(message) {
+            errorTextEl.textContent = message;
+            errorEl.hidden = false;
+        }
+
+        errorEl.hidden = true;
+        console.log("Entered ID:", emergencyId);
+        if (!emergencyId) {
+            showError("Please enter an Emergency ID.");
+            return;
+        }
+
+        try {
+            var response = await fetch(
+                "/api/v1/incidents/track/" +
+                encodeURIComponent(emergencyId) +
+                "/"
+            );
+
+            if (response.status === 404) {
+                showError(
+                    "Invalid Emergency ID. Please check the ID and try again."
+                );
+                return;
+            }
+
+            if (!response.ok) {
+                showError(
+                    "Unable to track this emergency. Please try again."
+                );
+                return;
+            }
+
+            window.location.href =
+                "/track-emergency?emergency_id=" +
+                encodeURIComponent(emergencyId);
+
+        } catch (error) {
+            console.error("Tracking validation failed:", error);
+
+            showError(
+                "Unable to connect to the server. Please try again."
+            );
+        }
+    });
+}
+
+
+
+
 /* ---- Screen: Emergency Tracking ---- */
 var trackIdEl = document.getElementById("trackEmergencyId");
 
@@ -408,13 +475,13 @@ if (trackIdEl) {
         trackIdEl.textContent = emergencyId;
 
         fetch("/api/v1/incidents/track/" + encodeURIComponent(emergencyId) + "/")
-            .then(function (response) {
-                return response.json().then(function (data) {
-                    return {
-                        ok: response.ok,
-                        data: data
-                    };
-                });
+            .then(async function (response) {
+                const data = await response.json();
+                return {
+                    ok: response.ok,
+                    status: response.status,
+                    data: data
+                };
             })
             .then(function (result) {
 

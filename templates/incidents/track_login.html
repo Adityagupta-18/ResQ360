@@ -1,16 +1,31 @@
 {% extends "base_bare.html" %}
+{% load static %}
 
 {% block title %}ResQ360 — Track Emergency{% endblock %}
 
 {% block content %}
 <div class="auth-shell">
-  <form class="r-card auth-card" id="trackForm" action="{% url 'track-emergency' %}" method="get">
-    <div class="auth-card__brand"><span class="auth-card__brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/></svg></span>ResQ360</div>
+  <form class="r-card auth-card" id="trackForm">
+    <div class="auth-card__brand">
+        <span class="r-brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M9 12.5l2 2 4-4.5" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>ResQ360</div>
     <h1>Track Emergency</h1>
     <p class="r-body-secondary">No account required. Enter the Emergency ID you received when you reported.</p>
-    <div class="field"><label for="trackId">Emergency ID</label><input type="text" id="trackId" name="emergency_id" class="input" placeholder="EMG-F9624B" required></div>
+    <div class="field"><label for="trackId">Emergency ID</label><input type="text" id="trackId" name="emergency_id" class="input" placeholder="EMG-F9624B"></div>
+<div id="trackError" role="alert" hidden>
+    <span id="trackErrorText"></span>
+</div>
     <button type="submit" class="r-btn r-btn-primary r-btn-block r-btn-lg">TRACK EMERGENCY</button>
     <p class="auth-foot"><a href="/" style="color:var(--r-indigo);font-weight:var(--r-weight-semibold);">Back to home</a></p>
   </form>
 </div>
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="{% static 'js/citizen-report.js' %}"></script>
 {% endblock %}
