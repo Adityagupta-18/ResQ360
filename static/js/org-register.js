@@ -227,11 +227,7 @@
             })
             .then(function (data) {
 
-            if (volunteer) {
-                window.location.href = "/login/";
-            } else {
-                window.location.href = nextBtn.getAttribute("data-final-href");
-            }
+            window.location.href = "/login/";
 
             })
             .catch(function (error) {

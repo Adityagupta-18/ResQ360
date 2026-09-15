@@ -19,11 +19,34 @@ loginForm.addEventListener("submit", async function(event) {
         })
     });
 
-    console.log("Login response:", data);
+    if (data.verification_status?.[0] === "PEND") {
+
+        const params = new URLSearchParams({
+            status: "PEND",
+            name: data.organization_name?.[0] || "",
+            type: data.organization_type?.[0] || ""
+        });
+        window.location.href =
+            "/verification-pending/?" + params.toString();
+        return;
+    }
+
+    if (data.verification_status?.[0] === "REJ") {
+
+        const params = new URLSearchParams({
+            status: "REJ",
+            name: data.organization_name?.[0] || "",
+            type: data.organization_type?.[0] || ""
+        });
+        window.location.href =
+            "/verification-pending/?" + params.toString();
+        return;
+    }
 
     // Invalid credentials
     if (!data.access || !data.refresh) {
-        loginError.textContent = data.detail || "Invalid email or password.";
+        loginError.textContent =
+            data.detail || "Invalid email or password.";
         loginError.classList.remove("d-none");
         return;
     }

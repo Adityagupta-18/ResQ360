@@ -48,7 +48,7 @@
 #loginError {
     width: 100%;
     max-width: 440px;
-    margin: 0 43.1rem 16px auto;
+    margin: 0 auto 16px auto;
     padding: 12px 16px;
 
     background: #fff1f2;
@@ -73,7 +73,7 @@
 #registrationError {
     width: 100%;
     max-width: 440px;
-    margin: 0 auto 16px auto;
+    margin: 0 43.1rem 16px auto;
     padding: 12px 16px;
 
     background: #fff1f2;

@@ -45,13 +45,19 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             organization = self.user.organization
 
             if organization.verification_status == 'PEND':
-                raise serializers.ValidationError(
-                    "Organization verification is pending."
-                )
+                raise serializers.ValidationError({
+                    "verification_status": "PEND",
+                    "message": "Organization verification is pending.",
+                    "organization_name": organization.name,
+                    "organization_type": organization.get_organization_type_display()
+                })
 
             if organization.verification_status == 'REJ':
-                raise serializers.ValidationError(
-                    "Organization registration has been rejected."
-                )
+                raise serializers.ValidationError({
+                    "verification_status": "REJ",
+                    "message": "Organization registration has been rejected.",
+                    "organization_name": organization.name,
+                    "organization_type": organization.get_organization_type_display()
+                })
 
         return data

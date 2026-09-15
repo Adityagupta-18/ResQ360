@@ -30,7 +30,7 @@ urlpatterns = [
     path("api/v1/notifications/",include("apps.notifications.urls")),
     path("register/", register_page, name="register-page"),
     path("login/", login_page, name="login-page"),
-    path("pending-verification/",pending_verification, name="pending-verification"),
+    path("verification-pending/",pending_verification, name="pending-verification"),
     path("organization/dashboard/", organization_dashboard, name="organization-dashboard"),
     path("organization/emergency/<str:emergency_id>/", emergency_detail, name="emergency-detail"),
     path("volunteer/dashboard/", volunteer_dashboard, name="volunteer-dashboard"),
