@@ -13,7 +13,8 @@
             document.getElementById("organizationDetails");
         var organizationDocumentEl =
             document.getElementById("organizationDocument");
-
+        var registrationErrorEl =
+            document.getElementById("registrationError");
         var nextBtn = document.getElementById("regNextBtn");
         var backBtn = document.getElementById("regBackBtn");
         var stepLabel = document.getElementById("regStepLabel");
@@ -200,6 +201,20 @@
             })
             .then(async function (response) {
 
+                var contentType = response.headers.get("content-type") || "";
+
+                if (!contentType.includes("application/json")) {
+                    if (response.status === 500) {
+                        throw new Error(
+                            "This email has already been registered."
+                        );
+                    }
+
+                    throw new Error(
+                        "Registration failed. Please try again."
+                    );
+                }
+
                 var data = await response.json();
 
                 if (!response.ok) {
@@ -221,7 +236,15 @@
             })
             .catch(function (error) {
 
-                alert(error.message || "Registration failed. Please try again.");
+                console.error("Registration failed:", error);
+
+                if (registrationErrorEl) {
+                    registrationErrorEl.textContent =
+                        error.message ||
+                        "Registration failed. Please try again.";
+
+                    registrationErrorEl.hidden = false;
+                }
 
             })
             .finally(function () {

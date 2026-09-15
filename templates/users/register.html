@@ -5,8 +5,21 @@
 
 {% block content %}
 <div class="auth-shell">
+      <div style="width:100%;max-width:630px;margin:0 auto;">
+    <a href="{% url "login-page" %}" class="back-link" style="display:flex;align-items:center;width:fit-content;">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 5l-7 7 7 7"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+        </svg>Back</a>
+  </div>
+  <div id="registrationError" class="alert alert-danger d-none" hidden role="alert"></div>
   <div class="r-card auth-card auth-card--wide">
-    <div class="auth-card__brand"><span class="auth-card__brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/></svg></span>ResQ360</div>
+    <div class="auth-card__brand"><span class="auth-card__brand-mark"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M12 2L4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round"/>
+    <path d="M8 12L11 15L16 9" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg></span>ResQ360</div>
     <h1>Registration</h1>
     <p class="r-body-secondary">Step <span id="regStepLabel">1</span> of <span id="regTotalSteps">3</span></p>
     <div class="form-progress" data-tabs>
