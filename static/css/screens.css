@@ -146,3 +146,54 @@
 .doc-row { display: flex; align-items: center; gap: var(--r-space-3); padding: var(--r-space-3); border: 1px solid var(--r-border); border-radius: var(--r-radius-md); }
 .doc-row svg { width: 20px; height: 20px; color: var(--r-text-secondary); flex-shrink: 0; }
 .doc-row__name { font-size: var(--r-text-sm); font-weight: var(--r-weight-medium); flex: 1; }
+
+
+/* =========================
+   Nearby Help Categories
+   ========================= */
+
+.nearby-categories {
+    display: flex;
+    gap: var(--r-space-3);
+    margin-bottom: var(--r-space-5);
+    flex-wrap: wrap;
+}
+
+.nearby-category {
+    flex: 1;
+    min-width: 150px;
+    padding: 10px 16px;
+    border: 1px solid var(--r-border);
+    border-radius: var(--r-radius-md);
+    background: var(--r-surface);
+    color: var(--r-text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.nearby-category:hover {
+    border-color: var(--r-red);
+    color: var(--r-red);
+}
+
+.nearby-category:focus-visible {
+    outline: 2px solid var(--r-red);
+    outline-offset: 2px;
+}
+
+.nearby-category:active {
+    transform: translateY(1px);
+}
+
+.nearby-category.active {
+    background: var(--r-red);
+    border-color: var(--r-red);
+    color: #fff;
+    box-shadow: var(--r-shadow-sm);
+}

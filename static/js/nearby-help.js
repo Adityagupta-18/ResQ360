@@ -47,6 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
             button.addEventListener("click", function () {
 
                 const type = button.dataset.type;
+                document
+                .querySelectorAll(".nearby-category")
+                .forEach(function (categoryButton) {
+                    categoryButton.classList.remove("active");
+                });
+
+            button.classList.add("active");
 
                 if (!userLocation) {
                     return;
@@ -146,8 +153,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const data = await response.json();
 
-                console.log("Nearest place:", data);
-
                 if (data.length === 0) {
                     resultsContainer.innerHTML =
                         "<div class='r-card card-pad'>" +
@@ -219,13 +224,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         padding: [30, 30]
                     });
                 }
-
-                console.log("Selected nearest place:", place);
-                console.log(
-                    "Distance:",
-                    nearestDistance.toFixed(2),
-                    "km"
-                );
 
                 const placeLat = parseFloat(place.lat);
                 const placeLon = parseFloat(place.lon);
