@@ -192,7 +192,7 @@ input:focus-visible,
 .r-header {
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 999;
   height: var(--r-header-height);
   background: var(--r-navy);
   border-bottom: 1px solid var(--r-navy-border);
