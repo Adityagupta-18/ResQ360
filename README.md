@@ -26,32 +26,18 @@ ResQ360 is built as a standalone educational/prototype platform and is **not a r
 
 ## Table of Contents
 
-* [Overview](#overview)
-* [Key Features](#key-features)
+|                                                                               |                                                                   |
+| :---------------------------------------------------------------------------- | :---------------------------------------------------------------- |
+| **01.** [Overview](#overview)                                                 | **10.** [Maps and Location Services](#maps-and-location-services) |
+| **02.** [Key Features](#key-features)                                         | **11.** [API Architecture](#api-architecture)                     |
+| **03.** [Application Flow](#application-flow)                                 | **12.** [Database Design](#database-design)                       |
+| **04.** [Technology Stack](#technology-stack)                                 | **13.** [Installation and Setup](#installation-and-setup)         |
+| **05.** [Project Structure](#project-structure)                               | **14.** [Deployment](#deployment)                                 |
+| **06.** [Authentication and Authorization](#authentication-and-authorization) | **15.** [Project Status](#project-status)                         |
+| **07.** [Incident Management](#incident-management)                           | **16.** [Future Improvements](#future-improvements)               |
+| **08.** [Volunteer Coordination](#volunteer-coordination)                     | **17.** [Disclaimer](#disclaimer)                                 |
+| **09.** [Notifications](#notifications)                                       | **18.** [Author](#author)                                         |
 
-  * [Citizen](#citizen)
-  * [Organizations](#organizations)
-  * [Volunteers](#volunteers)
-  * [Admin](#admin)
-  * [Platform](#platform)
-* [Application Flow](#application-flow)
-* [Technology Stack](#technology-stack)
-* [Project Structure](#project-structure)
-* [Authentication and Authorization](#authentication-and-authorization)
-* [Incident Management](#incident-management)
-* [Organization Dispatch](#organization-dispatch)
-* [Volunteer Coordination](#volunteer-coordination)
-* [Notifications](#notifications)
-* [Maps and Location Services](#maps-and-location-services)
-* [API Architecture](#api-architecture)
-* [Database Design](#database-design)
-* [Installation and Setup](#installation-and-setup)
-* [Environment Configuration](#environment-configuration)
-* [Deployment](#deployment)
-* [Project Status](#project-status)
-* [Future Improvements](#future-improvements)
-* [Disclaimer](#disclaimer)
-* [Author](#author)
 
 ---
 
@@ -382,7 +368,8 @@ JavaScript handles:
 
 The frontend does not independently determine whether a responder is authorized to perform an operation. Authorization is enforced by the backend API.
 
-### Maps and Location Services
+---
+## Maps and Location Services
 
 ResQ360 uses **Leaflet** to provide interactive maps.
 
@@ -937,18 +924,21 @@ Status changes are controlled by protected backend endpoints and validated again
 
 ### Organization Dispatch
 
-After incident creation, the backend determines which organization categories should receive the incident.
+After an incident is created, ResQ360 determines which organization categories are relevant to that incident type.
 
-| Incident         | Medical | Fire / Rescue | Police / Security | NGO |
-| :--------------- | :-----: | :-----------: | :---------------: | :-: |
-| Accident         |    ✓    |       —       |         ✓         |  ✓  |
-| Medical          |    ✓    |       —       |         —         |  ✓  |
-| Fire             |    ✓    |       ✓       |         ✓         |  ✓  |
-| Crime / Security |    —    |       —       |         ✓         |  ✓  |
-| Missing Person   |    —    |       —       |         ✓         |  ✓  |
-| Blood Bank       |    ✓    |       —       |         —         |  ✓  |
+| Incident Type        | Responding Organization Categories             |
+| :------------------- | :--------------------------------------------- |
+| **Accident**         | Medical, Police / Security, NGO                |
+| **Medical**          | Medical, NGO                                   |
+| **Fire**             | Fire / Rescue, Medical, Police / Security, NGO |
+| **Crime / Security** | Police / Security, NGO                         |
+| **Missing Person**   | Police / Security, NGO                         |
+| **Blood Bank**       | Medical, NGO                                   |
 
-Only eligible **verified organizations** are assigned.
+Only eligible **verified organizations** are assigned to incidents according to these dispatch rules.
+
+Volunteer notification is handled separately based on the incident type and volunteer eligibility.
+
 
 ### IncidentOrganization
 
@@ -983,3 +973,385 @@ This ensures that a client cannot bypass the intended workflow simply by sending
 The public tracking endpoint accepts an Emergency ID and returns the information required by the citizen tracking interface.
 
 Internal responder assignments, authorization details, and other protected information are not exposed through the public tracking flow.
+
+---
+## Volunteer Coordination
+
+Volunteers are independent responders who can receive relevant emergency incidents without being part of an organization.
+
+### Volunteer Registration
+
+Volunteers register through the platform using their account details. Unlike organizations, volunteers do not require organization verification or a verification document.
+
+After registration and login, volunteers can access their dedicated dashboard.
+
+### Incident Assignment
+
+Eligible active volunteers are notified based on the incident type.
+
+| Incident Type    | Volunteer Notification |
+| :--------------- | :--------------------: |
+| Accident         |           Yes          |
+| Medical          |           Yes          |
+| Fire             |           Yes          |
+| Crime / Security |           Yes          |
+| Missing Person   |           No           |
+| Blood Bank       |           Yes          |
+
+Each volunteer can have only one assignment for a particular incident.
+
+### Volunteer Interface
+
+Volunteers can:
+
+* View assigned emergencies.
+* View emergency details.
+* View incident status.
+* Receive notifications.
+* Mark notifications as read.
+* View the incident location on a map.
+* View a route from their current location to the incident.
+
+Volunteers **cannot accept incidents or change the incident lifecycle**. Lifecycle control remains with the authorized organization responder.
+
+## Notifications
+
+Notifications provide responder-specific updates about incidents assigned to them.
+
+A notification can belong to either:
+
+* An organization, or
+* A volunteer.
+
+The database enforces that a notification has exactly one recipient.
+
+### Notification Features
+
+* Incident-specific notification messages.
+* Emergency ID reference.
+* Creation timestamp.
+* Read/unread state.
+* Recipient ownership validation.
+* Individual notification read operation.
+
+Users can only access notifications belonging to their own organization or volunteer account.
+
+---
+## Maps and Location Services
+
+ResQ360 uses open mapping and routing services to provide location-based functionality without requiring paid map APIs.
+
+### Interactive Maps
+
+The frontend uses **Leaflet** to display interactive maps.
+
+Map tiles are provided through **OpenStreetMap**.
+
+Maps are used for:
+
+* Citizen incident location selection.
+* Incident location display.
+* Organization responder maps.
+* Volunteer emergency maps.
+* Nearby help discovery.
+
+### Citizen Location Selection
+
+During incident reporting, the citizen can use the browser's current location to position the map.
+
+The incident marker can also be dragged to adjust the exact location before submitting the report.
+
+The selected latitude and longitude are then included in the incident submission.
+
+### Nearby Help
+
+The citizen interface provides nearby help categories for:
+
+* Medical / Hospital
+* Police
+* Fire
+
+Nearby places are searched using **Nominatim/OpenStreetMap** data. Returned locations are evaluated against the user's position to identify the closest available result.
+
+### Routing
+
+**OSRM** is used to calculate driving routes between the responder's current location and the incident or selected nearby destination.
+
+The resulting route is displayed directly on the Leaflet map.
+
+### Location Services Used
+
+| Service                     | Purpose                   |
+| :-------------------------- | :------------------------ |
+| **Leaflet**                 | Interactive map rendering |
+| **OpenStreetMap**           | Map data and tiles        |
+| **Nominatim**               | Nearby place search       |
+| **OSRM**                    | Driving route calculation |
+| **Browser Geolocation API** | Current device location   |
+
+---
+## API Architecture
+
+ResQ360 follows a REST API architecture using Django REST Framework. The frontend communicates with the backend through HTTP requests using the Fetch API.
+
+The API is versioned under:
+
+```text id="p8s3mb"
+/api/v1/
+```
+
+### Authentication Endpoints
+
+| Method | Endpoint                      | Purpose                                 |
+| :----- | :---------------------------- | :-------------------------------------- |
+| `POST` | `/api/v1/auth/register/`      | Register a volunteer account            |
+| `POST` | `/api/v1/auth/login/`         | Authenticate a user                     |
+| `POST` | `/api/v1/auth/token/refresh/` | Refresh an access token                 |
+| `GET`  | `/api/v1/auth/me/`            | Retrieve authenticated user information |
+
+### Organization Endpoints
+
+| Method  | Endpoint                           | Purpose                         |
+| :------ | :--------------------------------- | :------------------------------ |
+| `POST`  | `/api/v1/organizations/register/`  | Register an organization        |
+| `GET`   | `/api/v1/organizations/me/`        | Retrieve organization profile   |
+| `PATCH` | `/api/v1/organizations/me/`        | Update permitted profile fields |
+| `GET`   | `/api/v1/organizations/incidents/` | Retrieve assigned incidents     |
+
+### Incident Endpoints
+
+| Method | Endpoint                                                  | Purpose                        |
+| :----- | :-------------------------------------------------------- | :----------------------------- |
+| `POST` | `/api/v1/incidents/`                                      | Create an anonymous incident   |
+| `GET`  | `/api/v1/incidents/track/<emergency_id>/`                 | Track an incident publicly     |
+| `POST` | `/api/v1/incidents/organization-assignments/<id>/accept/` | Accept an assigned incident    |
+| `POST` | Lifecycle action endpoints                                | Progress an accepted incident  |
+| `GET`  | `/api/v1/incidents/volunteer/`                            | Retrieve volunteer assignments |
+
+### Notification Endpoints
+
+| Method | Endpoint                                        | Purpose                       |
+| :----- | :---------------------------------------------- | :---------------------------- |
+| `GET`  | `/api/v1/notifications/`                        | Retrieve user's notifications |
+| `POST` | `/api/v1/notifications/<notification_id>/read/` | Mark a notification as read   |
+
+### API Security
+
+Protected endpoints use JWT authentication and backend permission checks.
+
+Authorization is applied according to:
+
+* Authentication state.
+* Account type.
+* Organization verification status.
+* Assignment ownership.
+* Incident lifecycle state.
+
+The frontend therefore acts as the client interface, while authorization and business rules remain enforced by the Django backend.
+
+---
+## Database Design
+
+ResQ360 uses PostgreSQL as its primary relational database.
+
+The database is organized around the platform's main domain entities and their relationships.
+
+### Core Models
+
+| Model                    | Purpose                                                  |
+| :----------------------- | :------------------------------------------------------- |
+| **User**                 | Stores authenticated organization and volunteer accounts |
+| **Organization**         | Stores organization details and verification information |
+| **Incident**             | Stores emergency reports and their current lifecycle     |
+| **IncidentOrganization** | Connects incidents with assigned organizations           |
+| **IncidentVolunteer**    | Connects incidents with assigned volunteers              |
+| **Notification**         | Stores responder-specific incident notifications         |
+
+### Main Relationships
+
+```text
+User
+ ├── Organization
+ └── Volunteer Account
+
+Incident
+ ├── IncidentOrganization ── Organization
+ ├── IncidentVolunteer ──── User
+ └── Notification
+
+Organization
+ └── User (Owner)
+```
+
+The database uses UUIDs for the primary identifiers of the main application entities.
+
+Important constraints are enforced at the database or application level, including:
+
+* Unique organization ownership.
+* Unique incident-organization assignments.
+* Unique incident-volunteer assignments.
+* Notification recipient integrity.
+* Controlled incident lifecycle transitions.
+* Organization verification requirements for responder operations.
+
+---
+## Installation and Setup
+
+### Prerequisites
+
+Make sure the following are installed:
+
+* Python 3.11
+* PostgreSQL
+* Git
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Adityagupta-18/ResQ360.git
+cd ResQ360
+```
+
+### Create a Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+Activate it on Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Configure Environment Variables
+
+Create a `.env` file in the project root and configure the required application settings.
+
+Example:
+
+```env
+SECRET_KEY=your-secret-key
+DEBUG=True
+
+DB_NAME=your_database
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+Additional environment variables may be required depending on the deployment environment.
+
+### Run Migrations
+
+```bash
+python manage.py migrate
+```
+
+### Create an Admin User
+
+```bash
+python manage.py createsuperuser
+```
+
+### Start the Development Server
+
+```bash
+python manage.py runserver
+```
+
+The application can then be accessed through the local Django development server.
+
+## Deployment
+
+ResQ360 is designed to be deployable using a Django-compatible hosting environment with PostgreSQL.
+
+The production deployment setup uses:
+
+* **Render** for application hosting.
+* **Neon PostgreSQL** for the production database.
+
+Environment variables should be configured through the hosting platform rather than committing secrets to the repository.
+
+The `.env` file should remain excluded from version control.
+
+### Production Considerations
+
+Before production deployment, the following should be configured appropriately:
+
+* `DEBUG=False`
+* Production secret key
+* PostgreSQL connection settings
+* Allowed hosts
+* Static file serving
+* Media file handling
+* Secure environment variables
+* HTTPS
+
+---
+## Project Status
+
+ResQ360 currently has a working backend and frontend integration covering the core emergency coordination workflow.
+
+### Currently Implemented
+
+* Anonymous citizen incident reporting.
+* Emergency ID generation and public tracking.
+* Incident-specific responder dispatch.
+* Verified organization registration and verification workflow.
+* Organization responder dashboard.
+* Volunteer registration and dashboard.
+* JWT authentication and role-based authorization.
+* Organization ownership protection.
+* Incident lifecycle management.
+* Responder notifications.
+* Leaflet and OpenStreetMap integration.
+* Nearby medical, police, and fire help discovery.
+* OSRM-based route visualization.
+* PostgreSQL database support.
+* Django Admin management.
+
+## Future Improvements
+
+The current implementation provides the foundation for further development. Potential improvements include:
+
+* Real-time incident status updates.
+* More advanced responder coordination.
+* Improved notification delivery.
+* Automated background processing for notifications and dispatch.
+* Automated backend testing.
+* Containerized deployment.
+* More advanced frontend architecture.
+* Production-scale infrastructure and monitoring.
+
+These are planned improvements and are **not part of the current implementation**.
+
+## Disclaimer
+
+> ResQ360 is an educational/prototype emergency coordination platform and is not a replacement for official emergency services such as 112. In a real emergency, users should contact the appropriate official emergency service.
+
+ResQ360 does not claim integration with or replacement of India's official emergency response system.
+
+## Author
+
+**Aditya Gupta**
+
+Computer Science & Applied Mathematics student and software developer focused on Python, Django, REST APIs, and backend development.
+
+### Connect
+
+* GitHub: `AdityaGupta-18`
+* LinkedIn: `adityagupta018`
+
+---
+
+## License
+
+This project is intended for educational and portfolio purposes.
