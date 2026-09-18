@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
+from django.urls import re_path
 from django.urls import path,include
 from apps.users.views import login_page ,register_page , volunteer_dashboard , volunteer_emergency_detail , pending_verification
 from apps.organizations.views import organization_dashboard ,emergency_detail
@@ -48,4 +50,10 @@ urlpatterns = [
 
 
 if not settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [
+        re_path(
+            r"^media/(?P<path>.*)$",
+            serve,
+            {"document_root": settings.MEDIA_ROOT},
+        ),
+    ]
