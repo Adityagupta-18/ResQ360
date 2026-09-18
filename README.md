@@ -22,7 +22,12 @@ The platform supports anonymous citizen incident reporting, automatic emergency 
 
 ResQ360 is built as a standalone educational/prototype platform and is **not a replacement for official emergency services such as India's 112 emergency response system**.
 
----
+
+## Live Demo
+
+**Live Application :** https://resq360-rane.onrender.com/
+
+
 
 ## Table of Contents
 
