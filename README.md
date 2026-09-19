@@ -25,7 +25,10 @@ ResQ360 is built as a standalone educational/prototype platform and is **not a r
 
 ## Live Demo
 
-**Live Application:** https://resq360-rane.onrender.com/
+**Live Application :** https://resq360-rane.onrender.com/
+
+**Project Demo Video :** [Watch the ResQ360 Demo on LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7507127033123106816/)
+
 
 The deployed application demonstrates the implemented citizen, organization, and volunteer workflows, including incident reporting, emergency tracking, responder coordination, notifications, and map-based location features.
 
