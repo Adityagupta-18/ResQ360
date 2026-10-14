@@ -3,6 +3,8 @@ from apps.notifications.models import Notification
 from apps.users.models import User
 from django.utils import timezone
 from .models import IncidentOrganization , IncidentVolunteer
+from apps.notifications.email_service import send_transactional_email
+
 
 def dispatch_incident(incident):
     required_types = incident.get_required_organization_types()
@@ -23,6 +25,24 @@ def dispatch_incident(incident):
             incident=incident,
             organization=organization,
             message=f"New emergency: {incident.get_incident_type_display()} reported at {incident.location_address}."
+        )
+
+        send_transactional_email(
+            recipient_email=organization.owner.email,
+            subject=f"ResQ360 Emergency Alert: {incident.get_incident_type_display()}",
+            html_content=(
+                f"<h2>New Emergency Alert</h2>"
+                f"<p>Incident: {incident.get_incident_type_display()}</p>"
+                f"<p>Emergency ID: {incident.emergency_id}</p>"
+                f"<p>Location: {incident.location_address}</p>"
+                f"<p>Please log in to ResQ360 to review the incident.</p>"
+            ),
+            text_content=(
+                f"New emergency: {incident.get_incident_type_display()}. "
+                f"Emergency ID: {incident.emergency_id}. "
+                f"Location: {incident.location_address}. "
+                "Please log in to ResQ360 to review the incident."
+            ),
         )
 
 

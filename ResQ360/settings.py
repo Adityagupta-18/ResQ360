@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'apps.incidents',
     'apps.notifications',
     'apps.organizations',
-    'apps.resources',
     'apps.users',
     'rest_framework',
 
@@ -181,3 +180,9 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# EMAIL
+BREVO_API_KEY = os.getenv("BREVO_API_KEY")
+BREVO_SENDER_EMAIL = os.getenv("BREVO_SENDER_EMAIL")
+BREVO_SENDER_NAME = os.getenv("BREVO_SENDER_NAME", "ResQ360")
