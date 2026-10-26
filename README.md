@@ -36,18 +36,18 @@ The deployed application demonstrates the implemented citizen, organization, and
 
 ## Table of Contents
 
-|                                                                               |                                                                   |
+| | |
 | :---------------------------------------------------------------------------- | :---------------------------------------------------------------- |
-| **01.** [Overview](#overview)                                                 | **10.** [Maps and Location Services](#maps-and-location-services) |
-| **02.** [Key Features](#key-features)                                         | **11.** [API Architecture](#api-architecture)                     |
-| **03.** [Application Flow](#application-flow)                                 | **12.** [Database Design](#database-design)                       |
-| **04.** [Technology Stack](#technology-stack)                                 | **13.** [Installation and Setup](#installation-and-setup)         |
-| **05.** [Project Structure](#project-structure)                               | **14.** [Deployment](#deployment)                                 |
-| **06.** [Authentication and Authorization](#authentication-and-authorization) | **15.** [Project Status](#project-status)                         |
-| **07.** [Incident Management](#incident-management)                           | **16.** [Future Improvements](#future-improvements)               |
-| **08.** [Volunteer Coordination](#volunteer-coordination)                     | **17.** [Disclaimer](#disclaimer)                                 |
-| **09.** [Notifications](#notifications)                                       | **18.** [Author](#author)                                         |
-
+| **01.** [Overview](#overview) | **11.** [API Architecture](#api-architecture) |
+| **02.** [Key Features](#key-features) | **12.** [Database Design](#database-design) |
+| **03.** [Application Flow](#application-flow) | **13.** [Installation and Setup](#installation-and-setup) |
+| **04.** [Technology Stack](#technology-stack) | **14.** [Docker Setup](#docker-setup) |
+| **05.** [Project Structure](#project-structure) | **15.** [Deployment](#deployment) |
+| **06.** [Authentication and Authorization](#authentication-and-authorization) | **16.** [Project Status](#project-status) |
+| **07.** [Incident Management](#incident-management) | **17.** [Future Improvements](#future-improvements) |
+| **08.** [Volunteer Coordination](#volunteer-coordination) | **18.** [Disclaimer](#disclaimer) |
+| **09.** [Notifications](#notifications) | **19.** [Author](#author) |
+| **10.** [Maps and Location Services](#maps-and-location-services) | |
 
 ---
 
@@ -1279,6 +1279,177 @@ python manage.py runserver
 
 The application can then be accessed through the local Django development server.
 
+---
+
+## Docker Setup
+
+ResQ360 supports a Docker-based development environment using Docker Compose. The application and database run in separate containers, allowing the web application to connect to PostgreSQL over a dedicated Docker network.
+
+### Architecture
+
+| Service | Description |
+| :--- | :--- |
+| `web` | Runs the Django application using Gunicorn on port `8000`. |
+| `db` | Runs PostgreSQL 18 and stores application data in a persistent Docker volume. |
+
+**Architecture flow:**
+
+```text
+Browser
+   |
+   | http://localhost:8000
+   v
+Django Web Container (web)
+   |
+   | Docker Compose Network
+   v
+PostgreSQL Container (db)
+   |
+   v
+Persistent Docker Volume
+```
+
+### Prerequisites
+
+Install the following before starting the application:
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) or Docker Engine with the Docker Compose plugin.
+- [Git](https://git-scm.com/) to clone the source repository.
+
+Verify the installation:
+
+```bash
+docker --version
+docker compose version
+```
+
+### Installation and Configuration
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/Adityagupta-18/ResQ360.git
+cd ResQ360
+```
+
+**2. Configure environment variables**
+
+Create a local `.env` file in the project root. Configure the environment variables required by `ResQ360/settings.py`, including the Django secret key, allowed hosts, CSRF trusted origins, and any email credentials needed for notification functionality.
+
+Also add the following variable to `.env`:
+
+```dotenv
+POSTGRES_PASSWORD=your_strong_local_password
+```
+
+Replace the placeholder with a strong password of your choice.
+
+The Compose configuration uses this password to initialize the PostgreSQL container. Inside Docker, the web service overrides the database connection settings to connect to the `db` service using the Docker database credentials.
+
+Keep `.env` private. Never commit database passwords, API keys, email credentials, or Django secret keys to version control.
+
+**3. Build and start the containers**
+
+From the directory containing `compose.yaml`, run:
+
+```bash
+docker compose up -d --build
+```
+
+This builds the web application image from the project's `Dockerfile` and starts both the Django web service and PostgreSQL database.
+
+**4. Verify the container status**
+
+```bash
+docker compose ps
+```
+
+Wait until the database service reports a healthy status.
+
+To inspect the web application logs:
+
+```bash
+docker compose logs --tail=50 web
+```
+
+### Database Initialization
+
+**1. Apply database migrations**
+
+```bash
+docker compose exec web python manage.py migrate
+```
+
+This creates the database tables in the PostgreSQL database running inside Docker.
+
+**2. Create an administrator account**
+
+```bash
+docker compose exec web python manage.py createsuperuser
+```
+
+Follow the prompts to create a superuser for the Docker database. A fresh database does not automatically contain existing users, administrator accounts, or records from another database.
+
+### Accessing the Application
+
+Once the containers are running, access ResQ360 using the following URLs:
+
+| Resource | URL |
+| :--- | :--- |
+| Web Application | [http://localhost:8000](http://localhost:8000) |
+| Django Admin | [http://localhost:8000/admin/](http://localhost:8000/admin/) |
+
+### Managing the Containers
+
+**Stop and remove the containers:**
+
+```bash
+docker compose down
+```
+
+This stops the services and removes their containers while preserving the named PostgreSQL volume.
+
+**Start the existing setup again:**
+
+```bash
+docker compose up -d
+```
+
+The database retains its stored data because the PostgreSQL volume persists independently of the database container.
+
+**Stop the application and delete its database volume:**
+
+```bash
+docker compose down -v
+```
+
+**Warning:** This command deletes the named PostgreSQL volume and its stored database data. Use it only when you intentionally want to remove that data.
+
+### Docker Image
+
+The ResQ360 web application image is published on Docker Hub.
+
+**Repository:** [adityagupta18/resq360](https://hub.docker.com/r/adityagupta18/resq360)
+
+Pull the published image:
+
+```bash
+docker pull adityagupta18/resq360:latest
+```
+
+The published image contains the Django web application, not the PostgreSQL server or its database contents. A complete deployment requires a compatible PostgreSQL database and the appropriate runtime configuration.
+
+The Compose workflow described above builds the web image from the source repository. Pulling the published image alone does not start the complete application.
+
+### Data Persistence and Security
+
+- PostgreSQL data is stored in the named Docker volume `resq360_postgres_data`.
+- Removing and recreating containers does not remove the database volume unless it is explicitly deleted.
+- The Docker web container uses environment variables for database connection settings and other application configuration.
+- The `.dockerignore` file excludes `.env` files and other local development artifacts from the Docker build context, except for an explicitly allowed `.env.example` file if present.
+- Never publish database backups, secret keys, API credentials, or private environment files with the application image.
+
+---
 ## Deployment
 
 ResQ360 is designed to be deployable using a Django-compatible hosting environment with PostgreSQL.

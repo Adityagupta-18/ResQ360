@@ -1,0 +1,41 @@
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: resq360-web
+    env_file:
+      - .env
+    environment:
+      DB_NAME: resq360
+      DB_USER: resq360_user
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      DB_HOST: db
+      DB_PORT: "5432"
+    ports:
+      - "8000:8000"
+    command: >
+      gunicorn ResQ360.wsgi:application
+      --bind 0.0.0.0:8000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:18
+    container_name: resq360-db
+    environment:
+      POSTGRES_DB: resq360
+      POSTGRES_USER: resq360_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - resq360_postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U resq360_user -d resq360"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  resq360_postgres_data:
